@@ -1,0 +1,133 @@
+body .ikosearch {
+  width: 100%;
+  height: 40px;
+  max-width: 54px;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  background-color: #F8F9FA;
+}
+body .ikosearch img {
+  display: inline;
+  margin: 0;
+  width: 18px;
+  vertical-align: middle;
+  margin-bottom: 3px;
+}
+
+body .ikoaccount {
+  width: 100%;
+  height: 40px;
+  max-width: 54px;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  background-color: #F8F9FA;
+}
+body .ikoaccount img {
+  display: inline;
+  margin: 0;
+  width: 18px;
+  vertical-align: middle;
+  margin-bottom: 3px;
+}
+
+body .ikoitinerary {
+  width: 100%;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  background-color: #F8F9FA;
+  padding: 10px 5px;
+}
+body .ikoitinerary img {
+  display: inline;
+  margin: 0;
+  width: 14px;
+  vertical-align: middle;
+  margin-bottom: 3px;
+}
+body .ikoitinerary div {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.8em;
+}
+
+body .ikolookup {
+  width: 100%;
+  text-align: left;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  background-color: #F8F9FA;
+  padding: 10px 30px 10px 10px;
+  position: relative;
+}
+body .ikolookup img {
+  display: inline;
+  margin: 0;
+  width: 10px;
+  vertical-align: middle;
+  margin-bottom: 3px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translate(0, -50%);
+  opacity: 0.4;
+}
+body .ikolookup div {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.8em;
+  color: #979797;
+}
+
+body .ikocontent {
+  width: 100%;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  background-color: #F8F9FA;
+  padding: 10px 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  position: relative;
+}
+body .ikocontent p {
+  font-size: 0.8em;
+  font-weight: bold;
+  position: relative;
+  z-index: 1;
+}
+body .ikocontent p.noPreview {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  margin: 0;
+  font-size: 0.5em;
+  font-weight: normal;
+}
+body .ikocontent img {
+  position: absolute;
+  object-fit: contain;
+  width: 90%;
+  height: 90%;
+  opacity: 0.05;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/*# sourceMappingURL=elements.css.map */

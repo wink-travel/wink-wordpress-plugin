@@ -1,0 +1,4 @@
+/* A simple file to customize the WP Customizer */
+#customize-control-ikoEnvironment {
+    display: none !important;
+}
