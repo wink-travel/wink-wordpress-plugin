@@ -1,21 +1,31 @@
 <?php
 /**
- * Plugin Name: iko.travel
- * Plugin URI:  https://iko.travel/
- * Description: This plugin integrates your iko.travel account with WordPress. It integrates with Gutenberg and as shortcodes.
- * Version:     1.0.16
+ * Plugin Name: iko.travel Affiliate
+ * Description: This plugin integrates your iko.travel affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
+ * Version:     1.0.25
  * Author:      iko.travel
  * Author URI:  https://iko.travel/
  * License:     GPL-3.0
  * License URI: https://oss.ninja/gpl-3.0?organization=Useful%20Team&project=jwt-auth
  * Text Domain: iko-travel
  *
+ * the iko.travel Affiliate WordPress plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * any later version.
+ * iko.travel Affiliate WordPress plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with iko.travel Affiliate WordPress plugin. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 class ikoTravel {
     function __construct() {
-        $this->version = '1.0.16';
+        $this->version = '1.0.4';
         $this->namespace = 'iko-travel';
         $this->section = 'ikoTravel'; // Customizer Section Name
         $this->clientIdKey = 'ikoTravelClientId';
@@ -23,15 +33,35 @@ class ikoTravel {
         $this->environment = 'ikoEnvironment';
         $this->environmentVal = get_option($this->environment, false);
         $this->pluginURL = trailingslashit( plugin_dir_url( __FILE__ ) );
+        $this->settingsURL = admin_url( '/customize.php?autofocus[section]='.$this->section);
         add_action( 'customize_register', array( $this,'addSettings' ) ); // adding plugin settings to WP Customizer
         add_action('admin_notices', array( $this,'adminNotice' ) ); // adding admin notice if client id has not been entered
         //add_shortcode('ikoTravel', array( $this,'blockHandler' ) ); // Adding Shortcode
-        add_filter( 'block_categories', array( $this,'gutenbergBlockCategory' ), 10, 2); // Adding custom Gutenberg Block Category
+        add_filter( 'block_categories_all', array( $this,'gutenbergBlockCategory' ), 10, 2); // Adding custom Gutenberg Block Category
         //add_action('init', array( $this,'gutenbergBlockRegistration' ) ); // Adding Gutenberg Block
         add_action( 'wp_enqueue_scripts', array($this, 'loadScripts' )); // too resource intensive to search all pages for iko.travel elements. Scripts need to be added all the time.
         
         add_filter( 'clean_url', array($this,'jsHelper'), 11, 1 ); // Helper to add attribute to js tag
         add_action( 'admin_enqueue_scripts', array($this,'customizeScripts'));
+
+        add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array($this,'settingsLink' ));
+    }
+    
+    function settingsLink( $links ) {
+        // Build and escape the URL.
+        $url = esc_url( add_query_arg(
+            'page',
+            'nelio-content-settings',
+            get_admin_url() . 'admin.php'
+        ) );
+        // Create the link.
+        $settings_link = '<a href="'.$this->settingsURL.'" title="'.__('iko.travel settings',$this->namespace).'">' . __( 'Settings',$this->namespace ) . '</a>';
+        // Adds the link to the end of the array.
+        array_push(
+            $links,
+            $settings_link
+        );
+        return $links;
     }
     function customizeScripts() {
         if (!isset($_GET['ikoadmin']) && !isset($_GET['ikoAdmin'])) {
@@ -69,7 +99,7 @@ class ikoTravel {
                 __('Congratulations', $this->namespace).
                 '</b> '.
                 __('on installing the official iko.travel WordPress plugin.',$this->namespace).
-                ' <a href="'.admin_url( '/customize.php?autofocus[section]='.$this->section ).'" title="'.__('iko.travel settings',$this->namespace).'">'.
+                ' <a href="'.$this->settingsURL.'" title="'.__('iko.travel settings',$this->namespace).'">'.
                 __('Click here',$this->namespace).
                 '</a> '.
                 __('to add your iko.travel Client-ID and your Client-Secret',$this->namespace).
@@ -91,10 +121,16 @@ class ikoTravel {
             }
         }
     }
-
     function addSettings( $wp_customize ) {
         $shortcodes = array();
-        $shortcodes = apply_filters( 'ikoShortcodes', $shortcodes);
+        $allShortcodes = apply_filters( 'ikoShortcodes', $shortcodes);
+        if (!empty($allShortcodes)) {
+            foreach ($allShortcodes as $key => $shortcodeData) {
+                if (!empty($shortcodeData['code'])) {
+                    $shortcodes[] = '['.$shortcodeData['code'].']';
+                }
+            }
+        }
         $wp_customize->add_section( $this->section, array(
             'title'      => __( 'iko.travel Settings', $this->namespace ),
             'priority'   => 30,
@@ -164,9 +200,9 @@ class ikoCore {
             'production' => 'https://elements.iko.travel'
         );
         $jsonEnvironments = array(
-            'staging' => 'https://staging.0101.network',
-            'development' => 'https://dev.traveliko.com:8443',
-            'production' => 'https://0101.network'
+            'staging' => 'https://staging-api.iko.travel',
+            'development' => ' https://staging-iam.iko.travel',
+            'production' => 'https://iam.iko.travel'
         );
 
         switch ($target) {

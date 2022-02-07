@@ -1,13 +1,11 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-
-class ikoContent extends ikoTravelElements
-{
-    function __construct()
-    {
+class ikoContent extends ikoTravelElements {
+    function __construct() {
         parent::__construct();
-        $this->blockName = 'ikocontent';
+        $this->blockCode = 'ikocontent';
+        $this->blockName = __( "iko Content", $this->namespace );
         $this->attributes = [
             'layout' => [
                 'default' => '',
@@ -21,52 +19,82 @@ class ikoContent extends ikoTravelElements
                 'default' => '',
                 'type' => 'string'
             ],
-            // 'backgroundPosition' => [
-            //     'default' => '',
-            //     'type' => 'string'
-            // ],
-            // 'backgroundPositionCustom' => [
-            //     'default' => '',
-            //     'type' => 'string'
-            // ],
-            // 'backgroundSize' => [
-            //     'default' => '',
-            //     'type' => 'string'
-            // ],
-            // 'backgroundSizeCustom' => [
-            //     'default' => '',
-            //     'type' => 'string'
-            // ]
         ];
         add_action('init', array($this, 'gutenbergBlockRegistration')); // Adding Gutenberg Block
-        add_shortcode($this->blockName, array($this, 'blockHandler'));
-        add_filter('ikoShortcodes', array($this, 'shortcodeOutput'));
+        add_shortcode($this->blockCode, array($this, 'blockHandler'));
+        add_filter('ikoShortcodes',array( $this, 'shortcodeData') );
     }
+    function shortcodeData($shortcodes) {
+        $ikoContentData = $this->getIkoBearerToken();
+        $values = array(
+            __( 'Choose your travel inventory',  $this->namespace  ) => ''
 
-    function shortcodeOutput($shortcodes)
-    {
-        $shortcodeTags = '';
-        foreach ($this->attributes as $attributeKey => $attributeValue) {
-            $shortcodeTags .= ' ' . $attributeKey . '=""';
+        );
+        foreach($ikoContentData as $key => $localValue) {
+            $values[$localValue['name']] = $localValue['id'];
         }
-        $shortcodes[] = '[' . $this->blockName . $shortcodeTags . ']';
+        $shortcodes[$this->blockCode] = array(
+            'code' => $this->blockCode,
+            'name' => $this->blockName,
+            'params' => array(
+                array(
+                    "type" => "dropdown",
+                    "holder" => "div",
+                    "class" => "",
+                    "heading" => __( "Layout", $this->namespace ),
+                    "param_name" => "layoutid",
+                    'value' => $values,
+                    "description" => __('Select any of your saved layouts. We strongly recommend to use this block only in full-width content areas and not in columns.', $this->namespace )
+                ),
+            )
+        );
         return $shortcodes;
     }
-
-    function blockHandler($atts)
-    {
+    
+    function blockHandler($atts) {
         $this->coreFunction();
         return $this->ikoTravelElement($atts);
     }
 
-    function ikoTravelElement($atts)
-    {
+    function ikoTravelElement($atts) {
         $config = array();
         if (!empty($atts['layout'])) {
             $config['layout'] = sanitize_text_field($atts['layout']);
         }
-        if (!empty($atts['layoutId'])) {
+        if (!empty($atts['layoutid'])) {
+            $atts['layoutId'] = $atts['layoutid']; // WPB Fallback
+        }
+        
+        if (!empty($atts['layoutid'])) {
             $config['id'] = sanitize_text_field($atts['layoutId']);
+            if (empty($atts['layout'])) {
+                $ikoContentData = $this->getIkoBearerToken();
+                $layoutName = '';
+                foreach($ikoContentData as $key => $localValue) {
+                    if ($localValue['id'] == $config['id']) {
+                        $layoutName = $localValue['layout'];
+                    }
+                }
+                if (!empty($layoutName)) {
+                    $config['layout'] = sanitize_text_field($layoutName);
+                } else {
+                    $config['layout'] = "HOTEL";
+                }
+            }
+        }
+        if (empty($config['layout']) && !empty($config['id'])) {
+            $ikoContentData = $this->getIkoBearerToken();
+            $layoutName = '';
+            foreach($ikoContentData as $key => $localValue) {
+                if ($localValue['id'] == $config['id']) {
+                    $layoutName = $localValue['layout'];
+                }
+            }
+            if (!empty($layoutName)) {
+                $config['layout'] = sanitize_text_field($layoutName);
+            } else {
+                $config['layout'] = "HOTEL";
+            }
         }
         $jsonConfig = json_encode($config);
         ob_start();
@@ -85,29 +113,6 @@ class ikoContent extends ikoTravelElements
         if (is_admin() || $isAdmin) {
             return htmlspecialchars($content);
         }
-        // if (!empty($atts['background'])) {
-        //     $css = '';
-        //     $css .= 'background-image: url('.sanitize_text_field( $atts['background'] ).');';
-        //     if (!empty($atts['backgroundPosition'])) {
-        //         if ($atts['backgroundPosition'] == 'custom') {
-        //             if (!empty($atts['backgroundPositionCustom'])) {
-        //                 $css .= ' background-position: '.sanitize_text_field( $atts['backgroundPositionCustom'] ).';';
-        //             }
-        //         } else {
-        //             $css .= ' background-position: '.sanitize_text_field( $atts['backgroundPosition'] ).';';
-        //         }
-        //     }
-        //     if (!empty($atts['backgroundSize'])) {
-        //         if ($atts['backgroundSize'] == 'custom') {
-        //             if (!empty($atts['backgroundSizeCustom'])) {
-        //                 $css .= ' background-size: '.sanitize_text_field( $atts['backgroundSizeCustom'] ).';';
-        //             }
-        //         } else {
-        //             $css .= ' background-size: '.sanitize_text_field( $atts['backgroundSize'] ).';';
-        //         }
-        //     }
-        //     return '<div style="'.$css.'">'.$content.'</div>';
-        // }
         return $content;
     }
 
@@ -122,16 +127,12 @@ class ikoContent extends ikoTravelElements
         $bearerTime = get_option('ikocontentTime', 0);
         $currentTime = current_time('timestamp');
         $bearerToken = '';
+        $ikoLayouts = get_option('ikoData', array());
 
-//        error_log('iko.travel - getIkoContentData');
-//        error_log($bearerTime);
-//        error_log($currentTime);
-//        error_log($env);
-
-        if ($bearerTime < $currentTime) {
+        if ($bearerTime < $currentTime || empty($ikoLayouts)) {
             $curl = curl_init();
 
-            $url = $env . '/api/oauth2/token';
+            $url = $env . '/oauth2/token';
             error_log('iko.travel - $token url: ' . $url);
             $curlConfigArray = array(
                 CURLOPT_URL => $url,
@@ -206,8 +207,8 @@ class ikoContent extends ikoTravelElements
         // error_log($dataTime);
         // error_log($currentTime);
         // error_log($env);
-
-        if ($dataTime < $currentTime) {
+        $ikoLayouts = get_option('ikoData', array());
+        if ($dataTime < $currentTime || empty($ikoLayouts)) {
             $curl = curl_init();
 
 //            error_log('iko.travel - $bearerToken: ' . $bearerToken);
@@ -246,23 +247,28 @@ class ikoContent extends ikoTravelElements
                 error_log('iko.travel - Empty response when trying to retrieve inventory. Details below:');
                 error_log(curl_error($curl));
             } else {
-
                 $data = json_decode($response, true);
                 if (!empty($data)) {
-//                    error_log('iko.travel - layout $data' . $data);
-                    update_option('ikoData', $data);
-                    update_option('ikodataTime', 60 * 2 + current_time('timestamp')); // 2 minutes
-                    return $data;
+                    if (!empty($data['status']) && $data['error'] == 404) {
+                        delete_option( 'ikoData' );
+                        delete_option( 'ikodataTime' );
+                        error_log('iko.travel - Unable to retrieve layout data.');
+                    } else {
+                        // error_log('iko.travel - layout $data' . $data);
+                        update_option('ikoData', $data);
+                        update_option('ikodataTime', 60 * 2 + current_time('timestamp')); // 2 minutes
+                        return $data;
+                    }
+//                  
                 } else {
                     error_log('iko.travel - Empty response body when trying to retrieve inventory list.');
                 }
 
             }
-
             curl_close($curl);
         } else {
-            error_log('iko.travel - $dateTime > $currentTime');
-            return get_option('ikoData', array());
+            //error_log('iko.travel - $dateTime > $currentTime');
+            return $ikoLayouts;
         }
         return array();
     }
@@ -276,8 +282,8 @@ class ikoContent extends ikoTravelElements
 
         $dir = dirname(__FILE__);
 
-        $gutenbergJS = $this->blockName . '.js';
-        wp_register_script('ikoTravelBlockRenderer_' . $this->blockName, $this->pluginURL . 'elements/js/' . $gutenbergJS,
+        $gutenbergJS = $this->blockCode . '.js';
+        wp_register_script('ikoTravelBlockRenderer_' . $this->blockCode, $this->pluginURL . 'elements/js/' . $gutenbergJS,
             array(
                 'wp-blocks',
                 'wp-i18n',
@@ -295,14 +301,14 @@ class ikoContent extends ikoTravelElements
             'mode' => $this->environmentVal
         );
 
-        wp_localize_script('ikoTravelBlockRenderer_' . $this->blockName, 'ikoTravelData', $jsData);
+        wp_localize_script('ikoTravelBlockRenderer_' . $this->blockCode, 'ikoTravelData', $jsData);
 
         $clientId = get_option($this->clientIdKey, false);
         $ikoContentData = $this->getIkoBearerToken();
-        wp_localize_script('ikoTravelBlockRenderer_' . $this->blockName, 'ikoContentData', $ikoContentData);
+        wp_localize_script('ikoTravelBlockRenderer_' . $this->blockCode, 'ikoContentData', $ikoContentData);
 
-        register_block_type('ikotravel-blocks/' . $this->blockName, array(
-            'editor_script' => 'ikoTravelBlockRenderer_' . $this->blockName,
+        register_block_type('ikotravel-blocks/' . $this->blockCode, array(
+            'editor_script' => 'ikoTravelBlockRenderer_' . $this->blockCode,
             'render_callback' => array($this, 'blockHandler'),
             'attributes' => $this->attributes,
             'category' => $this->namespace . '-blocks'

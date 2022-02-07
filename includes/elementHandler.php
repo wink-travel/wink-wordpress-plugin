@@ -24,7 +24,7 @@ class ikoTravelElements {
             $html = '';
             $clientId = get_option($this->clientIdKey, false);
             
-            $html .= '<iko-app-loader config=\'{"client-id":"'.$clientId.'"}\'></iko-app-loader>';
+            $html .= '<iko-app-loader config=\'{"clientId":"'.$clientId.'"}\'></iko-app-loader>';
 
             echo $html;
             $GLOBALS['ikoTravelLoaderAlreadyEnqueued'] = true;
@@ -35,6 +35,11 @@ class ikoTravelElements {
 
 require_once('elements/ikolookup.php'); // Lookup element
 require_once('elements/ikoitinerary.php'); // Itinerary button element
+require_once('elements/ikoitineraryform.php'); // Itinerary form element
 require_once('elements/ikosearch.php'); // Search button element
 require_once('elements/ikoaccount.php'); // Account button element
 require_once('elements/ikocontent.php'); // Content element
+
+require_once('elements/wpbakery/vcElements.php'); // WPBakery Page Builder
+require_once('elements/elementor/elementorWidgets.php'); // Elementor
+require_once('elements/avada/fusionElements.php'); // Avada / Fusion Builder

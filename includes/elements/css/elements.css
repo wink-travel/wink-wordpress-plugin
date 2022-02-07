@@ -59,6 +59,29 @@ body .ikoitinerary div {
   font-size: 0.8em;
 }
 
+body .ikoitineraryform {
+  width: 100%;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  background-color: #F8F9FA;
+  padding: 10px 5px;
+}
+body .ikoitineraryform img {
+  display: inline;
+  margin: 0;
+  width: 14px;
+  vertical-align: middle;
+  margin-bottom: 3px;
+}
+body .ikoitineraryform div {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.8em;
+}
+
 body .ikolookup {
   width: 100%;
   text-align: left;

@@ -1,11 +1,11 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class ikoItinerary extends ikoTravelElements {
+class ikoItineraryForm extends ikoTravelElements {
     function __construct() {
         parent::__construct();
-        $this->blockCode = 'ikoitinerary';
-        $this->blockName = __( "iko Itinerary Button", $this->namespace );
+        $this->blockCode = 'ikoitineraryform';
+        $this->blockName = __( "iko Itinerary Form", $this->namespace );
         add_action('init', array( $this,'gutenbergBlockRegistration' ) ); // Adding Gutenberg Block
         add_shortcode( $this->blockCode, array( $this,'blockHandler') );
         add_filter('ikoShortcodes',array( $this, 'shortcodeData') );
@@ -24,7 +24,7 @@ class ikoItinerary extends ikoTravelElements {
     }
     function ikoTravelElement() {
         ob_start();
-        ?><iko-itinerary-button></iko-itinerary-button><?php
+        ?><iko-itinerary-form></iko-itinerary-form><?php
         $content = ob_get_contents();
         ob_end_clean();
         $isAdmin = false;
@@ -82,4 +82,4 @@ class ikoItinerary extends ikoTravelElements {
     }
 }
 
-$ikoItinerary = new ikoItinerary();
+$ikoItineraryForm = new ikoItineraryForm();

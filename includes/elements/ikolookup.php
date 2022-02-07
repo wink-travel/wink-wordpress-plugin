@@ -1,17 +1,21 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-
 class ikoLookup extends ikoTravelElements {
     function __construct() {
         parent::__construct();
-        $this->blockName = 'ikolookup';
+        $this->blockCode = 'ikolookup';
+        $this->blockName = __( "iko Lookup", $this->namespace );
         add_action('init', array( $this,'gutenbergBlockRegistration' ) ); // Adding Gutenberg Block
-        add_shortcode( $this->blockName, array( $this,'blockHandler') );
-        add_filter('ikoShortcodes',array( $this, 'shortcodeOutput') );
+        add_shortcode( $this->blockCode, array( $this,'blockHandler') );
+        add_filter('ikoShortcodes',array( $this, 'shortcodeData') );
     }
-    function shortcodeOutput($shortcodes) {
-        $shortcodes[] = '['.$this->blockName.']';
+    function shortcodeData($shortcodes) {
+        $shortcodes[] = array(
+            'code' => $this->blockCode,
+            'name' => $this->blockName,
+            'params' => array() 
+        );
         return $shortcodes;
     }
     function blockHandler($atts) {
@@ -44,8 +48,8 @@ class ikoLookup extends ikoTravelElements {
         
         $dir = dirname(__FILE__);
 
-        $gutenbergJS = $this->blockName.'.js';
-        wp_register_script('ikoTravelBlockRenderer_'.$this->blockName, $this->pluginURL . 'elements/js/'.$gutenbergJS,
+        $gutenbergJS = $this->blockCode.'.js';
+        wp_register_script('ikoTravelBlockRenderer_'.$this->blockCode, $this->pluginURL . 'elements/js/'.$gutenbergJS,
             array(
                 'wp-blocks',
                 'wp-i18n',
@@ -62,10 +66,10 @@ class ikoLookup extends ikoTravelElements {
             'mode'      => $this->environmentVal
         );
 
-        wp_localize_script( 'ikoTravelBlockRenderer_'.$this->blockName, 'ikoTravelData', $jsData );
+        wp_localize_script( 'ikoTravelBlockRenderer_'.$this->blockCode, 'ikoTravelData', $jsData );
         
-        register_block_type('ikotravel-blocks/'.$this->blockName, array(
-            'editor_script' => 'ikoTravelBlockRenderer_'.$this->blockName,
+        register_block_type('ikotravel-blocks/'.$this->blockCode, array(
+            'editor_script' => 'ikoTravelBlockRenderer_'.$this->blockCode,
             'render_callback' => array($this,'blockHandler'),
             'attributes' => [
                 // 'configurationId' => [
