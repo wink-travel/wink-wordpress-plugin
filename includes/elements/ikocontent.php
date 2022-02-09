@@ -27,7 +27,7 @@ class ikoContent extends ikoTravelElements {
     function shortcodeData($shortcodes) {
         $ikoContentData = $this->getIkoBearerToken();
         $values = array(
-            __( 'Choose your travel inventory',  $this->namespace  ) => ''
+            __( 'Select...',  $this->namespace  ) => ''
 
         );
         foreach($ikoContentData as $key => $localValue) {
@@ -41,7 +41,7 @@ class ikoContent extends ikoTravelElements {
                     "type" => "dropdown",
                     "holder" => "div",
                     "class" => "",
-                    "heading" => __( "Layout", $this->namespace ),
+                    "heading" => __( "Inventory", $this->namespace ),
                     "param_name" => "layoutid",
                     'value' => $values,
                     "description" => __('Select any of your saved layouts. We strongly recommend to use this block only in full-width content areas and not in columns.', $this->namespace )
