@@ -39,7 +39,7 @@ There are multiple ways to use our components:
 == Changelog ==
 
 = 1.1.0 =
-* Accomodated API changes
+* Accommodated API changes
 
 = 1.0.19 =
 * Initial Launch

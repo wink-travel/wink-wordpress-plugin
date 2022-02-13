@@ -33,7 +33,7 @@ There are 2 ways to use our components:
 ### Changelog ###
 
 ###### 1.1.0 ######
-Accomodated API changes.
+Accommodated API changes.
 ###### 1.0.0 ######
 
 Initial Launch
