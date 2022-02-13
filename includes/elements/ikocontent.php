@@ -119,7 +119,7 @@ class ikoContent extends ikoTravelElements {
     function getIkoBearerToken()
     {
         $env = ikoCore::environmentURL('json', $this->environmentVal);
-
+        error_log($env);
         $clientId = get_option($this->clientIdKey, false);
         $clientSecret = get_option($this->clientSecretKey, false);
 
@@ -133,7 +133,7 @@ class ikoContent extends ikoTravelElements {
             $curl = curl_init();
 
             $url = $env . '/oauth2/token';
-            error_log('iko.travel - $token url: ' . $url);
+            error_log($url);
             $curlConfigArray = array(
                 CURLOPT_URL => $url,
                 CURLOPT_RETURNTRANSFER => true,
@@ -143,12 +143,8 @@ class ikoContent extends ikoTravelElements {
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => 'grant_type=client_credentials',
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/x-www-form-urlencoded'
-                ),
-                CURLOPT_USERPWD => $clientId . ":" . $clientSecret
-            );
+                CURLOPT_POSTFIELDS => array('client_id' => $clientId,'client_secret' => $clientSecret,'grant_type' => 'client_credentials','scope' => 'inventory.read inventory.write'),
+              );
 
             if ($this->environmentVal == 'development') {
                 // remove the need for valid SSL
@@ -197,9 +193,8 @@ class ikoContent extends ikoTravelElements {
         return array();
     }
 
-    function getIkoLayouts($bearerToken)
-    {
-        $env = ikoCore::environmentURL('json', $this->environmentVal);
+    function getIkoLayouts($bearerToken) {
+        $env = ikoCore::environmentURL('api', $this->environmentVal);
         $currentTime = current_time('timestamp');
         $dataTime = get_option('ikodataTime', 0);
 
@@ -209,43 +204,16 @@ class ikoContent extends ikoTravelElements {
         // error_log($env);
         $ikoLayouts = get_option('ikoData', array());
         if ($dataTime < $currentTime || empty($ikoLayouts)) {
-            $curl = curl_init();
-
-//            error_log('iko.travel - $bearerToken: ' . $bearerToken);
-            $url = $env . '/api/oauth2/seller/inventory/campaign/list';
-//            error_log('iko.travel - $data url: ' . $url);
-
-            $curlConfigArray = array(
-                CURLOPT_URL => $url, // to be changed to live URL
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-                CURLOPT_HTTPHEADER => array(
-                    'Authorization: Bearer ' . $bearerToken
-                ),
-            );
-
-            if ($this->environmentVal == 'development') {
-                // remove the need for valid SSL
-                error_log('Development environment. Ignoring self-signed certificates');
-                $curlConfigArray[CURLOPT_SSL_VERIFYHOST] = 0;
-                $curlConfigArray[CURLOPT_SSL_VERIFYPEER] = 0;
-            }
-
-            curl_setopt_array($curl, $curlConfigArray);
-
-            $response = curl_exec($curl);
-
+            $url = $env . '/api/inventory/campaign/list';
+            $options = array('http' => array(
+                'method'  => 'GET',
+                'header' => 'Authorization: Bearer '.$bearerToken
+            ));
+            $context  = stream_context_create($options);
+            $response = file_get_contents($url, false, $context);
             if (empty($response)) {
                 // print out any error
                 error_log('iko.travel - Empty response when trying to retrieve inventory. Details below:');
-                error_log(curl_error($curl));
             } else {
                 $data = json_decode($response, true);
                 if (!empty($data)) {
@@ -262,10 +230,10 @@ class ikoContent extends ikoTravelElements {
 //                  
                 } else {
                     error_log('iko.travel - Empty response body when trying to retrieve inventory list.');
+                    //error_log(print_r($response,true));
+                    //error_log(print_r($curlConfigArray,true));
                 }
-
             }
-            curl_close($curl);
         } else {
             //error_log('iko.travel - $dateTime > $currentTime');
             return $ikoLayouts;

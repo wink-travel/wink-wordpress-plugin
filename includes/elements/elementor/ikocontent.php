@@ -23,6 +23,7 @@ class elementorIkoContent extends \Elementor\Widget_Base {
 				'label' => __( 'iko Options', $this->namespace )
 			]
 		);
+		$shortcodes = array();
 		$shortcodes = apply_filters( 'ikoShortcodes', $shortcodes);
 		if (!empty($shortcodes['ikocontent'])) {
 			$options = array();
@@ -33,11 +34,11 @@ class elementorIkoContent extends \Elementor\Widget_Base {
 			$this->add_control(
 				'layoutid',
 				[
-					'label' => 'Layout',
+					'label' => 'Inventory',
 					'type' => \Elementor\Controls_Manager::SELECT,
 					'placeholder' => '',
 					'options' => $options,
-					'description' => __('Select any of your saved layouts. We strongly recommend to use this block only in full-width content areas and not in columns.', $this->namespace ),
+					'description' => __('Select any of your saved inventories. We strongly recommend to use this block only in full-width content areas and not in columns.', $this->namespace ),
 				]
 			);
 		}

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: iko.travel Affiliate
  * Description: This plugin integrates your iko.travel affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
- * Version:     1.0.25
+ * Version:     1.1.0
  * Author:      iko.travel
  * Author URI:  https://iko.travel/
  * License:     GPL-3.0
@@ -45,8 +45,10 @@ class ikoTravel {
         add_action( 'admin_enqueue_scripts', array($this,'customizeScripts'));
 
         add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array($this,'settingsLink' ));
+
+        add_action( 'customize_save_after' , array($this, 'clearIkoCache' ));
     }
-    
+
     function settingsLink( $links ) {
         // Build and escape the URL.
         $url = esc_url( add_query_arg(
@@ -166,13 +168,21 @@ class ikoTravel {
             'description' => __('Switch between environments. Use with caution and only if instructed by the iko.travel team.', $this->namespace),
             'section'    => $this->section,
             'choices' => array(
-                'live' => __( 'Live' ),
+                'production' => __( 'Live' ),
                 'staging' => __( 'Staging' ),
                 'development' => __( 'Development' )
             ),
         ) );
         
     }
+
+    function clearIkoCache() {
+        delete_option( 'ikoData' );
+        delete_option( 'ikodataTime' );
+        delete_option( 'ikocontentTime' );
+        delete_option( 'ikocontentBearer' );
+    }
+
     function gutenbergBlockCategory($categories, $post) {
             return array_merge(
                 $categories,
@@ -193,36 +203,26 @@ class ikoCore {
 
     }
     static function environmentURL($target, $environment) {
-//        error_log('iko.travel - environment: '.$environment);
-        $javascriptEnvironments = array(
-            'staging' => 'https://staging-elements.iko.travel',
-            'development' => 'https://dev.traveliko.com:8011',
-            'production' => 'https://elements.iko.travel'
+    //    error_log('iko.travel - target: '.$target);
+    //    error_log('iko.travel - environment: '.$environment);
+        $environments = array(
+            'js' => array(
+                'staging' => 'https://staging-elements.iko.travel',
+                'development' => 'https://dev.traveliko.com:8011',
+                'production' => 'https://elements.iko.travel'
+            ),
+            'json' => array(
+                'staging' => 'https://staging-iam.iko.travel',
+                'development' => 'https://staging-iam.iko.travel',
+                'production' => 'https://iam.iko.travel'
+            ),
+            'api' => array(
+                'staging' => 'https://staging-api.iko.travel',
+                'development' => 'https://dev.traveliko.com:8443',
+                'production' => 'https://api.iko.travel'
+            )
         );
-        $jsonEnvironments = array(
-            'staging' => 'https://staging-api.iko.travel',
-            'development' => ' https://staging-iam.iko.travel',
-            'production' => 'https://iam.iko.travel'
-        );
-
-        switch ($target) {
-            case 'json':
-                if (!empty($jsonEnvironments[$environment])) {
-                    return $jsonEnvironments[$environment];
-                }
-                break;
-            case 'js':
-                if (!empty($javascriptEnvironments[$environment])) {
-                    return $javascriptEnvironments[$environment];
-                }
-                break;
-            default:
-                error_log('iko.travel - Invalid target and / or environment');
-                error_log('iko.travel - target: '.$target);
-                error_log('iko.travel - environment: '.$environment);
-        }
-
-        return $jsonEnvironments['production'];
+        return $environments[$target][$environment];
     }
 }
 
