@@ -32,6 +32,8 @@ There are 2 ways to use our components:
 
 ### Changelog ###
 
+###### 1.1.1 ######
+Added dynamic version to static resources
 ###### 1.1.0 ######
 Accommodated API changes.
 ###### 1.0.0 ######

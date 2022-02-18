@@ -39,6 +39,9 @@ There are multiple ways to use our components:
 == Changelog ==
 
 = 1.1.0 =
+* Added dynamic version to static resources
+
+= 1.1.0 =
 * Accommodated API changes
 
 = 1.0.19 =
