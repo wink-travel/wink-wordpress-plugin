@@ -38,7 +38,10 @@ There are multiple ways to use our components:
 
 == Changelog ==
 
-= 1.1.0 =
+= 1.1.2 =
+* silent-refresh.html Support
+
+= 1.1.1 =
 * Added dynamic version to static resources
 
 = 1.1.0 =

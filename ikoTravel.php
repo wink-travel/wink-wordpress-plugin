@@ -2,7 +2,7 @@
 /**
  * Plugin Name: iko.travel Affiliate
  * Description: This plugin integrates your iko.travel affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
- * Version:     1.1.1
+ * Version:     1.1.2
  * Author:      iko.travel
  * Author URI:  https://iko.travel/
  * License:     GPL-3.0
@@ -228,4 +228,39 @@ class ikoCore {
 
 if (!empty(get_option('ikoTravelClientId', false)) && function_exists('curl_version')) {
     require_once('includes/elementHandler.php'); // Handles all iko.travel Elements (Only load it if the client id is present)
+}
+
+
+// make silent-refresh.html accessible on all sites using rewrite rules
+function ikoAddRewriteRules() {
+    $page_slug = 'products'; // slug of the page you want to be shown to
+    $param     = 'ikosilent';       // param name you want to handle on the page
+    add_rewrite_tag('%ikosilent%', '([^&]+)', 'ikosilent=');
+    add_rewrite_rule('silent-refresh\.html?([^/]*)', 'index.php?ikosilent=true', 'top');
+}
+
+function ikoAddQueryVars($vars) {
+    $vars[] = 'ikosilent'; // param name you want to handle on the page
+    return $vars;
+}
+add_filter('query_vars', 'ikoAddQueryVars');
+
+function ikoRenderSilentRefresh( $atts ){
+    $do = get_query_var( 'ikosilent' );
+    if ( !empty($do) ) {
+        header('Content-type: text/html');
+        $dir = plugin_dir_path( __FILE__ );
+        if (file_exists($dir.'includes/silent-refresh.html')) {
+            echo file_get_contents($dir.'includes/silent-refresh.html');
+        }
+        die();
+    }
+}
+add_action( 'parse_query', 'ikoRenderSilentRefresh' );
+
+register_activation_hook( __FILE__, 'ikoActivationRewrite' );
+
+function ikoActivationRewrite() {
+    ikoAddRewriteRules();
+    flush_rewrite_rules();
 }
