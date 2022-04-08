@@ -99,7 +99,7 @@ class ikoContent extends ikoTravelElements {
         $jsonConfig = json_encode($config);
         ob_start();
         ?>
-        <iko-content-loader config='<?= trim($jsonConfig); ?>'></iko-content-loader>
+        <iko-content-loader config='<?php echo trim($jsonConfig); ?>'></iko-content-loader>
         <?php
         $content = ob_get_contents();
         ob_end_clean();
@@ -130,55 +130,50 @@ class ikoContent extends ikoTravelElements {
         $ikoLayouts = get_option('ikoData', array());
 
         if ($bearerTime < $currentTime || empty($ikoLayouts)) {
-            $curl = curl_init();
-
-            $url = $env . '/oauth2/token';
-            error_log($url);
-            $curlConfigArray = array(
-                CURLOPT_URL => $url,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => array('client_id' => $clientId,'client_secret' => $clientSecret,'grant_type' => 'client_credentials','scope' => 'inventory.read inventory.write'),
-              );
-
+            
+            $postBody = array(
+                'client_id'    => $clientId,
+                'client_secret'   => $clientSecret,
+                'grant_type' => 'client_credentials',
+                'scope' => 'inventory.read inventory.write',
+            );
+            $postArgs = array(
+                'body'        => $postBody,
+                'timeout'     => 60,
+                'redirection' => 10,
+                'httpversion' => '1.0',
+                'blocking'    => true,
+                'sslverify' => false,
+            );
             if ($this->environmentVal == 'development') {
-                // remove the need for valid SSL
                 error_log('iko.travel - Development environment. Ignoring self-signed certificates');
-                $curlConfigArray[CURLOPT_SSL_VERIFYHOST] = 0;
-                $curlConfigArray[CURLOPT_SSL_VERIFYPEER] = 0;
+                $wpHTTPPostArgs['sslverify'] = false; 
             }
-
-            curl_setopt_array($curl, $curlConfigArray);
-
-            $response = curl_exec($curl);
-
-            if (empty($response)) {
+            $url = $env . '/oauth2/token';
+            $response = wp_remote_post($url,$postArgs);
+            if ( is_wp_error( $response ) ) {
                 // print out any error
                 error_log('iko.travel - Empty response when trying to retrieve token. Details below:');
-                error_log(curl_error($curl));
+                error_log($response->get_error_message());
             } else {
+                if (!empty($response['body'])) {
+                    $data = json_decode($response['body'], true);
 
-                $data = json_decode($response, true);
-
-                if (!empty($data)) {
-//                    error_log('iko.travel - token $data' . $data);
-                    if (!empty($data['access_token']) && !empty($data['expires_in'])) {
-                        update_option('ikocontentBearer', $data['access_token']);
-                        update_option('ikocontentTime', $data['expires_in'] + current_time('timestamp'));
-                        $bearerToken = $data['access_token'];
+                    if (!empty($data)) {
+    //                    error_log('iko.travel - token $data' . $data);
+                        if (!empty($data['access_token']) && !empty($data['expires_in'])) {
+                            update_option('ikocontentBearer', $data['access_token']);
+                            update_option('ikocontentTime', $data['expires_in'] + current_time('timestamp'));
+                            $bearerToken = $data['access_token'];
+                        }
+                    } else {
+                        error_log('iko.travel - Empty response body when trying to retrieve token.');
                     }
                 } else {
-                    error_log('iko.travel - Empty response body when trying to retrieve token.');
+                    error_log('iko.travel - Unable to get response body content while retrieving token. Response array below:');
+                    error_log(print_r($response,true));
                 }
-
             }
-
-            curl_close($curl);
         } else {
             // retrieve existing bearer token
             $bearerToken = get_option('ikocontentBearer', '');
@@ -198,10 +193,6 @@ class ikoContent extends ikoTravelElements {
         $currentTime = current_time('timestamp');
         $dataTime = get_option('ikodataTime', 0);
 
-        // error_log('iko.travel - getIkoLayouts');
-        // error_log($dataTime);
-        // error_log($currentTime);
-        // error_log($env);
         $ikoLayouts = get_option('ikoData', array());
         if ($dataTime < $currentTime || empty($ikoLayouts)) {
             $url = $env . '/api/inventory/campaign/list';
@@ -210,12 +201,19 @@ class ikoContent extends ikoTravelElements {
                 'header' => 'Authorization: Bearer '.$bearerToken
             ));
             $context  = stream_context_create($options);
-            $response = file_get_contents($url, false, $context);
-            if (empty($response)) {
+            $getArgs = array(
+                'headers' => array(
+                    'Authorization' => 'Bearer '.$bearerToken
+                )
+            );
+            $response = wp_remote_get($url,$getArgs);
+            if ( is_wp_error( $response ) ) {
                 // print out any error
-                error_log('iko.travel - Empty response when trying to retrieve inventory. Details below:');
+                error_log('iko.travel - Empty response when trying to retrieve layouts. Details below:');
+                error_log($response->get_error_message());
             } else {
-                $data = json_decode($response, true);
+                if (!empty($response['body'])) {
+                    $data = json_decode($response['body'], true);
                 if (!empty($data)) {
                     if (!empty($data['status']) && $data['error'] == 404) {
                         delete_option( 'ikoData' );
@@ -227,15 +225,13 @@ class ikoContent extends ikoTravelElements {
                         update_option('ikodataTime', 60 * 2 + current_time('timestamp')); // 2 minutes
                         return $data;
                     }
-//                  
                 } else {
-                    error_log('iko.travel - Empty response body when trying to retrieve inventory list.');
-                    //error_log(print_r($response,true));
-                    //error_log(print_r($curlConfigArray,true));
+                    error_log('iko.travel - Unable to get response body content while retrieving layouts. Response array below:');
+                    error_log(print_r($response,true));
                 }
             }
+        }
         } else {
-            //error_log('iko.travel - $dateTime > $currentTime');
             return $ikoLayouts;
         }
         return array();

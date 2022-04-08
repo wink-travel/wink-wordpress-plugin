@@ -2,7 +2,7 @@
 /**
  * Plugin Name: iko.travel Affiliate
  * Description: This plugin integrates your iko.travel affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
- * Version:     1.1.2
+ * Version:     1.2.1
  * Author:      iko.travel
  * Author URI:  https://iko.travel/
  * License:     GPL-3.0
@@ -86,7 +86,6 @@ class ikoTravel {
         if (!empty(get_option($this->clientIdKey, false))) {
             $env = ikoCore::environmentURL('js', $this->environmentVal);
             wp_enqueue_style('ikoTravel',$env.'/styles.css',array(),$this->version);
-//            wp_enqueue_script('ikoTravel-Elements',$env.'elements.js',array(),$this->version,true); // concat of the 4 below but doesn't work well w Sentry
             wp_enqueue_script('ikoTravel-Runtime',$env.'/runtime.js',array(),$this->version,true);
             wp_enqueue_script('ikoTravel-Polyfills',$env.'/polyfills.js',array(),$this->version,true);
             wp_enqueue_script('ikoTravel-Scripts',$env.'/scripts.js',array(),$this->version,true);
@@ -105,19 +104,6 @@ class ikoTravel {
                 __('Click here',$this->namespace).
                 '</a> '.
                 __('to add your iko.travel Client-ID and your Client-Secret',$this->namespace).
-                '.</p>
-                </div>';
-            }
-        }
-
-        //
-        if (is_admin() && !function_exists('curl_version')) {
-            if ( current_user_can( 'manage_options' ) ) { // let's only show this to admin users
-                echo '<div class="notice notice-info">
-                <img src="'.$this->pluginURL.'img/logo.png" alt="'.__('iko.travel logo',$this->namespace).'" width="100" style="margin-top: 10px;"><p><b>'.
-                __('Warning', $this->namespace).
-                '!</b> '.
-                __('the iko.travel WordPress plugin requires the PHP cURL extension enabled. Please contact your webhost and ask them to enable the PHP cURL extension',$this->namespace).
                 '.</p>
                 </div>';
             }
@@ -226,7 +212,7 @@ class ikoCore {
     }
 }
 
-if (!empty(get_option('ikoTravelClientId', false)) && function_exists('curl_version')) {
+if (!empty(get_option('ikoTravelClientId', false))) {
     require_once('includes/elementHandler.php'); // Handles all iko.travel Elements (Only load it if the client id is present)
 }
 

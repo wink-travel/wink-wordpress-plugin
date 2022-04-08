@@ -24,9 +24,7 @@ class ikoTravelElements {
             $html = '';
             $clientId = get_option($this->clientIdKey, false);
             
-            $html .= '<iko-app-loader config=\'{"clientId":"'.$clientId.'"}\'></iko-app-loader>';
-
-            echo $html;
+            echo'<iko-app-loader config=\'{"clientId":"'.sanitize_text_field($clientId).'"}\'></iko-app-loader>';
             $GLOBALS['ikoTravelLoaderAlreadyEnqueued'] = true;
         }
         return $GLOBALS['ikoTravelLoaderAlreadyEnqueued'];
