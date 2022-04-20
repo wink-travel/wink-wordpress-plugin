@@ -5,7 +5,7 @@ class ikoLookup extends ikoTravelElements {
     function __construct() {
         parent::__construct();
         $this->blockCode = 'ikolookup';
-        $this->blockName = __( "iko Lookup", $this->namespace );
+        $this->blockName = esc_html__( "iko Lookup", $this->namespace );
         add_action('init', array( $this,'gutenbergBlockRegistration' ) ); // Adding Gutenberg Block
         add_shortcode( $this->blockCode, array( $this,'blockHandler') );
         add_filter('ikoShortcodes',array( $this, 'shortcodeData') );

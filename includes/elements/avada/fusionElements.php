@@ -27,7 +27,7 @@ class fusionElements extends ikoTravelElements {
                     "name" => $shortcodeData['name'],
                     "shortcode" => $shortcodeData['code'],
                     "class" => "",
-                    "category" => __( "Content", $this->namespace),
+                    "category" => esc_html__( "Content", $this->namespace),
                     "icon" => 'fusion-module-icon fusiona-widget',
                     "params" => $params
                 ));

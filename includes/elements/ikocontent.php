@@ -5,7 +5,7 @@ class ikoContent extends ikoTravelElements {
     function __construct() {
         parent::__construct();
         $this->blockCode = 'ikocontent';
-        $this->blockName = __( "iko Content", $this->namespace );
+        $this->blockName = esc_html__( "iko Content", $this->namespace );
         $this->attributes = [
             'layout' => [
                 'default' => '',
@@ -27,7 +27,7 @@ class ikoContent extends ikoTravelElements {
     function shortcodeData($shortcodes) {
         $ikoContentData = $this->getIkoBearerToken();
         $values = array(
-            __( 'Select...',  $this->namespace  ) => ''
+            esc_html__( 'Select...',  $this->namespace  ) => ''
 
         );
         foreach($ikoContentData as $key => $localValue) {
@@ -59,14 +59,14 @@ class ikoContent extends ikoTravelElements {
     function ikoTravelElement($atts) {
         $config = array();
         if (!empty($atts['layout'])) {
-            $config['layout'] = sanitize_text_field($atts['layout']);
+            $config['layout'] = esc_html($atts['layout']);
         }
         if (!empty($atts['layoutid'])) {
             $atts['layoutId'] = $atts['layoutid']; // WPB Fallback
         }
         
         if (!empty($atts['layoutid'])) {
-            $config['id'] = sanitize_text_field($atts['layoutId']);
+            $config['id'] = esc_html($atts['layoutId']);
             if (empty($atts['layout'])) {
                 $ikoContentData = $this->getIkoBearerToken();
                 $layoutName = '';
@@ -76,7 +76,7 @@ class ikoContent extends ikoTravelElements {
                     }
                 }
                 if (!empty($layoutName)) {
-                    $config['layout'] = sanitize_text_field($layoutName);
+                    $config['layout'] = esc_html($layoutName);
                 } else {
                     $config['layout'] = "HOTEL";
                 }
@@ -91,7 +91,7 @@ class ikoContent extends ikoTravelElements {
                 }
             }
             if (!empty($layoutName)) {
-                $config['layout'] = sanitize_text_field($layoutName);
+                $config['layout'] = esc_html($layoutName);
             } else {
                 $config['layout'] = "HOTEL";
             }
@@ -113,13 +113,14 @@ class ikoContent extends ikoTravelElements {
         if (is_admin() || $isAdmin) {
             return htmlspecialchars($content);
         }
-        return $content;
+        //error_log(str_replace("&quot;",'"',$content));
+        return str_replace("&quot;",'"',$content);
     }
 
     function getIkoBearerToken()
     {
         $env = ikoCore::environmentURL('json', $this->environmentVal);
-        error_log($env);
+        //error_log($env);
         $clientId = get_option($this->clientIdKey, false);
         $clientSecret = get_option($this->clientSecretKey, false);
 

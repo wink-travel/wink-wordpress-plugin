@@ -33,9 +33,9 @@ class vcElements extends ikoTravelElements {
                             "class" => "",
                             "param_name" => "placeholder",
                             "value" => 1,
-                            "heading" => __( "This component does not require any configuration.", $this->namespace ),
-                            "description" => __( "Simply ensure that you have entered the correct Client-ID and Client-Secret ", $this->namespace ) . ' <a href="'.admin_url( '/customize.php?autofocus[section]=ikoTravel').'" title="'.__('iko.travel settings',$this->namespace).'" target="_blank">'.
-                            __('here',$this->namespace).'</a> '
+                            "heading" => esc_html__( "This component does not require any configuration.", $this->namespace ),
+                            "description" => esc_html__( "Simply ensure that you have entered the correct Client-ID and Client-Secret ", $this->namespace ) . ' <a href="'.admin_url( '/customize.php?autofocus[section]=ikoTravel').'" title="'.esc_html__('iko.travel settings',$this->namespace).'" target="_blank">'.
+                            esc_html__('here',$this->namespace).'</a> '
                         )
                     );
                 }
@@ -43,7 +43,7 @@ class vcElements extends ikoTravelElements {
                     "name" => $shortcodeData['name'],
                     "base" => $shortcodeData['code'],
                     "class" => "",
-                    "category" => __( "Content", $this->namespace),
+                    "category" => esc_html__( "Content", $this->namespace),
                     "icon" => $this->imgURL.'logo.png',
                     "params" => $params
                 ));

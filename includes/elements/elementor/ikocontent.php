@@ -20,7 +20,7 @@ class elementorIkoContent extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			[
-				'label' => __( 'iko Options', $this->namespace )
+				'label' => esc_html__( 'iko Options', $this->namespace )
 			]
 		);
 		$shortcodes = array();
@@ -38,7 +38,7 @@ class elementorIkoContent extends \Elementor\Widget_Base {
 					'type' => \Elementor\Controls_Manager::SELECT,
 					'placeholder' => '',
 					'options' => $options,
-					'description' => __('Select any of your saved inventories. We strongly recommend to use this block only in full-width content areas and not in columns.', $this->namespace ),
+					'description' => esc_html__('Select any of your saved inventories. We strongly recommend to use this block only in full-width content areas and not in columns.', $this->namespace ),
 				]
 			);
 		}
@@ -48,7 +48,7 @@ class elementorIkoContent extends \Elementor\Widget_Base {
 	}
 	protected function render() {
 		$settings = $this->get_settings_for_display();		
-		echo do_shortcode('[ikocontent layoutid="'.$settings['layoutid'].'"]');
+		echo do_shortcode('[ikocontent layoutid="'.esc_html($settings['layoutid']).'"]');
 		
 	}
 }

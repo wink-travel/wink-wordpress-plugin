@@ -5,7 +5,7 @@ class ikoItineraryForm extends ikoTravelElements {
     function __construct() {
         parent::__construct();
         $this->blockCode = 'ikoitineraryform';
-        $this->blockName = __( "iko Itinerary Form", $this->namespace );
+        $this->blockName = esc_html__( "iko Itinerary Form", $this->namespace );
         add_action('init', array( $this,'gutenbergBlockRegistration' ) ); // Adding Gutenberg Block
         add_shortcode( $this->blockCode, array( $this,'blockHandler') );
         add_filter('ikoShortcodes',array( $this, 'shortcodeData') );

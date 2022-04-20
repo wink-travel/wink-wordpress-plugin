@@ -7,7 +7,7 @@ class elementorIkoItineraryForm extends \Elementor\Widget_Base {
 		return 'ikoitineraryform';
 	}
 	public function get_title() {
-		return __( 'iko Itinerary Form', $this->namespace );
+		return esc_html__( 'iko Itinerary Form', $this->namespace );
 	}
 	public function get_icon() {
 		return 'eicon-external-link-square';
@@ -20,7 +20,7 @@ class elementorIkoItineraryForm extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			[
-				'label' => __( 'iko Options', $this->namespace )
+				'label' => esc_html__( 'iko Options', $this->namespace )
 			]
 		);
 

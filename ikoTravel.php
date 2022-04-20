@@ -2,7 +2,7 @@
 /**
  * Plugin Name: iko.travel Affiliate
  * Description: This plugin integrates your iko.travel affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
- * Version:     1.2.1
+ * Version:     1.2.2
  * Author:      iko.travel
  * Author URI:  https://iko.travel/
  * License:     GPL-3.0
@@ -57,7 +57,7 @@ class ikoTravel {
             get_admin_url() . 'admin.php'
         ) );
         // Create the link.
-        $settings_link = '<a href="'.$this->settingsURL.'" title="'.__('iko.travel settings',$this->namespace).'">' . __( 'Settings',$this->namespace ) . '</a>';
+        $settings_link = '<a href="'.$this->settingsURL.'" title="'.esc_html__('iko.travel settings',$this->namespace).'">' . esc_html__( 'Settings',$this->namespace ) . '</a>';
         // Adds the link to the end of the array.
         array_push(
             $links,
@@ -96,14 +96,14 @@ class ikoTravel {
         if (is_admin() && !get_option($this->clientIdKey, false)) {
             if ( current_user_can( 'manage_options' ) ) { // let's only show this to admin users
                 echo '<div class="notice notice-info">
-                <img src="'.$this->pluginURL.'img/logo.png" alt="'.__('iko.travel logo',$this->namespace).'" width="100" style="margin-top: 10px;"><p><b>'.
-                __('Congratulations', $this->namespace).
+                <img src="'.$this->pluginURL.'img/logo.png" alt="'.esc_html__('iko.travel logo',$this->namespace).'" width="100" style="margin-top: 10px;"><p><b>'.
+                esc_html__('Congratulations', $this->namespace).
                 '</b> '.
-                __('on installing the official iko.travel WordPress plugin.',$this->namespace).
-                ' <a href="'.$this->settingsURL.'" title="'.__('iko.travel settings',$this->namespace).'">'.
-                __('Click here',$this->namespace).
+                esc_html__('on installing the official iko.travel WordPress plugin.',$this->namespace).
+                ' <a href="'.$this->settingsURL.'" title="'.esc_html__('iko.travel settings',$this->namespace).'">'.
+                esc_html__('Click here',$this->namespace).
                 '</a> '.
-                __('to add your iko.travel Client-ID and your Client-Secret',$this->namespace).
+                esc_html__('to add your iko.travel Client-ID and your Client-Secret',$this->namespace).
                 '.</p>
                 </div>';
             }
@@ -120,9 +120,9 @@ class ikoTravel {
             }
         }
         $wp_customize->add_section( $this->section, array(
-            'title'      => __( 'iko.travel Settings', $this->namespace ),
+            'title'      => esc_html__( 'iko.travel Settings', $this->namespace ),
             'priority'   => 30,
-            'description' => '<p><img src="'.$this->pluginURL.'img/logo.png" alt="'.__('iko.travel logo',$this->namespace).'" width="100"></p>'.__('This plugin connects your site to your iko.travel account. Once you entered your Client-ID, you can start using the iko.travel elements either as a Gutenberg block or via the shortcodes below', $this->namespace ).'<br>'.implode('<br>',$shortcodes)
+            'description' => '<p><img src="'.$this->pluginURL.'img/logo.png" alt="'.__('iko.travel logo',$this->namespace).'" width="100"></p>'.esc_html__('This plugin connects your site to your iko.travel account. Once you entered your Client-ID, you can start using the iko.travel elements either as a Gutenberg block or via the shortcodes below', $this->namespace ).'<br>'.implode('<br>',$shortcodes)
         ) );
 
 
@@ -130,8 +130,8 @@ class ikoTravel {
             'type' => 'option'
         ));
         $wp_customize->add_control( $this->clientIdKey, array(
-            'label'      => __( 'Client-ID', $this->namespace ),
-            'description' => __('You can find your iko.travel Client-ID in your iko.travel account. After entering your Client-ID start using iko.travel by adding the iko.Travel Gutenberg blocks to your website.', $this->namespace),
+            'label'      => esc_html__( 'Client-ID', $this->namespace ),
+            'description' => esc_html__('You can find your iko.travel Client-ID in your iko.travel account. After entering your Client-ID start using iko.travel by adding the iko.Travel Gutenberg blocks to your website.', $this->namespace),
             'section'    => $this->section,
         ) );
 
@@ -139,8 +139,8 @@ class ikoTravel {
             'type' => 'option'
         ));
         $wp_customize->add_control( $this->clientSecretKey, array(
-            'label'      => __( 'Client-Secret', $this->namespace ),
-            'description' => __('You can find your iko.travel Client-Secret in your iko.travel account. After entering your Client-Secret and your Client-ID start using iko.travel by adding the iko.Travel Gutenberg blocks to your website.', $this->namespace),
+            'label'      => esc_html__( 'Client-Secret', $this->namespace ),
+            'description' => esc_html__('You can find your iko.travel Client-Secret in your iko.travel account. After entering your Client-Secret and your Client-ID start using iko.travel by adding the iko.Travel Gutenberg blocks to your website.', $this->namespace),
             'section'    => $this->section,
         ) );
         
@@ -150,13 +150,13 @@ class ikoTravel {
         ));
         $wp_customize->add_control( $this->environment, array(
             'type' => 'select',
-            'label'      => __( 'Environment', $this->namespace ),
-            'description' => __('Switch between environments. Use with caution and only if instructed by the iko.travel team.', $this->namespace),
+            'label'      => esc_html__( 'Environment', $this->namespace ),
+            'description' => esc_html__('Switch between environments. Use with caution and only if instructed by the iko.travel team.', $this->namespace),
             'section'    => $this->section,
             'choices' => array(
-                'production' => __( 'Live' ),
-                'staging' => __( 'Staging' ),
-                'development' => __( 'Development' )
+                'production' => esc_html__( 'Live' ),
+                'staging' => esc_html__( 'Staging' ),
+                'development' => esc_html__( 'Development' )
             ),
         ) );
         
@@ -175,7 +175,7 @@ class ikoTravel {
                 array(
                     array(
                         'slug' => $this->namespace.'-blocks',
-                        'title' => __( 'iko.travel Blocks', $this->namespace ),
+                        'title' => esc_html__( 'iko.travel Blocks', $this->namespace ),
                     ),
                 )
             );
@@ -235,9 +235,9 @@ function ikoRenderSilentRefresh( $atts ){
     $do = get_query_var( 'ikosilent' );
     if ( !empty($do) ) {
         header('Content-type: text/html');
-        $dir = plugin_dir_path( __FILE__ );
-        if (file_exists($dir.'includes/silent-refresh.html')) {
-            echo file_get_contents($dir.'includes/silent-refresh.html');
+        //$dir = plugin_dir_path( __FILE__ );
+        if (file_exists('includes/silent-refresh.html')) {
+            echo file_get_contents('includes/silent-refresh.html');
         }
         die();
     }

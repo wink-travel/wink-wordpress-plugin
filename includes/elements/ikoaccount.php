@@ -5,7 +5,7 @@ class ikoAccount extends ikoTravelElements {
     function __construct() {
         parent::__construct();
         $this->blockCode = 'ikoaccount';
-        $this->blockName = __( "iko Account", $this->namespace );
+        $this->blockName = esc_html__( "iko Account", $this->namespace );
         add_action('init', array( $this,'gutenbergBlockRegistration' ) ); // Adding Gutenberg Block
         add_shortcode( $this->blockCode, array( $this,'blockHandler') );
         add_filter('ikoShortcodes',array( $this, 'shortcodeData') );
