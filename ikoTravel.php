@@ -2,7 +2,7 @@
 /**
  * Plugin Name: iko.travel Affiliate
  * Description: This plugin integrates your iko.travel affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
- * Version:     1.2.2
+ * Version:     1.2.3
  * Author:      iko.travel
  * Author URI:  https://iko.travel/
  * License:     GPL-3.0
@@ -236,8 +236,8 @@ function ikoRenderSilentRefresh( $atts ){
     if ( !empty($do) ) {
         header('Content-type: text/html');
         //$dir = plugin_dir_path( __FILE__ );
-        if (file_exists('includes/silent-refresh.html')) {
-            echo file_get_contents('includes/silent-refresh.html');
+        if (file_exists(dirname(realpath(__FILE__)).'/includes/silent-refresh.html')) {
+            echo file_get_contents(dirname(realpath(__FILE__)).'/includes/silent-refresh.html');
         }
         die();
     }
