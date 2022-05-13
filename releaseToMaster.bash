@@ -11,7 +11,7 @@ echo "Releasing new version of iko-travel-affiliate WordPress plugin with git fl
 echo "Enter version number. E.g. 1.2.3";
 
 read versionNumber
-versionNumber = "v" + $versionNumber;
+versionNumber="v${versionNumber}";
 
 echo "Committing version changes for $versionNumber"
 git commit -a -m "build: bookmark: merge to master
