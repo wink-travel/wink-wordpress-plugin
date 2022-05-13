@@ -3,8 +3,8 @@ Contributors: MB-Jan, ikotravel
 Tags: travel, iko, booking
 Requires at least: 4.7
 Tested up to: 6.0
-Stable tag: 1.2.4
-Version: 1.2.4
+Stable tag: 1.2.5
+Version: 1.2.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -48,6 +48,9 @@ We believe yes. If you notice any issues, please contact us.
 [https://sell.iko.travel](https://sell.iko.travel "Your favorite travel inventory software")
 
 == Changelog ==
+
+= 1.2.5 =
+* Build related.
 
 = 1.2.4 =
 * Removed references to old scripts.js.
