@@ -2,7 +2,7 @@
 /**
  * Plugin Name: iko.travel Affiliate
  * Description: This plugin integrates your iko.travel affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
- * Version:     1.2.3
+ * Version:     1.2.4
  * Author:      iko.travel
  * Author URI:  https://iko.travel/
  * License:     GPL-3.0
@@ -73,10 +73,8 @@ class ikoTravel {
     function jsHelper($url) {
         $env = ikoCore::environmentURL('js', $this->environmentVal);
         $optimize = array(
-            $env.'/runtime.js?ver='.$this->version,
-            $env.'/polyfills.js?ver='.$this->version,
-            $env.'/scripts.js?ver='.$this->version,
-            $env.'/main.js?ver='.$this->version);
+            $env.'/elements.js?ver='.$this->version
+        );
         if ( in_array( $url, $optimize ) ) { // this will be optimized
             return "$url' defer data-cfasync='true";
         }
@@ -86,10 +84,7 @@ class ikoTravel {
         if (!empty(get_option($this->clientIdKey, false))) {
             $env = ikoCore::environmentURL('js', $this->environmentVal);
             wp_enqueue_style('ikoTravel',$env.'/styles.css',array(),$this->version);
-            wp_enqueue_script('ikoTravel-Runtime',$env.'/runtime.js',array(),$this->version,true);
-            wp_enqueue_script('ikoTravel-Polyfills',$env.'/polyfills.js',array(),$this->version,true);
-            wp_enqueue_script('ikoTravel-Scripts',$env.'/scripts.js',array(),$this->version,true);
-            wp_enqueue_script('ikoTravel-Main',$env.'/main.js',array(),$this->version,true);
+            wp_enqueue_script('ikoTravel-Elements',$env.'/elements.js',array(),$this->version,true);
         }
     }
     function adminNotice() {
