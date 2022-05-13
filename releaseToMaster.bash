@@ -8,11 +8,12 @@ echo "Disabling git messages for a release"
 export GIT_MERGE_AUTOEDIT=no
 
 echo "Releasing new version of iko-travel-affiliate WordPress plugin with git flow..."
-echo "Enter version number";
+echo "Enter version number. E.g. 1.2.3";
 
 read versionNumber
+versionNumber = "v" + $versionNumber;
 
-echo "Committing version changes"
+echo "Committing version changes for $versionNumber"
 git commit -a -m "build: bookmark: merge to master
 
 Version bump to $versionNumber registered
