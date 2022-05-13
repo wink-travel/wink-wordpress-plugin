@@ -3,7 +3,7 @@
 ### Project information ###
 
 * Summary: Integrates WordPress with your iko.travel seller account at [https://sell.iko.travel][https://sell.iko.travel]
-* Version: 1.2.5
+* Version: 1.2.6
 
 ### Setup ###
 Once you've created an account with iko.travel, you can install this WordPress plugin on your site. Once installed, the plugin will ask you for your clientId and secretKey to connect with your account on iko.travel. 
@@ -31,6 +31,8 @@ There are 2 ways to use our components:
 [https://sell.iko.travel]: https://sell.iko.travel
 
 ### Changelog ###
+###### 1.2.6 ######
+Build related
 ###### 1.2.5 ######
 Build related
 ###### 1.2.4 ######
