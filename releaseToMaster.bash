@@ -51,4 +51,4 @@ git push
 echo "Enabling git messages for a release again"
 export GIT_MERGE_AUTOEDIT=yes
 
-echo "iko-travel-affiliate WordPress plugin v$versionNumber has been successfully released"
+echo "iko-travel-affiliate WordPress plugin $versionNumber has been successfully released"
