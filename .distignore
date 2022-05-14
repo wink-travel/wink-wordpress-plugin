@@ -11,6 +11,7 @@ Release*/
 *.app/
 *.pyc
 .svn/
+.idea/
 
 ###################################
 # IDE specific
@@ -137,6 +138,7 @@ build
 /.git
 /.github
 /node_modules
+releaseToMaster.bash
 .distignore
 .gitignore
 ###################################
