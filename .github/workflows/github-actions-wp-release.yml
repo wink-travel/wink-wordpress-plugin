@@ -14,10 +14,13 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      
       - name: Check out repository code
-      - uses: actions/checkout@master
+        uses: actions/checkout@master
+      
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to release your code to WordPress."
+      
       - name: WordPress Plugin Deploy
         uses: nk-o/action-wordpress-plugin-deploy@master
         env:
@@ -25,4 +28,5 @@ jobs:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SOURCE_DIR: /
           SLUG: iko-travel-affiliate
+      
       - run: echo "🍏 This job's status is ${{ job.status }}."
