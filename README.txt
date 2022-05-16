@@ -3,7 +3,7 @@ Contributors: MB-Jan, ikotravel
 Tags: travel, iko, booking
 Requires at least: 4.7
 Tested up to: 6.0
-Stable tag: 1.2.15
+Stable tag: 1.2.16
 Version: 1.2.15
 Requires PHP: 7.4
 License: GPLv2 or later
@@ -48,6 +48,9 @@ If you notice any issues, please contact us.
 [https://sell.iko.travel](https://sell.iko.travel "Your favorite travel inventory software")
 
 == Changelog ==
+
+= 1.2.16 =
+* Disabled sslverify in development environment.
 
 = 1.2.15 =
 * Build related.
