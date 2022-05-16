@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [ersionNumber] - 2022-05-16
 
+### Build
+
+- :construction_worker: bumped version number in main php file
+
+## [ersionNumber] - 2022-05-16
+
 ### Documentation
 
 - :memo: removed extra 'v'
