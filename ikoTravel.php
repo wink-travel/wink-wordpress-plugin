@@ -194,7 +194,7 @@ class ikoCore {
             ),
             'json' => array(
                 'staging' => 'https://staging-iam.iko.travel',
-                'development' => 'https://staging-iam.iko.travel',
+                'development' => 'https://dev.traveliko.com:9000',
                 'production' => 'https://iam.iko.travel'
             ),
             'api' => array(
