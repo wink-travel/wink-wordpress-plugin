@@ -11,6 +11,9 @@ echo "Releasing new version of iko-travel-affiliate WordPress plugin with git fl
 echo "Enter version number. E.g. 1.2.3";
 
 read versionNumber
+
+git cliff --unreleased --tag versionNumber --sort newest --prepend CHANGELOG.md
+
 versionNumber="v${versionNumber}";
 
 echo "Committing version changes for $versionNumber"
