@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.11] - 2022-05-16
+
+### Bug Fixes
+
+- :bug: fixed local development
+
+### Build
+
+- Bookmark: merge to master
+- :construction_worker: bumped version number correctly
+
 ## [1.2.10] - 2022-05-16
 
 ### Build
