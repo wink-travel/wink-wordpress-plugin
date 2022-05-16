@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.10] - 2022-05-16
+
+### Build
+
+- :construction_worker: bumped version number correctly
+
 ## [ersionNumber] - 2022-05-16
 
 ### Build

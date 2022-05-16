@@ -12,7 +12,7 @@ echo "Enter version number. E.g. 1.2.3";
 
 read versionNumber
 
-git cliff --unreleased --tag versionNumber --sort newest --prepend CHANGELOG.md
+git cliff --unreleased --tag $versionNumber --sort newest --prepend CHANGELOG.md
 
 versionNumber="v${versionNumber}";
 
