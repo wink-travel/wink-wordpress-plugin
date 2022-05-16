@@ -49,6 +49,15 @@ If you notice any issues, please contact us.
 
 == Changelog ==
 
+= 1.2.13 =
+* Build related.
+
+= 1.2.12 =
+* Build related.
+
+= 1.2.11 =
+* Build related.
+
 = 1.2.10 =
 * Build related.
 
