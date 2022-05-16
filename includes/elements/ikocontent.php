@@ -148,7 +148,7 @@ class ikoContent extends ikoTravelElements {
             );
             if ($this->environmentVal == 'development') {
                 error_log('iko.travel - Development environment. Ignoring self-signed certificates');
-                $wpHTTPPostArgs['sslverify'] = false; 
+                $postArgs['sslverify'] = false; 
             }
             $url = $env . '/oauth2/token';
             $response = wp_remote_post($url,$postArgs);
