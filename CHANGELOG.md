@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.9] - 2022-05-16
+
+### Build
+
+- Bookmark: merge to master
+- :construction_worker: bumped version number in main php file
+
 ## [1.2.13] - 2022-05-16
 
 ### Bug Fixes
