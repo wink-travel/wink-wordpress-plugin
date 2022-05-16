@@ -2,7 +2,7 @@
 /**
  * Plugin Name: iko.travel Affiliate
  * Description: This plugin integrates your iko.travel affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
- * Version:     1.2.14
+ * Version:     1.2.15
  * Author:      iko.travel
  * Author URI:  https://iko.travel/
  * License:     GPL-3.0
