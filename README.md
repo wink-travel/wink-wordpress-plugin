@@ -3,7 +3,7 @@
 ### Project information ###
 
 * Summary: Integrates WordPress with your iko.travel seller account at [https://sell.iko.travel][https://sell.iko.travel]
-* Version: 1.2.7
+* Version: 1.2.8
 
 ### Setup ###
 Once you've created an account with iko.travel, you can install this WordPress plugin on your site. Once installed, the plugin will ask you for your clientId and secretKey to connect with your account on iko.travel. 
@@ -29,28 +29,3 @@ There are 2 ways to use our components:
 * Support: bjorn@iko.travel
 
 [https://sell.iko.travel]: https://sell.iko.travel
-
-### Changelog ###
-###### 1.2.7 ######
-Build related
-###### 1.2.6 ######
-Build related
-###### 1.2.5 ######
-Build related
-###### 1.2.4 ######
-Removed references to old scripts.js.
-###### 1.2.3 ######
-Minor fix for silent-refresh endpoint.
-###### 1.2.2 ######
-Added further security features.
-###### 1.2.1 ######
-Updates to add compliance with WordPress codex.
-###### 1.1.2 ######
-silent-refresh.html Support
-###### 1.1.1 ######
-Added dynamic version to static resources
-###### 1.1.0 ######
-Accommodated API changes.
-###### 1.0.0 ######
-
-Initial Launch
