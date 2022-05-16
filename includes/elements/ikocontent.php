@@ -144,7 +144,7 @@ class ikoContent extends ikoTravelElements {
                 'redirection' => 10,
                 'httpversion' => '1.0',
                 'blocking'    => true,
-                'sslverify' => false,
+                'sslverify' => true,
             );
             if ($this->environmentVal == 'development') {
                 error_log('iko.travel - Development environment. Ignoring self-signed certificates');
@@ -207,6 +207,10 @@ class ikoContent extends ikoTravelElements {
                     'Authorization' => 'Bearer '.$bearerToken
                 )
             );
+            if ($this->environmentVal == 'development') {
+                error_log('iko.travel - Development environment. Ignoring self-signed certificates');
+                $getArgs['sslverify'] = false; 
+            }
             $response = wp_remote_get($url,$getArgs);
             if ( is_wp_error( $response ) ) {
                 // print out any error

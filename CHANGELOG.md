@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.16] - 2022-05-16
+
+### Bug Fixes
+
+- :bug: fixed local development
+
+### Styling
+
+- :lipstick: added square brand icon
+
+### Build
+
+- :construction_worker: bumped version
+- :construction_worker: disabled sslverify in dev env for layout call
+- Bookmark: merge to master
+- :construction_worker: bumped version numbers
+- :construction_worker: changed git cliff tag name to fit the actual tag
+- Bookmark: merge to master
+- :construction_worker: bumped version number everywhere
+- Bookmark: merge to master
+- :construction_worker: bumped correct version number in ikotravel.php
+- Bookmark: merge to master
+- Bookmark: merge to master
+- Bookmark: merge to master
+- :construction_worker: bumped version number correctly
+
 ## [1.2.15] - 2022-05-16
 
 ### Bug Fixes
