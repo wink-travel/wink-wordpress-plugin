@@ -12,9 +12,9 @@ echo "Enter version number. E.g. 1.2.3";
 
 read versionNumber
 
-git cliff --latest --tag $versionNumber --sort newest --prepend CHANGELOG.md
-
 versionNumber="v${versionNumber}";
+
+git cliff --unreleased --tag $versionNumber --sort newest --prepend CHANGELOG.md
 
 echo "Committing version changes for $versionNumber"
 git commit -a -m "build: bookmark: merge to master
