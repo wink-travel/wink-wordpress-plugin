@@ -2,7 +2,7 @@
 /**
  * Plugin Name: iko.travel Affiliate
  * Description: This plugin integrates your iko.travel affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
- * Version:     1.2.16
+ * Version:     1.2.17
  * Author:      iko.travel
  * Author URI:  https://iko.travel/
  * License:     GPL-3.0
@@ -31,7 +31,7 @@ class ikoTravel {
         $this->clientIdKey = 'ikoTravelClientId';
         $this->clientSecretKey = 'ikoTravelSecret';
         $this->environment = 'ikoEnvironment';
-        $this->environmentVal = get_option($this->environment, false);
+        $this->environmentVal = get_option($this->environment, 'production');
         $this->pluginURL = trailingslashit( plugin_dir_url( __FILE__ ) );
         $this->settingsURL = admin_url( '/customize.php?autofocus[section]='.$this->section);
         add_action( 'customize_register', array( $this,'addSettings' ) ); // adding plugin settings to WP Customizer
@@ -102,6 +102,18 @@ class ikoTravel {
                 '.</p>
                 </div>';
             }
+        } else if (is_admin() && empty(get_option('permalink_structure'))) {
+            echo '<div class="notice notice-info">
+            <img src="'.$this->pluginURL.'img/logo.png" alt="'.esc_html__('iko.travel logo',$this->namespace).'" width="100" style="margin-top: 10px;"><p><b>'.
+            esc_html__('Attention!', $this->namespace).
+            '</b> '.
+            esc_html__('the iko.travel plugin requires permalinks. Please disable plain permalinks',$this->namespace).
+            ' <a href="'.admin_url('options-permalink.php').'" title="'.esc_html__('Edit Permalinks',$this->namespace).'">'.
+            esc_html__('here',$this->namespace).
+            '</a> '.
+            esc_html__('and start using the plugin.',$this->namespace).
+            '.</p>
+            </div>';
         }
     }
     function addSettings( $wp_customize ) {
@@ -240,6 +252,7 @@ function ikoRenderSilentRefresh( $atts ){
 add_action( 'parse_query', 'ikoRenderSilentRefresh' );
 
 register_activation_hook( __FILE__, 'ikoActivationRewrite' );
+add_action( 'init' , 'ikoAddRewriteRules', 10, 2 );
 
 function ikoActivationRewrite() {
     ikoAddRewriteRules();
