@@ -13,7 +13,7 @@ class ikoTravelElements {
         // $this->namespace = 'iko-travel';
         $this->pluginURL = trailingslashit( plugin_dir_url( __FILE__ ) );
         $this->imgURL = trailingslashit( dirname( plugin_dir_url( __FILE__ ) ) ) . 'img/';
-        $this->environmentVal = get_option('ikoEnvironment', false);
+        $this->environmentVal = get_option('ikoEnvironment', 'production');
     }
 
     function coreFunction() {

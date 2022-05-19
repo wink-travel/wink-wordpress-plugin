@@ -65,7 +65,7 @@ class ikoContent extends ikoTravelElements {
             $atts['layoutId'] = $atts['layoutid']; // WPB Fallback
         }
         
-        if (!empty($atts['layoutid'])) {
+        if (!empty($atts['layoutId'])) {
             $config['id'] = esc_html($atts['layoutId']);
             if (empty($atts['layout'])) {
                 $ikoContentData = $this->getIkoBearerToken();
