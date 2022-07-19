@@ -1,42 +1,42 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if (!array_key_exists('ikoTravelLoaderAlreadyEnqueued',$GLOBALS)) {
-    $GLOBALS['ikoTravelLoaderAlreadyEnqueued'] = false;
+if (!array_key_exists('winkLoaderAlreadyEnqueued',$GLOBALS)) {
+    $GLOBALS['winkLoaderAlreadyEnqueued'] = false;
 }
 
-class ikoTravelElements {
-    protected $namespace = 'iko-travel';
-    protected $clientIdKey = 'ikoTravelClientId';
-    protected $clientSecretKey = 'ikoTravelSecret';
+class winkElements {
+    protected $namespace = 'wink';
+    protected $clientIdKey = 'winkClientId';
+    protected $clientSecretKey = 'winkSecret';
     function __construct() {
-        // $this->namespace = 'iko-travel';
+        // $this->namespace = 'wink';
         $this->pluginURL = trailingslashit( plugin_dir_url( __FILE__ ) );
         $this->imgURL = trailingslashit( dirname( plugin_dir_url( __FILE__ ) ) ) . 'img/';
-        $this->environmentVal = get_option('ikoEnvironment', 'production');
+        $this->environmentVal = get_option('winkEnvironment', 'production');
     }
 
     function coreFunction() {
         add_action('wp_footer',array($this,'coreComponent'));
     }
     function coreComponent() {
-        if ($GLOBALS['ikoTravelLoaderAlreadyEnqueued'] == false) {
+        if ($GLOBALS['winkLoaderAlreadyEnqueued'] == false) {
             $html = '';
             $clientId = get_option($this->clientIdKey, false);
             
-            echo'<iko-app-loader config=\'{"clientId":"'.esc_html($clientId).'"}\'></iko-app-loader>';
-            $GLOBALS['ikoTravelLoaderAlreadyEnqueued'] = true;
+            echo'<wink-app-loader config=\'{"clientId":"'.esc_html($clientId).'"}\'></wink-app-loader>';
+            $GLOBALS['winkLoaderAlreadyEnqueued'] = true;
         }
-        return $GLOBALS['ikoTravelLoaderAlreadyEnqueued'];
+        return $GLOBALS['winkLoaderAlreadyEnqueued'];
     }
 }
 
-require_once('elements/ikolookup.php'); // Lookup element
-require_once('elements/ikoitinerary.php'); // Itinerary button element
-require_once('elements/ikoitineraryform.php'); // Itinerary form element
-require_once('elements/ikosearch.php'); // Search button element
-require_once('elements/ikoaccount.php'); // Account button element
-require_once('elements/ikocontent.php'); // Content element
+require_once('elements/winklookup.php'); // Lookup element
+require_once('elements/winkitinerary.php'); // Itinerary button element
+require_once('elements/winkitineraryform.php'); // Itinerary form element
+require_once('elements/winksearch.php'); // Search button element
+require_once('elements/winkaccount.php'); // Account button element
+require_once('elements/winkcontent.php'); // Content element
 
 require_once('elements/wpbakery/vcElements.php'); // WPBakery Page Builder
 require_once('elements/elementor/elementorWidgets.php'); // Elementor

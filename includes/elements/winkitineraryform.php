@@ -1,14 +1,14 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class ikoLookup extends ikoTravelElements {
+class winkItineraryForm extends winkElements {
     function __construct() {
         parent::__construct();
-        $this->blockCode = 'ikolookup';
-        $this->blockName = esc_html__( "iko Lookup", $this->namespace );
+        $this->blockCode = 'winkitineraryform';
+        $this->blockName = esc_html__( "wink Itinerary Form", $this->namespace );
         add_action('init', array( $this,'gutenbergBlockRegistration' ) ); // Adding Gutenberg Block
         add_shortcode( $this->blockCode, array( $this,'blockHandler') );
-        add_filter('ikoShortcodes',array( $this, 'shortcodeData') );
+        add_filter('winkShortcodes',array( $this, 'shortcodeData') );
     }
     function shortcodeData($shortcodes) {
         $shortcodes[] = array(
@@ -20,11 +20,11 @@ class ikoLookup extends ikoTravelElements {
     }
     function blockHandler($atts) {
         $this->coreFunction();
-        return $this->ikoTravelElement();
+        return $this->winkElement();
     }
-    function ikoTravelElement() {
+    function winkElement() {
         ob_start();
-        ?><iko-lookup></iko-lookup><?php
+        ?><wink-itinerary-form></wink-itinerary-form><?php
         $content = ob_get_contents();
         ob_end_clean();
         $isAdmin = false;
@@ -49,7 +49,7 @@ class ikoLookup extends ikoTravelElements {
         $dir = dirname(__FILE__);
 
         $gutenbergJS = $this->blockCode.'.js';
-        wp_register_script('ikoTravelBlockRenderer_'.$this->blockCode, $this->pluginURL . 'elements/js/'.$gutenbergJS,
+        wp_register_script('winkBlockRenderer_'.$this->blockCode, $this->pluginURL . 'elements/js/'.$gutenbergJS,
             array(
                 'wp-blocks',
                 'wp-i18n',
@@ -66,10 +66,10 @@ class ikoLookup extends ikoTravelElements {
             'mode'      => $this->environmentVal
         );
 
-        wp_localize_script( 'ikoTravelBlockRenderer_'.$this->blockCode, 'ikoTravelData', $jsData );
+        wp_localize_script( 'winkBlockRenderer_'.$this->blockCode, 'winkData', $jsData );
         
-        register_block_type('ikotravel-blocks/'.$this->blockCode, array(
-            'editor_script' => 'ikoTravelBlockRenderer_'.$this->blockCode,
+        register_block_type('wink-blocks/'.$this->blockCode, array(
+            'editor_script' => 'winkBlockRenderer_'.$this->blockCode,
             'render_callback' => array($this,'blockHandler'),
             'attributes' => [
                 // 'configurationId' => [
@@ -82,4 +82,4 @@ class ikoLookup extends ikoTravelElements {
     }
 }
 
-$ikoLookup = new ikoLookup();
+$winkItineraryForm = new winkItineraryForm();

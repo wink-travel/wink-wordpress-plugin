@@ -1,13 +1,13 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class elementorIkoContent extends \Elementor\Widget_Base {
-	protected $namespace = 'iko-travel';
+class elementorWinkContent extends \Elementor\Widget_Base {
+	protected $namespace = 'wink';
 	public function get_name() {
-		return 'ikocontent';
+		return 'winkcontent';
 	}
 	public function get_title() {
-		return __( 'iko Content', $this->namespace );
+		return __( 'wink Content', $this->namespace );
 	}
 	public function get_icon() {
 		return 'eicon-external-link-square';
@@ -20,15 +20,15 @@ class elementorIkoContent extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			[
-				'label' => esc_html__( 'iko Options', $this->namespace )
+				'label' => esc_html__( 'wink Options', $this->namespace )
 			]
 		);
 		$shortcodes = array();
-		$shortcodes = apply_filters( 'ikoShortcodes', $shortcodes);
-		if (!empty($shortcodes['ikocontent'])) {
+		$shortcodes = apply_filters( 'winkShortcodes', $shortcodes);
+		if (!empty($shortcodes['winkcontent'])) {
 			$options = array();
 			
-			foreach($shortcodes['ikocontent']['params'][0]['value'] as $optionKey => $optionValue) {
+			foreach($shortcodes['winkcontent']['params'][0]['value'] as $optionKey => $optionValue) {
 				$options[$optionValue] = $optionKey;
 			}
 			$this->add_control(
@@ -48,7 +48,7 @@ class elementorIkoContent extends \Elementor\Widget_Base {
 	}
 	protected function render() {
 		$settings = $this->get_settings_for_display();		
-		echo do_shortcode('[ikocontent layoutid="'.esc_html($settings['layoutid']).'"]');
+		echo do_shortcode('[winkcontent layoutid="'.esc_html($settings['layoutid']).'"]');
 		
 	}
 }

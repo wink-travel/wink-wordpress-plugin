@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class elementorWidgets extends ikoTravelElements {
+class winkElementorWidgets extends winkElements {
     function __construct() {
         add_action('init', array($this, 'checkIfEnabled'));
 
@@ -10,7 +10,7 @@ class elementorWidgets extends ikoTravelElements {
     public function register_controls() {
         require_once('elementorControls.php');
 		$controls_manager = \Elementor\Plugin::$instance->controls_manager;
-		$controls_manager->register_control( 'ikoDefault', new ikoDefault() );
+		$controls_manager->register_control( 'winkDefault', new winkDefault() );
 
 	}
     function checkIfEnabled() {
@@ -19,22 +19,22 @@ class elementorWidgets extends ikoTravelElements {
             add_action( 'elementor/widgets/widgets_registered', function() {
 
 
-                require_once('ikoaccount.php');
-                require_once('ikoitinerary.php');
-                require_once('ikolookup.php');
-                require_once('ikosearch.php');   
-                require_once('ikocontent.php');
-                require_once('ikoitineraryform.php');          
+                require_once('winkaccount.php');
+                require_once('winkitinerary.php');
+                require_once('winklookup.php');
+                require_once('winksearch.php');   
+                require_once('winkcontent.php');
+                require_once('winkitineraryform.php');          
                 // Let Elementor know about our widget
-                Elementor\Plugin::instance()->widgets_manager->register_widget_type( new elementorIkoAccount() );
-                Elementor\Plugin::instance()->widgets_manager->register_widget_type( new elementorIkoitinerary() );
-                Elementor\Plugin::instance()->widgets_manager->register_widget_type( new elementorIkoLookup() );
-                Elementor\Plugin::instance()->widgets_manager->register_widget_type( new elementorIkoSearch() );
-                Elementor\Plugin::instance()->widgets_manager->register_widget_type( new elementorIkoContent() );
+                Elementor\Plugin::instance()->widgets_manager->register_widget_type( new elementorWinkAccount() );
+                Elementor\Plugin::instance()->widgets_manager->register_widget_type( new elementorWinkitinerary() );
+                Elementor\Plugin::instance()->widgets_manager->register_widget_type( new elementorWinkLookup() );
+                Elementor\Plugin::instance()->widgets_manager->register_widget_type( new elementorWinkSearch() );
+                Elementor\Plugin::instance()->widgets_manager->register_widget_type( new elementorWinkContent() );
 
             });
         }
     }
 }
 
-$elementorWidgets = new elementorWidgets();
+$winkElementorWidgets = new winkElementorWidgets();
