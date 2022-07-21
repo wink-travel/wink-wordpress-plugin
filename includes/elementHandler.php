@@ -24,7 +24,7 @@ class winkElements {
             $html = '';
             $clientId = get_option($this->clientIdKey, false);
             
-            echo'<wink-app-loader config=\'{"clientId":"'.esc_html($clientId).'"}\'></wink-app-loader>';
+            echo'<iko-app-loader config=\'{"clientId":"'.esc_html($clientId).'"}\'></iko-app-loader>';
             $GLOBALS['winkLoaderAlreadyEnqueued'] = true;
         }
         return $GLOBALS['winkLoaderAlreadyEnqueued'];

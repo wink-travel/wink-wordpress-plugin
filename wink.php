@@ -200,19 +200,19 @@ class winkCore {
     //    error_log('WINK - environment: '.$environment);
         $environments = array(
             'js' => array(
-                'staging' => 'https://staging-elements.WINK',
-                'development' => 'https://dev.travelwink.com:8011',
-                'production' => 'https://elements.WINK'
+                'staging' => 'https://staging-elements.wink.travel',
+                'development' => 'https://dev.traveliko.com:8011',
+                'production' => 'https://elements.wink.travel'
             ),
             'json' => array(
-                'staging' => 'https://staging-iam.WINK',
-                'development' => 'https://dev.travelwink.com:9000',
-                'production' => 'https://iam.WINK'
+                'staging' => 'https://staging-iam.wink.travel',
+                'development' => 'https://dev.traveliko.com:9000',
+                'production' => 'https://iam.wink.travel'
             ),
             'api' => array(
-                'staging' => 'https://staging-api.WINK',
-                'development' => 'https://dev.travelwink.com:8443',
-                'production' => 'https://api.WINK'
+                'staging' => 'https://staging-api.wink.travel',
+                'development' => 'https://dev.traveliko.com:8443',
+                'production' => 'https://api.wink.travel'
             )
         );
         return $environments[$target][$environment];

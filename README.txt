@@ -2,9 +2,9 @@
 Contributors: MB-Jan, wink
 Tags: travel, wink, booking
 Requires at least: 4.7
-Tested up to: 6.0
-Stable tag: 1.2.17
-Version: 1.2.17
+Tested up to: 6.0.1
+Stable tag: 1.2.18
+Version: 1.2.18
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -50,7 +50,7 @@ If you notice any issues, please contact us.
 == Changelog ==
 
 = 1.2.18 =
-* Rebrand to Wink.
+* Rebrand to WINK.
 
 = 1.2.17 =
 * Includes multiple fixes + notice if permalinks have not been set in WordPress.

@@ -24,7 +24,7 @@ class winkSearch extends winkElements {
     }
     function winkElement() {
         ob_start();
-        ?><wink-search-button></wink-search-button><?php
+        ?><iko-search-button></iko-search-button><?php
         $content = ob_get_contents();
         ob_end_clean();
         $isAdmin = false;
