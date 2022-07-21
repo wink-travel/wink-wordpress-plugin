@@ -7,7 +7,7 @@
 echo "Disabling git messages for a release"
 export GIT_MERGE_AUTOEDIT=no
 
-echo "Releasing new version of iko-travel-affiliate WordPress plugin with git flow..."
+echo "Releasing new version of Wink Affiliate WordPress plugin with git flow..."
 echo "Enter version number. E.g. 1.2.3";
 
 read versionNumber
@@ -54,4 +54,4 @@ git push
 echo "Enabling git messages for a release again"
 export GIT_MERGE_AUTOEDIT=yes
 
-echo "iko-travel-affiliate WordPress plugin $versionNumber has been successfully released"
+echo "Wink Affiliate WordPress plugin $versionNumber has been successfully released"
