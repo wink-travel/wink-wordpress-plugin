@@ -24,7 +24,7 @@ class winkAccount extends winkElements {
     }
     function winkElement() {
         ob_start();
-        ?><iko-account-button></iko-account-button><?php
+        ?><wink-account-button></wink-account-button><?php
         $content = ob_get_contents();
         ob_end_clean();
         $isAdmin = false;

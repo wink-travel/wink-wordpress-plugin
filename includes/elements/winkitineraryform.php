@@ -24,7 +24,7 @@ class winkItineraryForm extends winkElements {
     }
     function winkElement() {
         ob_start();
-        ?><iko-itinerary-form></iko-itinerary-form><?php
+        ?><wink-itinerary-form></wink-itinerary-form><?php
         $content = ob_get_contents();
         ob_end_clean();
         $isAdmin = false;

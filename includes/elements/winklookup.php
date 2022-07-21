@@ -24,7 +24,7 @@ class winkLookup extends winkElements {
     }
     function winkElement() {
         ob_start();
-        ?><iko-lookup></iko-lookup><?php
+        ?><wink-lookup></wink-lookup><?php
         $content = ob_get_contents();
         ob_end_clean();
         $isAdmin = false;

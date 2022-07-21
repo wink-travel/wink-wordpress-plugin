@@ -99,7 +99,7 @@ class winkContent extends winkElements {
         $jsonConfig = json_encode($config);
         ob_start();
         ?>
-        <iko-content-loader config='<?php echo trim($jsonConfig); ?>'></iko-content-loader>
+        <wink-content-loader config='<?php echo trim($jsonConfig); ?>'></wink-content-loader>
         <?php
         $content = ob_get_contents();
         ob_end_clean();
