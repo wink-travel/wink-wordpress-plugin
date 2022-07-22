@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class vcElements extends ikoTravelElements {
+class winkVCElements extends winkElements {
     function __construct() {
         add_action('init', array($this, 'checkIfEnabled'));
     }
@@ -14,7 +14,7 @@ class vcElements extends ikoTravelElements {
     }
     function initVC() {
         if (function_exists('vc_add_shortcode_param')) {
-            vc_add_shortcode_param( 'ikoText', array($this,'settingsText') );
+            vc_add_shortcode_param( 'winkText', array($this,'settingsText') );
         }
     }
     function settingsText( $settings, $value ) {
@@ -23,18 +23,18 @@ class vcElements extends ikoTravelElements {
     function initElements() {
         if (function_exists('vc_map')) {
             $shortcodes = array();
-            $shortcodes = apply_filters( 'ikoShortcodes', $shortcodes);
+            $shortcodes = apply_filters( 'winkShortcodes', $shortcodes);
             foreach ($shortcodes as $key => $shortcodeData) {
                 $params = $shortcodeData['params'];
                 if (empty($params)) {
                     $params = array(
                         array(
-                            "type" => "ikoText",
+                            "type" => "winkText",
                             "class" => "",
                             "param_name" => "placeholder",
                             "value" => 1,
                             "heading" => esc_html__( "This component does not require any configuration.", $this->namespace ),
-                            "description" => esc_html__( "Simply ensure that you have entered the correct Client-ID and Client-Secret ", $this->namespace ) . ' <a href="'.admin_url( '/customize.php?autofocus[section]=ikoTravel').'" title="'.esc_html__('iko.travel settings',$this->namespace).'" target="_blank">'.
+                            "description" => esc_html__( "Simply ensure that you have entered the correct Client-ID and Client-Secret ", $this->namespace ) . ' <a href="'.admin_url( '/customize.php?autofocus[section]=wink').'" title="'.esc_html__('WINK settings',$this->namespace).'" target="_blank">'.
                             esc_html__('here',$this->namespace).'</a> '
                         )
                     );
@@ -52,4 +52,4 @@ class vcElements extends ikoTravelElements {
     }
 }
 
-$vsElements = new vcElements();
+$winkVCElements = new winkVCElements();

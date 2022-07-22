@@ -1,13 +1,13 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class elementorIkoSearch extends \Elementor\Widget_Base {
-	protected $namespace = 'iko-travel';
+class elementorWinkItinerary extends \Elementor\Widget_Base {
+	protected $namespace = 'wink';
 	public function get_name() {
-		return 'ikosearch';
+		return 'winkitinerary';
 	}
 	public function get_title() {
-		return esc_html__( 'iko Search', $this->namespace );
+		return esc_html__( 'wink Itinerary Button', $this->namespace );
 	}
 	public function get_icon() {
 		return 'eicon-external-link-square';
@@ -20,7 +20,7 @@ class elementorIkoSearch extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			[
-				'label' => esc_html__( 'iko Options', $this->namespace )
+				'label' => esc_html__( 'wink Options', $this->namespace )
 			]
 		);
 
@@ -28,7 +28,7 @@ class elementorIkoSearch extends \Elementor\Widget_Base {
 			'hey',
 			[
 				'label' => '',
-				'type' => 'ikoDefault',
+				'type' => 'winkDefault',
 				'placeholder' => ''
 			]
 		);
@@ -39,7 +39,7 @@ class elementorIkoSearch extends \Elementor\Widget_Base {
 	protected function render() {
 
 		$settings = $this->get_settings_for_display();
-		echo do_shortcode('[ikosearch]');
+		echo do_shortcode('[winkitinerary]');
 		
 	}
 }

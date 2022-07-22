@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class fusionElements extends ikoTravelElements {
+class winkFusionElements extends winkElements {
     function __construct() {
         add_action('init', array($this, 'checkIfEnabled'));
     }
@@ -36,4 +36,4 @@ class fusionElements extends ikoTravelElements {
     }
 }
 
-$vsElements = new vcElements();
+$winkFusionElements = new winkFusionElements();
