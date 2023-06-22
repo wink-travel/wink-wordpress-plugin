@@ -3,8 +3,8 @@ Contributors: MB-Jan, wink
 Tags: travel, wink, booking
 Requires at least: 4.7
 Tested up to: 6.2.2
-Stable tag: 1.2.19
-Version: 1.2.19
+Stable tag: 1.2.20
+Version: 1.2.20
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -52,6 +52,9 @@ No. It is not yet compatible with PHP 8.x
 [https://sell.wink.travel](https://sell.wink.travel "Your favorite travel inventory software")
 
 == Changelog ==
+
+= 1.2.20 =
+* Updated release script.
 
 = 1.2.19 =
 * Updated readme and tested with latest version of WordPress.

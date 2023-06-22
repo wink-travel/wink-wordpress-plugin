@@ -35,6 +35,15 @@ git flow release finish -m $versionNumber $versionNumber
 echo "Checking out master..."
 git checkout master
 
+echo "Updating CHANGELOG.md..."
+npx git-changelog-command-line -of CHANGELOG.md
+git commit -a -m ":memo: doc: Updated CHANGELOG.md..."
+
+git push origin master:refs/heads/master
+
+echo "Creating GitHub release..."
+gh release create v$newVersion --notes "See CHANGELOG.md for release notes" --target master
+
 echo "Pulling ORIGIN master into local branch..."
 git pull origin
 
@@ -47,6 +56,9 @@ git checkout develop
 
 echo "Pulling ORIGIN develop into local branch..."
 git pull origin
+
+echo "Merging CHANGELOG.md from master into develop..."
+git merge master --no-edit -m ":twisted_rightwards_arrows: doc: merged CHANGELOG.md from master into develop branch" --strategy-option theirs
 
 echo "Pushing develop to ORIGIN..."
 git push
