@@ -49,7 +49,6 @@ git pull origin
 
 echo "Pushing master (+ tags) to ORIGIN..."
 git push
-git push --tags
 
 echo "Checking out local develop branch..."
 git checkout develop
