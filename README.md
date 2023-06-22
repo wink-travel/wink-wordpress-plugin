@@ -1,11 +1,11 @@
-# WINK Affiliate WordPress plugin documentation #
+# Wink Affiliate WordPress plugin documentation #
 
 ### Project information ###
 
-* Summary: Integrates WordPress with your WINK seller account at [https://sell.wink.travel](https://sell.wink.travel)
+* Summary: Integrates WordPress with your Wink affiliate account at [https://sell.wink.travel](https://sell.wink.travel)
 
 ### Setup ###
-Once you've created an account with WINK, you can install this WordPress plugin on your site. Once installed, the plugin will ask you for your clientId and secretKey to connect with your account on WINK. 
+Once you've created an account with Wink, you can install this WordPress plugin on your site. Once installed, the plugin will ask you for your clientId and secretKey to connect with your account on WINK. 
 
 Once you've entered your credentials, you can go to your Gutenberg editor and start embedding our web components into your site.
 
@@ -25,6 +25,6 @@ There are 2 ways to use our components:
 
 ### Support ###
 
-* Support: bjorn@wink.travel
+* Support: developer@wink.travel
 
 [https://sell.wink.travel]: https://sell.wink.travel
