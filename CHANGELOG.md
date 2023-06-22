@@ -1,3 +1,7 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
 # affiliate-wordpress-plugin changelog
 
 Changelog of affiliate-wordpress-plugin.
