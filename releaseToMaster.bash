@@ -42,7 +42,7 @@ git commit -a -m ":memo: doc: Updated CHANGELOG.md..."
 git push origin master:refs/heads/master
 
 echo "Creating GitHub release..."
-gh release create v$versionNumber --notes "See CHANGELOG.md for release notes" --target master
+gh release create $versionNumber --notes "See CHANGELOG.md for release notes" --target master
 
 echo "Pulling ORIGIN master into local branch..."
 git pull origin
