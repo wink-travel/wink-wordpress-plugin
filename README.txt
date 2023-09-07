@@ -1,15 +1,15 @@
-=== Wink Affiliate ===
+=== Wink Travel ===
 Contributors: MB-Jan, wink
-Tags: travel, wink, booking
+Tags: wink2travel, travel, wink, booking
 Requires at least: 4.7
-Tested up to: 6.2.2
-Stable tag: 1.2.23
-Version: 1.2.23
+Tested up to: 6.3.1
+Stable tag: 1.3.0
+Version: 1.3.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Integrates WordPress with your Wink affiliate account. Learn more at [https://sell.wink.travel](https://sell.wink.travel "Your favorite travel inventory software").
+Integrates WordPress with your Wink account. Learn more at [https://sell.wink.travel](https://sell.wink.travel "The travel monetization platform for influencers and affiliates").
 
 == Description ==
 
@@ -52,6 +52,9 @@ No. It is not yet compatible with PHP 8.x
 [https://sell.wink.travel](https://sell.wink.travel "Your favorite travel inventory software")
 
 == Changelog ==
+
+= 1.3.0 =
+* Migrating over to new WordPress repo.
 
 = 1.2.23 =
 * Updated release script.
