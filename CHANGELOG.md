@@ -1,3 +1,13 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [1.3.1] - 2023-09-07
+
+### Build
+
+- :wrench: renamed back to iko affiliate plugin to free up Wink Travel
+
 # affiliate-wordpress-plugin changelog
 
 Changelog of affiliate-wordpress-plugin.
