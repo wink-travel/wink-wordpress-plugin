@@ -1,3 +1,13 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [1.3.0] - 2023-09-07
+
+### Documentation
+
+- :memo: updated version number and text changes
+
 # affiliate-wordpress-plugin changelog
 
 Changelog of affiliate-wordpress-plugin.
