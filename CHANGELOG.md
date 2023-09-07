@@ -1,16 +1,21 @@
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-## [1.3.0] - 2023-09-07
-
-### Documentation
-
-- :memo: updated version number and text changes
-
 # affiliate-wordpress-plugin changelog
 
 Changelog of affiliate-wordpress-plugin.
+
+## v1.3.0 (2023-09-07)
+
+### Other changes
+
+**Merge branch 'release/v1.3.0'**
+
+
+[ea984](https://github.com/wink-travel/affiliate-wordpress-plugin/commit/ea9846e1aa13fc4) Bjorn Harvold *2023-09-07 04:20:05*
+
+**:memo: doc: Updated CHANGELOG.md...**
+
+
+[76b05](https://github.com/wink-travel/affiliate-wordpress-plugin/commit/76b05ed6421da3d) Bjorn Harvold *2023-06-22 06:54:26*
+
 
 ## v1.2.23 (2023-06-22)
 
