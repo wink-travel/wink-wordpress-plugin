@@ -1,4 +1,4 @@
-# affiliate-wordpress-plugin changelog
+# wink2travel changelog
 
 Changelog of affiliate-wordpress-plugin.
 

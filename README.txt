@@ -1,10 +1,10 @@
-=== iko.travel Affiliate ===
-Contributors: MB-Jan, wink
-Tags: wink2travel, travel, wink, booking
+=== wink2travel ===
+Contributors: MB-Jan, bjornharvold
+Tags: wink2travel, travel, hotel, booking, affiliate network
 Requires at least: 4.7
-Tested up to: 6.3.1
-Stable tag: 1.3.1
-Version: 1.3.1
+Tested up to: 6.3.2
+Stable tag: 2.0.0
+Version: 2.0.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
