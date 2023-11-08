@@ -205,6 +205,7 @@ class winkContent extends winkElements {
             $context  = stream_context_create($options);
             $getArgs = array(
                 'headers' => array(
+                    'Wink-Version'  => '2.0',
                     'Authorization' => 'Bearer '.$bearerToken
                 )
             );
