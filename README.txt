@@ -2,7 +2,7 @@
 Contributors: MB-Jan, bjornharvold
 Tags: wink2travel, travel, hotel, booking, affiliate network
 Requires at least: 4.7
-Tested up to: 6.3.2
+Tested up to: 6.4
 Stable tag: 2.0.0
 Version: 2.0.0
 Requires PHP: 7.4

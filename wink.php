@@ -1,15 +1,15 @@
 <?php
 /**
- * Plugin Name: WINK Affiliate
- * Description: This plugin integrates your WINK affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
+ * Plugin Name: Wink Affiliate WordPress Plugin
+ * Description: This plugin integrates your Wink affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
  * Version:     1.2.18
- * Author:      WINK
+ * Author:      Wink
  * Author URI:  https://wink.travel/
  * License:     GPL-3.0
  * License URI: https://oss.ninja/gpl-3.0?organization=Useful%20Team&project=jwt-auth
  * Text Domain: wink
  *
- * the WINK Affiliate WordPress plugin is free software: you can redistribute it and/or modify
+ * The Wink Affiliate WordPress plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * any later version.
@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with WINK Affiliate WordPress plugin. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
+ * along with Wink Affiliate WordPress plugin. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -57,7 +57,7 @@ class wink {
             get_admin_url() . 'admin.php'
         ) );
         // Create the link.
-        $settings_link = '<a href="'.$this->settingsURL.'" title="'.esc_html__('WINK settings',$this->namespace).'">' . esc_html__( 'Settings',$this->namespace ) . '</a>';
+        $settings_link = '<a href="'.$this->settingsURL.'" title="'.esc_html__('Wink settings',$this->namespace).'">' . esc_html__( 'Settings',$this->namespace ) . '</a>';
         // Adds the link to the end of the array.
         array_push(
             $links,
