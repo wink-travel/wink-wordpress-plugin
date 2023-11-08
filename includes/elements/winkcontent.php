@@ -147,31 +147,31 @@ class winkContent extends winkElements {
                 'sslverify' => true,
             );
             if ($this->environmentVal == 'development') {
-                error_log('WINK - Development environment. Ignoring self-signed certificates');
+                error_log('Wink - Development environment. Ignoring self-signed certificates');
                 $postArgs['sslverify'] = false; 
             }
             $url = $env . '/oauth2/token';
             $response = wp_remote_post($url,$postArgs);
             if ( is_wp_error( $response ) ) {
                 // print out any error
-                error_log('WINK - Empty response when trying to retrieve token. Details below:');
+                error_log('Wink - Empty response when trying to retrieve token. Details below:');
                 error_log($response->get_error_message());
             } else {
                 if (!empty($response['body'])) {
                     $data = json_decode($response['body'], true);
 
                     if (!empty($data)) {
-    //                    error_log('WINK - token $data' . $data);
+    //                    error_log('Wink - token $data' . $data);
                         if (!empty($data['access_token']) && !empty($data['expires_in'])) {
                             update_option('winkcontentBearer', $data['access_token']);
                             update_option('winkcontentTime', $data['expires_in'] + current_time('timestamp'));
                             $bearerToken = $data['access_token'];
                         }
                     } else {
-                        error_log('WINK - Empty response body when trying to retrieve token.');
+                        error_log('Wink - Empty response body when trying to retrieve token.');
                     }
                 } else {
-                    error_log('WINK - Unable to get response body content while retrieving token. Response array below:');
+                    error_log('Wink - Unable to get response body content while retrieving token. Response array below:');
                     error_log(print_r($response,true));
                 }
             }
@@ -183,7 +183,7 @@ class winkContent extends winkElements {
         if (!empty($bearerToken)) {
             return $this->getwinkLayouts($bearerToken);
         } else {
-            error_log('WINK - Bearer token empty');
+            error_log('Wink - Bearer token empty');
         }
 
         return array();
@@ -199,6 +199,7 @@ class winkContent extends winkElements {
             $url = $env . '/api/inventory/campaign/list';
             $options = array('http' => array(
                 'method'  => 'GET',
+                'Wink-Version'  => '2.0',
                 'header' => 'Authorization: Bearer '.$bearerToken
             ));
             $context  = stream_context_create($options);
@@ -208,13 +209,13 @@ class winkContent extends winkElements {
                 )
             );
             if ($this->environmentVal == 'development') {
-                error_log('WINK - Development environment. Ignoring self-signed certificates');
+                error_log('Wink - Development environment. Ignoring self-signed certificates');
                 $getArgs['sslverify'] = false; 
             }
             $response = wp_remote_get($url,$getArgs);
             if ( is_wp_error( $response ) ) {
                 // print out any error
-                error_log('WINK - Empty response when trying to retrieve layouts. Details below:');
+                error_log('Wink - Empty response when trying to retrieve layouts. Details below:');
                 error_log($response->get_error_message());
             } else {
                 if (!empty($response['body'])) {
@@ -223,15 +224,15 @@ class winkContent extends winkElements {
                     if (!empty($data['status']) && $data['error'] == 404) {
                         delete_option( 'winkData' );
                         delete_option( 'winkdataTime' );
-                        error_log('WINK - Unable to retrieve layout data.');
+                        error_log('Wink - Unable to retrieve layout data.');
                     } else {
-                        // error_log('WINK - layout $data' . $data);
+                        // error_log('Wink - layout $data' . $data);
                         update_option('winkData', $data);
                         update_option('winkdataTime', 60 * 2 + current_time('timestamp')); // 2 minutes
                         return $data;
                     }
                 } else {
-                    error_log('WINK - Unable to get response body content while retrieving layouts. Response array below:');
+                    error_log('Wink - Unable to get response body content while retrieving layouts. Response array below:');
                     error_log(print_r($response,true));
                 }
             }
