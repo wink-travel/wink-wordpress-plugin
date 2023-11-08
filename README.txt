@@ -3,8 +3,8 @@ Contributors: MB-Jan, bjornharvold
 Tags: wink2travel, travel, hotel, booking, affiliate network
 Requires at least: 4.7
 Tested up to: 6.4
-Stable tag: 2.0.0
-Version: 2.0.0
+Stable tag: 2.0.1
+Version: 2.0.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -52,6 +52,12 @@ No. It is not yet compatible with PHP 8.x
 [https://sell.wink.travel](https://sell.wink.travel "Your favorite travel inventory software")
 
 == Changelog ==
+
+= 2.0.1 =
+* Added Wink-Version to API request call
+
+= 2.0.0 =
+* Renamed plugin.
 
 = 1.3.1 =
 * Migrating over to new WordPress repo.
