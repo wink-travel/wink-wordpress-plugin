@@ -4,7 +4,7 @@
 # Copyright (c) wink.travel 2022.
 #
 
-echo "Releasing new version of Wink Affiliate WordPress plugin with git flow..."
+echo "Releasing new version of Wink Affiliate WordPress plugin using git flow..."
 
 versionNumber=$(npx git-changelog-command-line --print-next-version --major-version-pattern BREAKING --minor-version-pattern feat)
 
