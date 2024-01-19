@@ -18,9 +18,9 @@ case $yn in
   git cliff --unreleased --tag $versionNumber --sort newest
 
   echo "Committing version changes for $versionNumber"
-  sed -i '' 's/Version.*/Version: $versionNumber/g' README.txt
-  sed -i '' 's/Stable tag.*/Stable tag: $versionNumber/g' README.txt
-  sed -i '' 's/Version.*/Version:     $versionNumber/g' wink.php
+  sed -i '' "s/Version.*/Version: $versionNumber/g" README.txt
+  sed -i '' "s/Stable tag.*/Stable tag: $versionNumber/g" README.txt
+  sed -i '' "s/Version.*/Version:     $versionNumber/g" wink.php
 
   git commit -a -m "build: arrow_up: bumping version and merging to master
 

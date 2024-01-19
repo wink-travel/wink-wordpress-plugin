@@ -3,8 +3,8 @@ Contributors: MB-Jan, bjornharvold
 Tags: wink2travel, travel, hotel, booking, affiliate network
 Requires at least: 4.7
 Tested up to: 6.4
-Stable tag: $versionNumber
-Version: $versionNumber
+Stable tag: 1.4.1
+Version: 1.4.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
