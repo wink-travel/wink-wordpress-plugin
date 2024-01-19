@@ -5,7 +5,7 @@ class winkAccount extends winkElements {
     function __construct() {
         parent::__construct();
         $this->blockCode = 'winkaccount';
-        $this->blockName = esc_html__( "wink Account", $this->namespace );
+        $this->blockName = esc_html__( "wink Account", "wink" );
         add_action('init', array( $this,'gutenbergBlockRegistration' ) ); // Adding Gutenberg Block
         add_shortcode( $this->blockCode, array( $this,'blockHandler') );
         add_filter('winkShortcodes',array( $this, 'shortcodeData') );
@@ -61,7 +61,7 @@ class winkAccount extends winkElements {
         );
 
         $jsData = array(
-            'blockCat'  => $this->namespace.'-blocks',
+            'blockCat'  => "wink".'-blocks',
             'imgURL'    => $this->imgURL,
             'mode'      => $this->environmentVal
         );
@@ -72,7 +72,7 @@ class winkAccount extends winkElements {
             'editor_script' => 'winkBlockRenderer_'.$this->blockCode,
             'render_callback' => array($this,'blockHandler'),
             'attributes' => [],
-            'category' => $this->namespace.'-blocks'
+            'category' => "wink".'-blocks'
         ));
     }
 }

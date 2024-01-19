@@ -2,12 +2,11 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 class elementorWinkContent extends \Elementor\Widget_Base {
-	protected $namespace = 'wink';
 	public function get_name() {
 		return 'winkcontent';
 	}
 	public function get_title() {
-		return __( 'wink Content', $this->namespace );
+		return __( 'wink Content', "wink" );
 	}
 	public function get_icon() {
 		return 'eicon-external-link-square';
@@ -20,7 +19,7 @@ class elementorWinkContent extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			[
-				'label' => esc_html__( 'wink Options', $this->namespace )
+				'label' => esc_html__( 'wink Options', "wink" )
 			]
 		);
 		$shortcodes = array();
@@ -38,7 +37,7 @@ class elementorWinkContent extends \Elementor\Widget_Base {
 					'type' => \Elementor\Controls_Manager::SELECT,
 					'placeholder' => '',
 					'options' => $options,
-					'description' => esc_html__('Select any of your saved inventories. We strongly recommend to use this block only in full-width content areas and not in columns.', $this->namespace ),
+					'description' => esc_html__('Select any of your saved inventories. We strongly recommend to use this block only in full-width content areas and not in columns.', "wink" ),
 				]
 			);
 		}
@@ -48,7 +47,7 @@ class elementorWinkContent extends \Elementor\Widget_Base {
 	}
 	protected function render() {
 		$settings = $this->get_settings_for_display();		
-		echo do_shortcode('[winkcontent layoutid="'.esc_html($settings['layoutid']).'"]');
+		echo wp_kses(do_shortcode('[winkcontent layoutid="'.esc_html($settings['layoutid']).'"]'));
 		
 	}
 }

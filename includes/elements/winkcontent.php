@@ -5,7 +5,7 @@ class winkContent extends winkElements {
     function __construct() {
         parent::__construct();
         $this->blockCode = 'winkcontent';
-        $this->blockName = esc_html__( "wink Content", $this->namespace );
+        $this->blockName = esc_html__( "wink Content", "wink" );
         $this->attributes = [
             'layout' => [
                 'default' => '',
@@ -27,7 +27,7 @@ class winkContent extends winkElements {
     function shortcodeData($shortcodes) {
         $winkContentData = $this->getwinkBearerToken();
         $values = array(
-            esc_html__( 'Select...',  $this->namespace  ) => ''
+            esc_html__( 'Select...',  "wink"  ) => ''
 
         );
         foreach($winkContentData as $key => $localValue) {
@@ -41,10 +41,10 @@ class winkContent extends winkElements {
                     "type" => "dropdown",
                     "holder" => "div",
                     "class" => "",
-                    "heading" => __( "Inventory", $this->namespace ),
+                    "heading" => __( "Inventory", "wink" ),
                     "param_name" => "layoutid",
                     'value' => $values,
-                    "description" => __('Select any of your saved layouts. We strongly recommend to use this block only in full-width content areas and not in columns.', $this->namespace )
+                    "description" => __('Select any of your saved layouts. We strongly recommend to use this block only in full-width content areas and not in columns.', "wink" )
                 ),
             )
         );
@@ -267,7 +267,7 @@ class winkContent extends winkElements {
         );
 
         $jsData = array(
-            'blockCat' => $this->namespace . '-blocks',
+            'blockCat' => "wink" . '-blocks',
             'imgURL' => $this->imgURL,
             'mode' => $this->environmentVal
         );
@@ -282,7 +282,7 @@ class winkContent extends winkElements {
             'editor_script' => 'winkBlockRenderer_' . $this->blockCode,
             'render_callback' => array($this, 'blockHandler'),
             'attributes' => $this->attributes,
-            'category' => $this->namespace . '-blocks'
+            'category' => "wink" . '-blocks'
         ));
     }
 }

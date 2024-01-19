@@ -25,6 +25,10 @@ Available components:
 * [winkitinerary]Itinerary: Same as search button, only it contains itinerary information as button text.
 * [winkcontent]: Lets you embed the inventory you've selected on Wink directly into a page or post.
 
+== External Services ==
+
+This plugin requires a Wink account. It uses the Wink & Traveliko API to connect to display your Wink/Traveliko account information. You can find more information about Wink/Traveliko at [hhttps://wink.travel](https://wink.travel "Influencer-driven travel booking").
+
 == Options ==
 There are multiple ways to use our components:
 

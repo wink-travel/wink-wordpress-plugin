@@ -26,14 +26,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 class wink {
     function __construct() {
         $this->version = current_time('Y-m-d');
-        $this->namespace = 'wink';
         $this->section = 'wink'; // Customizer Section Name
         $this->clientIdKey = 'winkClientId';
         $this->clientSecretKey = 'winkSecret';
         $this->environment = 'winkEnvironment';
         $this->environmentVal = get_option($this->environment, 'production');
-        $this->pluginURL = trailingslashit( plugin_dir_url( __FILE__ ) );
-        $this->settingsURL = admin_url( '/customize.php?autofocus[section]='.$this->section);
+        $this->pluginURL = wp_kses(trailingslashit( plugin_dir_url( __FILE__ ) ) );
+        $this->settingsURL = wp_kses(admin_url( '/customize.php?autofocus[section]='.$this->section));
         add_action( 'customize_register', array( $this,'addSettings' ) ); // adding plugin settings to WP Customizer
         add_action('admin_notices', array( $this,'adminNotice' ) ); // adding admin notice if client id has not been entered
         //add_shortcode('wink', array( $this,'blockHandler' ) ); // Adding Shortcode
@@ -57,7 +56,7 @@ class wink {
             get_admin_url() . 'admin.php'
         ) );
         // Create the link.
-        $settings_link = '<a href="'.$this->settingsURL.'" title="'.esc_html__('Wink settings',$this->namespace).'">' . esc_html__( 'Settings',$this->namespace ) . '</a>';
+        $settings_link = '<a href="'.$this->settingsURL.'" title="'.esc_html__('Wink settings',"wink").'">' . esc_html__( 'Settings',"wink" ) . '</a>';
         // Adds the link to the end of the array.
         array_push(
             $links,
@@ -91,27 +90,27 @@ class wink {
         if (is_admin() && !get_option($this->clientIdKey, false)) {
             if ( current_user_can( 'manage_options' ) ) { // let's only show this to admin users
                 echo '<div class="notice notice-info">
-                <img src="'.$this->pluginURL.'img/logo.png" alt="'.esc_html__('Wink logo',$this->namespace).'" width="100" style="margin-top: 10px;"><p><b>'.
-                esc_html__('Congratulations', $this->namespace).
+                <img src="'.$this->pluginURL.'img/logo.png" alt="'.esc_html__('Wink logo',"wink").'" width="100" style="margin-top: 10px;"><p><b>'.
+                esc_html__('Congratulations', "wink").
                 '</b> '.
-                esc_html__('on installing the official Wink Affiliate WordPress plugin.',$this->namespace).
-                ' <a href="'.$this->settingsURL.'" title="'.esc_html__('Wink settings',$this->namespace).'">'.
-                esc_html__('Click here',$this->namespace).
+                esc_html__('on installing the official Wink Affiliate WordPress plugin.',"wink").
+                ' <a href="'.$this->settingsURL.'" title="'.esc_html__('Wink settings',"wink").'">'.
+                esc_html__('Click here',"wink").
                 '</a> '.
-                esc_html__('to add your Wink Client-ID and your Client-Secret',$this->namespace).
+                esc_html__('to add your Wink Client-ID and your Client-Secret',"wink").
                 '.</p>
                 </div>';
             }
         } else if (is_admin() && empty(get_option('permalink_structure'))) {
             echo '<div class="notice notice-info">
-            <img src="'.$this->pluginURL.'img/logo.png" alt="'.esc_html__('Wink logo',$this->namespace).'" width="100" style="margin-top: 10px;"><p><b>'.
-            esc_html__('Attention!', $this->namespace).
+            <img src="'.$this->pluginURL.'img/logo.png" alt="'.esc_html__('Wink logo',"wink").'" width="100" style="margin-top: 10px;"><p><b>'.
+            esc_html__('Attention!', "wink").
             '</b> '.
-            esc_html__('the Wink plugin requires permalinks. Please disable plain permalinks',$this->namespace).
-            ' <a href="'.admin_url('options-permalink.php').'" title="'.esc_html__('Edit Permalinks',$this->namespace).'">'.
-            esc_html__('here',$this->namespace).
+            esc_html__('the Wink plugin requires permalinks. Please disable plain permalinks',"wink").
+            ' <a href="'.admin_url('options-permalink.php').'" title="'.esc_html__('Edit Permalinks',"wink").'">'.
+            esc_html__('here',"wink").
             '</a> '.
-            esc_html__('and start using the plugin.',$this->namespace).
+            esc_html__('and start using the plugin.',"wink").
             '.</p>
             </div>';
         }
@@ -127,9 +126,9 @@ class wink {
             }
         }
         $wp_customize->add_section( $this->section, array(
-            'title'      => esc_html__( 'Wink Settings', $this->namespace ),
+            'title'      => esc_html__( 'Wink Settings', "wink" ),
             'priority'   => 30,
-            'description' => '<p><img src="'.$this->pluginURL.'img/logo.png" alt="'.__('Wink logo',$this->namespace).'" width="100"></p>'.esc_html__('This plugin connects your site to your Wink account. Once you entered your Client-ID, you can start using the Wink elements either as a Gutenberg block or via the shortcodes below', $this->namespace ).'<br>'.implode('<br>',$shortcodes)
+            'description' => '<p><img src="'.$this->pluginURL.'img/logo.png" alt="'.__('Wink logo',"wink").'" width="100"></p>'.esc_html__('This plugin connects your site to your Wink account. Once you entered your Client-ID, you can start using the Wink elements either as a Gutenberg block or via the shortcodes below', "wink" ).'<br>'.implode('<br>',$shortcodes)
         ) );
 
 
@@ -137,8 +136,8 @@ class wink {
             'type' => 'option'
         ));
         $wp_customize->add_control( $this->clientIdKey, array(
-            'label'      => esc_html__( 'Client-ID', $this->namespace ),
-            'description' => esc_html__('You can find your Wink Client-ID in your Wink account. After entering your Client-ID start using Wink by adding the Wink Gutenberg blocks to your website.', $this->namespace),
+            'label'      => esc_html__( 'Client-ID', "wink" ),
+            'description' => esc_html__('You can find your Wink Client-ID in your Wink account. After entering your Client-ID start using Wink by adding the Wink Gutenberg blocks to your website.', "wink"),
             'section'    => $this->section,
         ) );
 
@@ -146,8 +145,8 @@ class wink {
             'type' => 'option'
         ));
         $wp_customize->add_control( $this->clientSecretKey, array(
-            'label'      => esc_html__( 'Client-Secret', $this->namespace ),
-            'description' => esc_html__('You can find your Wink Client-Secret in your Wink account. After entering your Client-Secret and your Client-ID start using Wink by adding the Wink Gutenberg blocks to your website.', $this->namespace),
+            'label'      => esc_html__( 'Client-Secret', "wink" ),
+            'description' => esc_html__('You can find your Wink Client-Secret in your Wink account. After entering your Client-Secret and your Client-ID start using Wink by adding the Wink Gutenberg blocks to your website.', "wink"),
             'section'    => $this->section,
         ) );
         
@@ -157,8 +156,8 @@ class wink {
         ));
         $wp_customize->add_control( $this->environment, array(
             'type' => 'select',
-            'label'      => esc_html__( 'Environment', $this->namespace ),
-            'description' => esc_html__('Switch between environments. Use with caution and only if instructed by the Wink team.', $this->namespace),
+            'label'      => esc_html__( 'Environment', "wink" ),
+            'description' => esc_html__('Switch between environments. Use with caution and only if instructed by the Wink team.', "wink"),
             'section'    => $this->section,
             'choices' => array(
                 'production' => esc_html__( 'Live' ),
@@ -181,8 +180,8 @@ class wink {
                 $categories,
                 array(
                     array(
-                        'slug' => $this->namespace.'-blocks',
-                        'title' => esc_html__( 'Wink Blocks', $this->namespace ),
+                        'slug' => "wink".'-blocks',
+                        'title' => esc_html__( 'Wink Blocks', "wink" ),
                     ),
                 )
             );
@@ -244,7 +243,7 @@ function winkRenderSilentRefresh( $atts ){
         header('Content-type: text/html');
         //$dir = plugin_dir_path( __FILE__ );
         if (file_exists(dirname(realpath(__FILE__)).'/includes/silent-refresh.html')) {
-            echo file_get_contents(dirname(realpath(__FILE__)).'/includes/silent-refresh.html');
+            echo wp_kses(file_get_contents(dirname(realpath(__FILE__)).'/includes/silent-refresh.html'));
         }
         die();
     }

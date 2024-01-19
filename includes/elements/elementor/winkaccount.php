@@ -2,12 +2,11 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 class elementorWinkAccount extends \Elementor\Widget_Base {
-	protected $namespace = 'wink';
 	public function get_name() {
 		return 'winkaccount';
 	}
 	public function get_title() {
-		return esc_html__( 'wink Account', $this->namespace );
+		return esc_html__( 'wink Account', "wink" );
 	}
 	public function get_icon() {
 		return 'eicon-external-link-square';
@@ -20,7 +19,7 @@ class elementorWinkAccount extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			[
-				'label' => esc_html__( 'wink Options', $this->namespace )
+				'label' => esc_html__( 'wink Options', "wink" )
 			]
 		);
 
@@ -39,7 +38,7 @@ class elementorWinkAccount extends \Elementor\Widget_Base {
 	protected function render() {
 
 		$settings = $this->get_settings_for_display();
-		echo do_shortcode('[winkaccount]');
+		echo wp_kses(do_shortcode('[winkaccount]'));
 		
 	}
 }
