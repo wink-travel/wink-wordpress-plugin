@@ -6,7 +6,7 @@
 
 echo "Releasing new version of Wink Affiliate WordPress plugin with git flow..."
 
-newVersion=$(npx git-changelog-command-line --print-next-version --major-version-pattern BREAKING --minor-version-pattern feat)
+$versionNumber=$(npx git-changelog-command-line --print-next-version --major-version-pattern BREAKING --minor-version-pattern feat)
 
 read -p "Do you want to proceed with version $newVersion? (y/n) " yn
 
