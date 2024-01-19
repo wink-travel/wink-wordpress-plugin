@@ -4,69 +4,80 @@
 # Copyright (c) wink.travel 2022.
 #
 
-echo "Disabling git messages for a release"
-export GIT_MERGE_AUTOEDIT=no
-
 echo "Releasing new version of Wink Affiliate WordPress plugin with git flow..."
-echo "Enter version number. E.g. 1.2.3";
 
-read versionNumber
+newVersion=$(npx git-changelog-command-line --print-next-version --major-version-pattern BREAKING --minor-version-pattern feat)
 
-versionNumber="v${versionNumber}";
+read -p "Do you want to proceed with version $newVersion? (y/n) " yn
 
-git cliff --unreleased --tag $versionNumber --sort newest --prepend CHANGELOG.md
+case $yn in
+[yY])
+  echo "Disabling git messages for a release"
+  export GIT_MERGE_AUTOEDIT=no
 
-echo "Committing version changes for $versionNumber"
-sed -i '' 's/Version.*/Version: $versionNumber/g' README.txt
-sed -i '' 's/Stable tag.*/Stable tag: $versionNumber/g' README.txt
-sed -i '' 's/Version.*/Version:     $versionNumber/g' wink.php
+  git cliff --unreleased --tag $versionNumber --sort newest --prepend CHANGELOG.md
 
-git commit -a -m "build: arrow_up: bumping version and merging to master
+  echo "Committing version changes for $versionNumber"
+  sed -i '' 's/Version.*/Version: $versionNumber/g' README.txt
+  sed -i '' 's/Stable tag.*/Stable tag: $versionNumber/g' README.txt
+  sed -i '' 's/Version.*/Version:     $versionNumber/g' wink.php
 
-Version bump to $versionNumber registered
+  git commit -a -m "build: arrow_up: bumping version and merging to master
 
-Ops: $USER
-"
+  Version bump to $versionNumber registered
 
-git push --follow-tags origin develop
+  Ops: $USER
+  "
 
-echo "Calling 'git flow release $versionNumber'"
-git flow release start $versionNumber
+  git push --follow-tags origin develop
 
-echo "Calling 'git flow finish -m $versionNumber $versionNumber'"
-git flow release finish -m $versionNumber $versionNumber
+  echo "Calling 'git flow release $versionNumber'"
+  git flow release start $versionNumber
 
-echo "Checking out master..."
-git checkout master
+  echo "Calling 'git flow finish -m $versionNumber $versionNumber'"
+  git flow release finish -m $versionNumber $versionNumber
 
-echo "Updating CHANGELOG.md..."
-npx git-changelog-command-line -of CHANGELOG.md
-git commit -a -m ":memo: doc: Updated CHANGELOG.md..."
+  echo "Checking out master..."
+  git checkout master
 
-git push origin master:refs/heads/master
+  echo "Updating CHANGELOG.md..."
+  npx git-changelog-command-line -of CHANGELOG.md
+  git commit -a -m ":memo: doc: Updated CHANGELOG.md..."
 
-echo "Creating GitHub release..."
-gh release create $versionNumber --notes "See CHANGELOG.md for release notes" --target master
+  git push origin master:refs/heads/master
 
-echo "Pulling ORIGIN master into local branch..."
-git pull origin
+  echo "Creating GitHub release..."
+  gh release create $versionNumber --notes "See CHANGELOG.md for release notes" --target master
 
-echo "Pushing master (+ tags) to ORIGIN..."
-git push
+  echo "Pulling ORIGIN master into local branch..."
+  git pull origin
 
-echo "Checking out local develop branch..."
-git checkout develop
+  echo "Pushing master (+ tags) to ORIGIN..."
+  git push
 
-echo "Pulling ORIGIN develop into local branch..."
-git pull origin
+  echo "Checking out local develop branch..."
+  git checkout develop
 
-echo "Merging CHANGELOG.md from master into develop..."
-git merge master --no-edit -m ":twisted_rightwards_arrows: doc: merged CHANGELOG.md from master into develop branch" --strategy-option theirs
+  echo "Pulling ORIGIN develop into local branch..."
+  git pull origin
 
-echo "Pushing develop to ORIGIN..."
-git push
+  echo "Merging CHANGELOG.md from master into develop..."
+  git merge master --no-edit -m ":twisted_rightwards_arrows: doc: merged CHANGELOG.md from master into develop branch" --strategy-option theirs
 
-echo "Enabling git messages for a release again"
-export GIT_MERGE_AUTOEDIT=yes
+  echo "Pushing develop to ORIGIN..."
+  git push
 
-echo "Wink Affiliate WordPress plugin $versionNumber has been successfully released"
+  echo "Enabling git messages for a release again"
+  export GIT_MERGE_AUTOEDIT=yes
+
+  echo "Wink Affiliate WordPress plugin $versionNumber has been successfully released"
+  ;;
+[nN])
+  echo "Exiting..."
+  exit
+  ;;
+*)
+  echo "Invalid response"
+  exit 1
+  ;;
+esac
