@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (c) iko.travel 2022.
+# Copyright (c) wink.travel 2022.
 #
 
 echo "Disabling git messages for a release"
