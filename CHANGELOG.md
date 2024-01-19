@@ -1,3 +1,32 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [--sort] - 2024-01-19
+
+### Documentation
+
+- :memo: added changelog entry
+
+### Features
+
+- :memo: update some text and assets
+
+### Refactor
+
+- :fire: removed .idea directory from repo
+- :wrench: added Wink-Version to API request
+- :wrench: added Wink-Version to API request
+- :recycle: updates from Jan based on WordPress feedback
+- :recycle: updated copyright
+- :recycle: updated release script
+- :recycle: updated release script
+
+### Build
+
+- :wrench: updated text file for Wordpress re-submission
+- :bookmark: updated Wink plugin version
+
 # wink2travel changelog
 
 Changelog of affiliate-wordpress-plugin.
