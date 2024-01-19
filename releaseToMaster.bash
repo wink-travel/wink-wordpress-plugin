@@ -15,7 +15,7 @@ case $yn in
   echo "Disabling git messages for a release"
   export GIT_MERGE_AUTOEDIT=no
 
-  git cliff --unreleased --tag $versionNumber --sort newest --prepend CHANGELOG.md
+  git cliff --unreleased --tag $versionNumber --sort newest
 
   echo "Committing version changes for $versionNumber"
   sed -i '' 's/Version.*/Version: $versionNumber/g' README.txt
