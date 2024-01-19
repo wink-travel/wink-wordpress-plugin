@@ -27,7 +27,7 @@ Available components:
 
 == External Services ==
 
-This plugin requires a Wink account. It uses the Wink & Traveliko API to connect to display your Wink/Traveliko account information. You can find more information about Wink/Traveliko at [hhttps://wink.travel](https://wink.travel "Influencer-driven travel booking").
+This plugin requires a Wink account. It uses the Wink API to retrieve travel inventory data from your Wink account. You can find more information about Wink at [https://wink.travel](https://wink.travel "Influencer-driven travel booking").
 
 == Options ==
 There are multiple ways to use our components:
@@ -57,100 +57,4 @@ No. It is not yet compatible with PHP 8.x
 
 == Changelog ==
 
-= 2.0.1 =
-* Added Wink-Version to API request call
-
-= 2.0.0 =
-* Renamed plugin.
-
-= 1.3.1 =
-* Migrating over to new WordPress repo.
-
-= 1.3.0 =
-* Migrating over to new WordPress repo.
-
-= 1.2.23 =
-* Updated release script.
-
-= 1.2.22 =
-* Updated release script.
-
-= 1.2.21 =
-* Updated release script.
-
-= 1.2.20 =
-* Updated release script.
-
-= 1.2.19 =
-* Updated readme and tested with latest version of WordPress.
-
-= 1.2.18 =
-* Rebrand to Wink.
-
-= 1.2.17 =
-* Includes multiple fixes + notice if permalinks have not been set in WordPress.
-
-= 1.2.16 =
-* Disabled sslverify in development environment.
-
-= 1.2.15 =
-* Build related.
-
-= 1.2.14 =
-* Build related.
-
-= 1.2.13 =
-* Build related.
-
-= 1.2.12 =
-* Build related.
-
-= 1.2.11 =
-* Build related.
-
-= 1.2.10 =
-* Build related.
-
-= 1.2.9 =
-* Build related.
-
-= 1.2.8 =
-* Build related.
-
-= 1.2.7 =
-* Build related.
-
-= 1.2.6 =
-* Build related.
-
-= 1.2.5 =
-* Build related.
-
-= 1.2.4 =
-* Removed references to old scripts.js.
-
-= 1.2.3 =
-* Minor fix for silent-refresh endpoint.
-
-= 1.2.2 =
-* Added further security features.
-
-= 1.2.1 =
-* Updates to add compliance with WordPress codex.
-
-= 1.1.2 =
-* silent-refresh.html Support
-
-= 1.1.1 =
-* Added dynamic version to static resources
-
-= 1.1.0 =
-* Accommodated API changes
-
-= 1.0.19 =
-* Initial Launch
-
-== Upgrade Notice ==
-
-= 1.2.1 =
-This version is now fully compliant with the WordPress codex and has increased compatibility with different server environments.
+See CHANGELOG.md for details
