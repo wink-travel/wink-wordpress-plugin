@@ -33,9 +33,9 @@ class winkVCElements extends winkElements {
                             "class" => "",
                             "param_name" => "placeholder",
                             "value" => 1,
-                            "heading" => esc_html__( "This component does not require any configuration.", $this->namespace ),
-                            "description" => esc_html__( "Simply ensure that you have entered the correct Client-ID and Client-Secret ", $this->namespace ) . ' <a href="'.admin_url( '/customize.php?autofocus[section]=wink').'" title="'.esc_html__('WINK settings',$this->namespace).'" target="_blank">'.
-                            esc_html__('here',$this->namespace).'</a> '
+                            "heading" => esc_html__( "This component does not require any configuration.", "wink" ),
+                            "description" => esc_html__( "Simply ensure that you have entered the correct Client-ID and Client-Secret ", "wink" ) . ' <a href="'.admin_url( '/customize.php?autofocus[section]=wink').'" title="'.esc_html__('WINK settings',"wink").'" target="_blank">'.
+                            esc_html__('here',"wink").'</a> '
                         )
                     );
                 }
@@ -43,7 +43,7 @@ class winkVCElements extends winkElements {
                     "name" => $shortcodeData['name'],
                     "base" => $shortcodeData['code'],
                     "class" => "",
-                    "category" => esc_html__( "Content", $this->namespace),
+                    "category" => esc_html__( "Content", "wink"),
                     "icon" => $this->imgURL.'logo.png',
                     "params" => $params
                 ));

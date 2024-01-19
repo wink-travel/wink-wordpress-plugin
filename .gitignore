@@ -11,6 +11,7 @@ Release*/
 *.app/
 *.pyc
 .svn/
+.idea/
 
 ###################################
 # IDE specific

@@ -6,11 +6,9 @@ if (!array_key_exists('winkLoaderAlreadyEnqueued',$GLOBALS)) {
 }
 
 class winkElements {
-    protected $namespace = 'wink';
     protected $clientIdKey = 'winkClientId';
     protected $clientSecretKey = 'winkSecret';
     function __construct() {
-        // $this->namespace = 'wink';
         $this->pluginURL = trailingslashit( plugin_dir_url( __FILE__ ) );
         $this->imgURL = trailingslashit( dirname( plugin_dir_url( __FILE__ ) ) ) . 'img/';
         $this->environmentVal = get_option('winkEnvironment', 'production');

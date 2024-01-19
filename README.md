@@ -5,7 +5,7 @@
 * Summary: Integrates WordPress with your Wink account at [https://sell.wink.travel](https://sell.wink.travel)
 
 ### Setup ###
-Once you've created an account with Wink, you can install this WordPress plugin on your site. Once installed, the plugin will ask you for your clientId and secretKey to connect with your account on WINK. 
+Once you've created an account with Wink, you can install this WordPress plugin on your site. Once installed, the plugin will ask you for your clientId and secretKey to connect with your account on Wink. 
 
 Once you've entered your credentials, you can go to your Gutenberg editor and start embedding our web components into your site.
 

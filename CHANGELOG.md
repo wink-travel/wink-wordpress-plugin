@@ -1,3 +1,36 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [1.4.0] - 2024-01-19
+
+### Documentation
+
+- :memo: added changelog entry
+
+### Features
+
+- :memo: update some text and assets
+
+### Refactor
+
+- :recycle: updated release script
+- :recycle: updated release script
+- :recycle: updated copyright
+- :recycle: updates from Jan based on WordPress feedback
+- :wrench: added Wink-Version to API request
+- :wrench: added Wink-Version to API request
+- :fire: removed .idea directory from repo
+
+### Build
+
+- :wrench: updated release script
+- :wrench: updated release script
+- :wrench: updated release script
+- Arrow_up: bumping version and merging to master
+- :bookmark: updated Wink plugin version
+- :wrench: updated text file for Wordpress re-submission
+
 # wink-wordpress-plugin changelog
 
 Changelog of wink-wordpress-plugin.

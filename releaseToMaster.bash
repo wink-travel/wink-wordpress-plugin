@@ -1,68 +1,83 @@
 #!/bin/bash
 
 #
-# Copyright (c) iko.travel 2022.
+# Copyright (c) wink.travel 2022.
 #
 
-echo "Disabling git messages for a release"
-export GIT_MERGE_AUTOEDIT=no
-
 echo "Releasing new version of Wink Affiliate WordPress plugin with git flow..."
-echo "Enter version number. E.g. 1.2.3";
 
-read versionNumber
+versionNumber=$(npx git-changelog-command-line --print-next-version --major-version-pattern BREAKING --minor-version-pattern feat)
 
-versionNumber="v${versionNumber}";
+read -p "Do you want to proceed with version $versionNumber? (y/n) " yn
 
-git cliff --unreleased --tag $versionNumber --sort newest --prepend CHANGELOG.md
+case $yn in
+[yY])
+  echo "Disabling git messages for a release"
+  export GIT_MERGE_AUTOEDIT=no
 
-echo "Committing version changes for $versionNumber"
-git commit -a -m "build: bookmark: merge to master
+  git cliff --unreleased --tag $versionNumber --sort newest --prepend CHANGELOG.md
 
-Version bump to $versionNumber registered
+  echo "Committing version changes for $versionNumber"
+  sed -i '' 's/Version.*/Version: $versionNumber/g' README.txt
+  sed -i '' 's/Stable tag.*/Stable tag: $versionNumber/g' README.txt
+  sed -i '' 's/Version.*/Version:     $versionNumber/g' wink.php
 
-Ops: $USER
-"
+  git commit -a -m "build: arrow_up: bumping version and merging to master
 
-git push --follow-tags origin develop
+  Version bump to $versionNumber registered
 
-echo "Calling 'git flow release $versionNumber'"
-git flow release start $versionNumber
+  Ops: $USER
+  "
 
-echo "Calling 'git flow finish -m $versionNumber $versionNumber'"
-git flow release finish -m $versionNumber $versionNumber
+  git push --follow-tags origin develop
 
-echo "Checking out master..."
-git checkout master
+  echo "Calling 'git flow release $versionNumber'"
+  git flow release start $versionNumber
 
-echo "Updating CHANGELOG.md..."
-npx git-changelog-command-line -of CHANGELOG.md
-git commit -a -m ":memo: doc: Updated CHANGELOG.md..."
+  echo "Calling 'git flow finish -m $versionNumber $versionNumber'"
+  git flow release finish -m $versionNumber $versionNumber
 
-git push origin master:refs/heads/master
+  echo "Checking out master..."
+  git checkout master
 
-echo "Creating GitHub release..."
-gh release create $versionNumber --notes "See CHANGELOG.md for release notes" --target master
+  echo "Updating CHANGELOG.md..."
+  npx git-changelog-command-line -of CHANGELOG.md
+  git commit -a -m ":memo: doc: Updated CHANGELOG.md..."
 
-echo "Pulling ORIGIN master into local branch..."
-git pull origin
+  git push origin master:refs/heads/master
 
-echo "Pushing master (+ tags) to ORIGIN..."
-git push
+  echo "Creating GitHub release..."
+  gh release create $versionNumber --notes "See CHANGELOG.md for release notes" --target master
 
-echo "Checking out local develop branch..."
-git checkout develop
+  echo "Pulling ORIGIN master into local branch..."
+  git pull origin
 
-echo "Pulling ORIGIN develop into local branch..."
-git pull origin
+  echo "Pushing master (+ tags) to ORIGIN..."
+  git push
 
-echo "Merging CHANGELOG.md from master into develop..."
-git merge master --no-edit -m ":twisted_rightwards_arrows: doc: merged CHANGELOG.md from master into develop branch" --strategy-option theirs
+  echo "Checking out local develop branch..."
+  git checkout develop
 
-echo "Pushing develop to ORIGIN..."
-git push
+  echo "Pulling ORIGIN develop into local branch..."
+  git pull origin
 
-echo "Enabling git messages for a release again"
-export GIT_MERGE_AUTOEDIT=yes
+  echo "Merging CHANGELOG.md from master into develop..."
+  git merge master --no-edit -m ":twisted_rightwards_arrows: doc: merged CHANGELOG.md from master into develop branch" --strategy-option theirs
 
-echo "Wink Affiliate WordPress plugin $versionNumber has been successfully released"
+  echo "Pushing develop to ORIGIN..."
+  git push
+
+  echo "Enabling git messages for a release again"
+  export GIT_MERGE_AUTOEDIT=yes
+
+  echo "Wink Affiliate WordPress plugin $versionNumber has been successfully released"
+  ;;
+[nN])
+  echo "Exiting..."
+  exit
+  ;;
+*)
+  echo "Invalid response"
+  exit 1
+  ;;
+esac

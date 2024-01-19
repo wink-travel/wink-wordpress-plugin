@@ -5,7 +5,7 @@ class winkItineraryForm extends winkElements {
     function __construct() {
         parent::__construct();
         $this->blockCode = 'winkitineraryform';
-        $this->blockName = esc_html__( "wink Itinerary Form", $this->namespace );
+        $this->blockName = esc_html__( "wink Itinerary Form", "wink" );
         add_action('init', array( $this,'gutenbergBlockRegistration' ) ); // Adding Gutenberg Block
         add_shortcode( $this->blockCode, array( $this,'blockHandler') );
         add_filter('winkShortcodes',array( $this, 'shortcodeData') );
@@ -61,7 +61,7 @@ class winkItineraryForm extends winkElements {
         );
 
         $jsData = array(
-            'blockCat'  => $this->namespace.'-blocks',
+            'blockCat'  => "wink".'-blocks',
             'imgURL'    => $this->imgURL,
             'mode'      => $this->environmentVal
         );
@@ -77,7 +77,7 @@ class winkItineraryForm extends winkElements {
                 //     'type' => 'string'
                 // ]
             ],
-            'category' => $this->namespace.'-blocks'
+            'category' => "wink".'-blocks'
         ));
     }
 }
