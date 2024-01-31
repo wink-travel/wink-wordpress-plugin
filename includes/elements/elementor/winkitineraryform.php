@@ -6,7 +6,7 @@ class elementorWinkItineraryForm extends \Elementor\Widget_Base {
 		return 'winkitineraryform';
 	}
 	public function get_title() {
-		return esc_html__( 'wink Itinerary Form', "wink" );
+		return esc_html__( 'Wink Itinerary Form', "wink2travel" );
 	}
 	public function get_icon() {
 		return 'eicon-external-link-square';
@@ -19,7 +19,7 @@ class elementorWinkItineraryForm extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			[
-				'label' => esc_html__( 'wink Options', "wink" )
+				'label' => esc_html__( 'Wink Options', "wink2travel" )
 			]
 		);
 

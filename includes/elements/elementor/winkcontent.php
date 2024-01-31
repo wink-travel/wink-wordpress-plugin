@@ -6,7 +6,7 @@ class elementorWinkContent extends \Elementor\Widget_Base {
 		return 'winkcontent';
 	}
 	public function get_title() {
-		return __( 'wink Content', "wink" );
+		return __( 'Wink Content', "wink2travel" );
 	}
 	public function get_icon() {
 		return 'eicon-external-link-square';
@@ -19,7 +19,7 @@ class elementorWinkContent extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			[
-				'label' => esc_html__( 'wink Options', "wink" )
+				'label' => esc_html__( 'Wink Options', "wink2travel" )
 			]
 		);
 		$shortcodes = array();
@@ -37,7 +37,7 @@ class elementorWinkContent extends \Elementor\Widget_Base {
 					'type' => \Elementor\Controls_Manager::SELECT,
 					'placeholder' => '',
 					'options' => $options,
-					'description' => esc_html__('Select any of your saved inventories. We strongly recommend to use this block only in full-width content areas and not in columns.', "wink" ),
+					'description' => esc_html__('Select any of your saved inventories. We strongly recommend to use this block only in full-width content areas and not in columns.', "wink2travel" ),
 				]
 			);
 		}

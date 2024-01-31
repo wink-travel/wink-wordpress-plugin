@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Wink Affiliate WordPress Plugin
  * Description: This plugin integrates your Wink affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
- * Version:     1.4.2
+ * Version:     2.0.1
  * Author:      Wink
  * Author URI:  https://wink.travel/
  * License:     GPL-3.0
@@ -56,7 +56,7 @@ class wink {
             get_admin_url() . 'admin.php'
         ) );
         // Create the link.
-        $settings_link = '<a href="'.$this->settingsURL.'" title="'.esc_html__('Wink settings',"wink").'">' . esc_html__( 'Settings',"wink" ) . '</a>';
+        $settings_link = '<a href="'.esc_url($this->settingsURL).'" title="'.esc_html__('Wink settings',"wink2travel").'">' . esc_html__( 'Settings',"wink2travel" ) . '</a>';
         // Adds the link to the end of the array.
         array_push(
             $links,
@@ -90,27 +90,27 @@ class wink {
         if (is_admin() && !get_option($this->clientIdKey, false)) {
             if ( current_user_can( 'manage_options' ) ) { // let's only show this to admin users
                 echo '<div class="notice notice-info">
-                <img src="'.$this->pluginURL.'img/logo.png" alt="'.esc_html__('Wink logo',"wink").'" width="100" style="margin-top: 10px;"><p><b>'.
-                esc_html__('Congratulations', "wink").
+                <img src="'.esc_url($this->pluginURL).'img/logo.png" alt="'.esc_html__('Wink logo',"wink2travel").'" width="100" style="margin-top: 10px;"><p><b>'.
+                esc_html__('Congratulations', "wink2travel").
                 '</b> '.
-                esc_html__('on installing the official Wink Affiliate WordPress plugin.',"wink").
-                ' <a href="'.$this->settingsURL.'" title="'.esc_html__('Wink settings',"wink").'">'.
-                esc_html__('Click here',"wink").
+                esc_html__('on installing the official Wink Affiliate WordPress plugin.',"wink2travel").
+                ' <a href="'.esc_url($this->settingsURL).'" title="'.esc_html__('Wink settings',"wink2travel").'">'.
+                esc_html__('Click here',"wink2travel").
                 '</a> '.
-                esc_html__('to add your Wink Client-ID and your Client-Secret',"wink").
+                esc_html__('to add your Wink Client-ID and your Client-Secret',"wink2travel").
                 '.</p>
                 </div>';
             }
         } else if (is_admin() && empty(get_option('permalink_structure'))) {
             echo '<div class="notice notice-info">
-            <img src="'.$this->pluginURL.'img/logo.png" alt="'.esc_html__('Wink logo',"wink").'" width="100" style="margin-top: 10px;"><p><b>'.
-            esc_html__('Attention!', "wink").
+            <img src="'.esc_url($this->pluginURL).'img/logo.png" alt="'.esc_html__('Wink logo',"wink2travel").'" width="100" style="margin-top: 10px;"><p><b>'.
+            esc_html__('Attention!', "wink2travel").
             '</b> '.
-            esc_html__('the Wink plugin requires permalinks. Please disable plain permalinks',"wink").
-            ' <a href="'.admin_url('options-permalink.php').'" title="'.esc_html__('Edit Permalinks',"wink").'">'.
-            esc_html__('here',"wink").
+            esc_html__('the Wink plugin requires permalinks. Please disable plain permalinks',"wink2travel").
+            ' <a href="'.admin_url('options-permalink.php').'" title="'.esc_html__('Edit Permalinks',"wink2travel").'">'.
+            esc_html__('here',"wink2travel").
             '</a> '.
-            esc_html__('and start using the plugin.',"wink").
+            esc_html__('and start using the plugin.',"wink2travel").
             '.</p>
             </div>';
         }
@@ -126,9 +126,9 @@ class wink {
             }
         }
         $wp_customize->add_section( $this->section, array(
-            'title'      => esc_html__( 'Wink Settings', "wink" ),
+            'title'      => esc_html__( 'Wink Settings', "wink2travel" ),
             'priority'   => 30,
-            'description' => '<p><img src="'.$this->pluginURL.'img/logo.png" alt="'.__('Wink logo',"wink").'" width="100"></p>'.esc_html__('This plugin connects your site to your Wink account. Once you entered your Client-ID, you can start using the Wink elements either as a Gutenberg block or via the shortcodes below', "wink" ).'<br>'.implode('<br>',$shortcodes)
+            'description' => '<p><img src="'.esc_url($this->pluginURL).'img/logo.png" alt="'.__('Wink logo',"wink2travel").'" width="100"></p>'.esc_html__('This plugin connects your site to your Wink account. Once you entered your Client-ID, you can start using the Wink elements either as a Gutenberg block or via the shortcodes below', "wink2travel" ).'<br>'.implode('<br>',$shortcodes)
         ) );
 
 
@@ -136,8 +136,8 @@ class wink {
             'type' => 'option'
         ));
         $wp_customize->add_control( $this->clientIdKey, array(
-            'label'      => esc_html__( 'Client-ID', "wink" ),
-            'description' => esc_html__('You can find your Wink Client-ID in your Wink account. After entering your Client-ID start using Wink by adding the Wink Gutenberg blocks to your website.', "wink"),
+            'label'      => esc_html__( 'Client-ID', "wink2travel" ),
+            'description' => esc_html__('You can find your Wink Client-ID in your Wink account. After entering your Client-ID start using Wink by adding the Wink Gutenberg blocks to your website.', "wink2travel"),
             'section'    => $this->section,
         ) );
 
@@ -145,8 +145,8 @@ class wink {
             'type' => 'option'
         ));
         $wp_customize->add_control( $this->clientSecretKey, array(
-            'label'      => esc_html__( 'Client-Secret', "wink" ),
-            'description' => esc_html__('You can find your Wink Client-Secret in your Wink account. After entering your Client-Secret and your Client-ID start using Wink by adding the Wink Gutenberg blocks to your website.', "wink"),
+            'label'      => esc_html__( 'Client-Secret', "wink2travel" ),
+            'description' => esc_html__('You can find your Wink Client-Secret in your Wink account. After entering your Client-Secret and your Client-ID start using Wink by adding the Wink Gutenberg blocks to your website.', "wink2travel"),
             'section'    => $this->section,
         ) );
         
@@ -156,8 +156,8 @@ class wink {
         ));
         $wp_customize->add_control( $this->environment, array(
             'type' => 'select',
-            'label'      => esc_html__( 'Environment', "wink" ),
-            'description' => esc_html__('Switch between environments. Use with caution and only if instructed by the Wink team.', "wink"),
+            'label'      => esc_html__( 'Environment', "wink2travel" ),
+            'description' => esc_html__('Switch between environments. Use with caution and only if instructed by the Wink team.', "wink2travel"),
             'section'    => $this->section,
             'choices' => array(
                 'production' => esc_html__( 'Live' ),
@@ -180,8 +180,8 @@ class wink {
                 $categories,
                 array(
                     array(
-                        'slug' => "wink".'-blocks',
-                        'title' => esc_html__( 'Wink Blocks', "wink" ),
+                        'slug' => "wink2travel".'-blocks',
+                        'title' => esc_html__( 'Wink Blocks', "wink2travel" ),
                     ),
                 )
             );
