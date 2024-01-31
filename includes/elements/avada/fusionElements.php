@@ -27,7 +27,7 @@ class winkFusionElements extends winkElements {
                     "name" => $shortcodeData['name'],
                     "shortcode" => $shortcodeData['code'],
                     "class" => "",
-                    "category" => esc_html__( "Content", "wink"),
+                    "category" => esc_html__( "Content", "wink2travel"),
                     "icon" => 'fusion-module-icon fusiona-widget',
                     "params" => $params
                 ));

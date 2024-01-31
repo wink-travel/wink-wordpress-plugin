@@ -5,7 +5,7 @@ class winkContent extends winkElements {
     function __construct() {
         parent::__construct();
         $this->blockCode = 'winkcontent';
-        $this->blockName = esc_html__( "wink Content", "wink" );
+        $this->blockName = esc_html__( "wink Content", "wink2travel" );
         $this->attributes = [
             'layout' => [
                 'default' => '',
@@ -27,7 +27,7 @@ class winkContent extends winkElements {
     function shortcodeData($shortcodes) {
         $winkContentData = $this->getwinkBearerToken();
         $values = array(
-            esc_html__( 'Select...',  "wink"  ) => ''
+            esc_html__( 'Select...',  "wink2travel"  ) => ''
 
         );
         foreach($winkContentData as $key => $localValue) {
@@ -41,10 +41,10 @@ class winkContent extends winkElements {
                     "type" => "dropdown",
                     "holder" => "div",
                     "class" => "",
-                    "heading" => __( "Inventory", "wink" ),
+                    "heading" => __( "Inventory", "wink2travel" ),
                     "param_name" => "layoutid",
                     'value' => $values,
-                    "description" => __('Select any of your saved layouts. We strongly recommend to use this block only in full-width content areas and not in columns.', "wink" )
+                    "description" => __('Select any of your saved layouts. We strongly recommend to use this block only in full-width content areas and not in columns.', "wink2travel" )
                 ),
             )
         );
@@ -96,10 +96,9 @@ class winkContent extends winkElements {
                 $config['layout'] = "HOTEL";
             }
         }
-        $jsonConfig = json_encode($config);
         ob_start();
         ?>
-        <wink-content-loader config='<?php echo trim($jsonConfig); ?>'></wink-content-loader>
+        <wink-content-loader config='<?php echo trim(json_encode($config)); ?>'></wink-content-loader>
         <?php
         $content = ob_get_contents();
         ob_end_clean();
@@ -267,7 +266,7 @@ class winkContent extends winkElements {
         );
 
         $jsData = array(
-            'blockCat' => "wink" . '-blocks',
+            'blockCat' => "wink2travel" . '-blocks',
             'imgURL' => $this->imgURL,
             'mode' => $this->environmentVal
         );
@@ -282,7 +281,7 @@ class winkContent extends winkElements {
             'editor_script' => 'winkBlockRenderer_' . $this->blockCode,
             'render_callback' => array($this, 'blockHandler'),
             'attributes' => $this->attributes,
-            'category' => "wink" . '-blocks'
+            'category' => "wink2travel" . '-blocks'
         ));
     }
 }

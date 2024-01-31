@@ -5,7 +5,7 @@ class winkSearch extends winkElements {
     function __construct() {
         parent::__construct();
         $this->blockCode = 'winksearch';
-        $this->blockName = esc_html__( "wink Search", "wink" );
+        $this->blockName = esc_html__( "Wink Search", "wink2travel" );
         add_action('init', array( $this,'gutenbergBlockRegistration' ) ); // Adding Gutenberg Block
         add_shortcode( $this->blockCode, array( $this,'blockHandler') );
         add_filter('winkShortcodes',array( $this, 'shortcodeData') );
@@ -62,7 +62,7 @@ class winkSearch extends winkElements {
         
 
         $jsData = array(
-            'blockCat'  => "wink".'-blocks',
+            'blockCat'  => "wink2travel".'-blocks',
             'imgURL'    => $this->imgURL,
             'mode'      => $this->environmentVal
         );
@@ -80,7 +80,7 @@ class winkSearch extends winkElements {
                 //     'type' => 'string'
                 // ]
             ],
-            'category' => "wink".'-blocks'
+            'category' => "wink2travel".'-blocks'
         ));
     }
 }
