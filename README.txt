@@ -27,7 +27,15 @@ Available components:
 
 == External Services ==
 
-This plugin requires a Wink account. It uses the Wink API to retrieve travel inventory data from your Wink account. You can find more information about Wink at [https://wink.travel](https://wink.travel "Influencer-driven travel booking").
+This plugin relies on a 3rd party service.
+
+Name: Wink API
+Description: This plugin requires that you have created an account with Wink. It uses the [Wink API](https://api.wink.travel) to retrieve travel inventory data from your Wink account. You can find more information about Wink at [https://wink.travel](https://wink.travel "Influencer-driven travel booking").
+How to create a Wink account: [https://sell.wink.travel](https://sell.wink.travel)
+Wink API endpoint: [https://api.wink.travel](https://api.wink.travel)
+Privacy policy: [https://wink.travel/privacy-policy](https://wink.travel/privacy-policy) 
+Terms & Conditions: [https://wink.travel/terms-and-conditions](https://wink.travel/terms-and-conditions)
+
 
 == Options ==
 There are multiple ways to use our components:
