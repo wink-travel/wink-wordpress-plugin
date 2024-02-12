@@ -107,7 +107,7 @@ class wink {
             esc_html__('Attention!', "wink2travel").
             '</b> '.
             esc_html__('the Wink plugin requires permalinks. Please disable plain permalinks',"wink2travel").
-            ' <a href="'.admin_url('options-permalink.php').'" title="'.esc_html__('Edit Permalinks',"wink2travel").'">'.
+            ' <a href="'.esc_url(admin_url('options-permalink.php')).'" title="'.esc_html__('Edit Permalinks',"wink2travel").'">'.
             esc_html__('here',"wink2travel").
             '</a> '.
             esc_html__('and start using the plugin.',"wink2travel").
