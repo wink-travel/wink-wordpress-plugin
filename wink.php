@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Wink Affiliate WordPress Plugin
  * Description: This plugin integrates your Wink affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
- * Version:     1.4.3
+ * Version:     1.4.4
  * Author:      Wink
  * Author URI:  https://wink.travel/
  * License:     GPL-3.0
@@ -107,7 +107,7 @@ class wink {
             esc_html__('Attention!', "wink2travel").
             '</b> '.
             esc_html__('the Wink plugin requires permalinks. Please disable plain permalinks',"wink2travel").
-            ' <a href="'.admin_url('options-permalink.php').'" title="'.esc_html__('Edit Permalinks',"wink2travel").'">'.
+            ' <a href="'.esc_url(admin_url('options-permalink.php')).'" title="'.esc_html__('Edit Permalinks',"wink2travel").'">'.
             esc_html__('here',"wink2travel").
             '</a> '.
             esc_html__('and start using the plugin.',"wink2travel").
