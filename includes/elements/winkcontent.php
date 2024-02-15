@@ -98,7 +98,7 @@ class winkContent extends winkElements {
         }
         ob_start();
         ?>
-        <wink-content-loader config='<?php echo filter_var(wp_json_encode($config, FILTER_SANITIZE_FULL_SPECIAL_CHARS)); ?>'></wink-content-loader>
+        <wink-content-loader config='<?php echo filter_var(wp_json_encode($config),FILTER_SANITIZE_FULL_SPECIAL_CHARS); ?>'></wink-content-loader>
         <?php
         $content = ob_get_contents();
         ob_end_clean();
