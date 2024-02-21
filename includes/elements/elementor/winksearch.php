@@ -38,7 +38,7 @@ class elementorWinkSearch extends \Elementor\Widget_Base {
 	protected function render() {
 
 		$settings = $this->get_settings_for_display();
-		echo wp_kses(do_shortcode('[winksearch]'));
+		echo do_shortcode('[winksearch]');
 		
 	}
 }

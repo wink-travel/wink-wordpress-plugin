@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Wink Affiliate WordPress Plugin
  * Description: This plugin integrates your Wink affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
- * Version:     1.4.6
+ * Version:     1.4.7
  * Author:      Wink
  * Author URI:  https://wink.travel/
  * License:     GPL-3.0
@@ -31,8 +31,8 @@ class wink {
         $this->clientSecretKey = 'winkSecret';
         $this->environment = 'winkEnvironment';
         $this->environmentVal = get_option($this->environment, 'production');
-        $this->pluginURL = wp_kses(trailingslashit( plugin_dir_url( __FILE__ ) ) );
-        $this->settingsURL = wp_kses(admin_url( '/customize.php?autofocus[section]='.$this->section));
+        $this->pluginURL = esc_url(trailingslashit( plugin_dir_url( __FILE__ ) ) );
+        $this->settingsURL = esc_url(admin_url( '/customize.php?autofocus[section]='.$this->section));
         add_action( 'customize_register', array( $this,'addSettings' ) ); // adding plugin settings to WP Customizer
         add_action('admin_notices', array( $this,'adminNotice' ) ); // adding admin notice if client id has not been entered
         //add_shortcode('wink', array( $this,'blockHandler' ) ); // Adding Shortcode
@@ -243,7 +243,45 @@ function winkRenderSilentRefresh( $atts ){
         header('Content-type: text/html');
         //$dir = plugin_dir_path( __FILE__ );
         if (file_exists(dirname(realpath(__FILE__)).'/includes/silent-refresh.html')) {
-            echo wp_kses(file_get_contents(dirname(realpath(__FILE__)).'/includes/silent-refresh.html'));
+            echo "<html>
+            <body>
+              <script>
+                var checks = [
+                  /[\?|&|#]code=/,
+                  /[\?|&|#]error=/,
+                  /[\?|&|#]token=/,
+                  /[\?|&|#]id_token=/
+                ];
+          
+                function isResponse(str) {
+                  if (!str) return false;
+                  for (var i = 0; i < checks.length; i++) {
+                    if (str.match(checks[i])) return true;
+                  }
+                  return false;
+                }
+          
+                var message = isResponse(location.hash)
+                  ? location.hash
+                  : '#' + location.search;
+          
+                // console.log('message', message);
+          
+                if (window.parent && window.parent !== window) {
+                    // if loaded as an iframe during silent refresh
+                    window.parent.postMessage(message, location.origin);
+                } else if (window.opener && window.opener !== window) {
+                    // if loaded as a popup during initial login
+                    window.opener.postMessage(message, location.origin);
+                } else {
+                    // last resort for a popup which has been through redirects and can't use window.opener
+                    localStorage.setItem('auth_hash', message);
+                    localStorage.removeItem('auth_hash');
+                }
+          
+              </script>
+            </body>
+          </html>";
         }
         die();
     }
