@@ -47,7 +47,7 @@ class elementorWinkContent extends \Elementor\Widget_Base {
 	}
 	protected function render() {
 		$settings = $this->get_settings_for_display();		
-		echo wp_kses(do_shortcode('[winkcontent layoutid="'.esc_html($settings['layoutid']).'"]'));
+		echo do_shortcode('[winkcontent layoutid="'.esc_html($settings['layoutid']).'"]');
 		
 	}
 }

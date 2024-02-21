@@ -38,7 +38,7 @@ class elementorWinkAccount extends \Elementor\Widget_Base {
 	protected function render() {
 
 		$settings = $this->get_settings_for_display();
-		echo wp_kses(do_shortcode('[winkaccount]'));
+		echo do_shortcode('[winkaccount]');
 		
 	}
 }
