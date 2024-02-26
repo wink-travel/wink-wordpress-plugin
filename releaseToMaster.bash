@@ -4,7 +4,7 @@
 # Copyright (c) wink.travel 2022.
 #
 
-echo "Releasing new version of Wink Affiliate WordPress plugin using git flow..."
+echo "Releasing new version of Wink WordPress plugin using git flow..."
 
 versionNumber=$(npx git-changelog-command-line --print-next-version --major-version-pattern BREAKING --minor-version-pattern feat)
 
@@ -47,7 +47,7 @@ case $yn in
   git push origin master:refs/heads/master
 
   echo "Creating GitHub release..."
-  gh release create $versionNumber --notes "See CHANGELOG.md for release notes" --target master
+  gh release create v$versionNumber --notes "See CHANGELOG.md for release notes" --target master
 
   echo "Pulling ORIGIN master into local branch..."
   git pull origin
@@ -70,7 +70,7 @@ case $yn in
   echo "Enabling git messages for a release again"
   export GIT_MERGE_AUTOEDIT=yes
 
-  echo "Wink Affiliate WordPress plugin $versionNumber has been successfully released"
+  echo "Wink WordPress plugin $versionNumber has been successfully released"
   ;;
 [nN])
   echo "Exiting..."
