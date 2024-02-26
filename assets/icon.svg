@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        font-family: FontAwesome6Pro-Solid, 'Font Awesome 6 Pro';
+        font-size: 160.21px;
+      }
+
+      .cls-2 {
+        fill: #8039d7;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <rect class="cls-2" width="256" height="256"/>
+  <text class="cls-1" transform="translate(47.89 190.97)"><tspan x="0" y="0"></tspan></text>
+</svg>
