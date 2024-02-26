@@ -139,6 +139,8 @@ build
 /.github
 /node_modules
 releaseToMaster.bash
+cliff.toml
+CHANGELOG.md
 .distignore
 .gitignore
 ###################################

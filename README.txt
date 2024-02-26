@@ -65,4 +65,4 @@ No. It is not yet compatible with PHP 8.x
 
 == Changelog ==
 
-See CHANGELOG.md for details
+See CHANGELOG.md in our public Github repo (https://github.com/wink-travel/wink-wordpress-plugin)[https://github.com/wink-travel/wink-wordpress-plugin] for details
