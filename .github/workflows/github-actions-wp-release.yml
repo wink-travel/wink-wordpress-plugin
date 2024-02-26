@@ -27,6 +27,6 @@ jobs:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SOURCE_DIR: /
-          SLUG: iko-travel-affiliate
+          SLUG: wink2travel
       
       - run: echo "🍏 This job's status is ${{ job.status }}."

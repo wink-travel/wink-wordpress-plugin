@@ -3,8 +3,8 @@ Contributors: MB-Jan, bjornharvold
 Tags: wink2travel, travel, hotel, booking, affiliate network
 Requires at least: 4.7
 Tested up to: 6.4
-Stable tag: 1.4.7
-Version: 1.4.7
+Stable tag: 1.4.8
+Version: 1.4.8
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -65,4 +65,4 @@ No. It is not yet compatible with PHP 8.x
 
 == Changelog ==
 
-See CHANGELOG.md for details
+See CHANGELOG.md in our public Github repo (https://github.com/wink-travel/wink-wordpress-plugin)[https://github.com/wink-travel/wink-wordpress-plugin] for details
