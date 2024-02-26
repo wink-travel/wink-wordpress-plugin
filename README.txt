@@ -17,7 +17,15 @@ Once you've created an account with Wink, you can install this WordPress plugin 
 
 Once you've entered your credentials, you can go to your Gutenberg editor and start embedding our web components into your site.
 
-Available components:
+== Supported page builders ==
+
+* Gutenberg
+* Avada
+* Elementor
+* WPBakery
+* Divi support here: [https://github.com/wink-travel/affiliate-wordpress-divi-plugin]
+
+== Short codes ==
 
 * [winklookup]: Works with ranked content grid. Type in a place you want to visit and have inventory displayed.
 * [winksearch]: Simple button to open up itinerary form.
@@ -47,7 +55,7 @@ There are multiple ways to use our components:
 
 = Is a Wink affiliate account required to use this plugin? =
 
-Yes. Learn more at [https://sell.wink.travel](https://sell.wink.travel "Your favorite travel inventory software").
+Yes. Learn more at [https://sell.wink.travel](https://sell.wink.travel "Your favorite travel inventory platform").
 
 = Is it compatible with PHP <8.0 =
 
