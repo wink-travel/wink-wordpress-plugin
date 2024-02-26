@@ -3,13 +3,13 @@ Contributors: MB-Jan, bjornharvold
 Tags: wink2travel, travel, hotel, booking, affiliate network
 Requires at least: 4.7
 Tested up to: 6.4
-Stable tag: 1.4.11
-Version: 1.4.11
+Stable tag: 1.4.12
+Version: 1.4.12
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Integrates WordPress with your Wink account. Learn more at [https://sell.wink.travel](https://sell.wink.travel "The travel monetization platform for influencers and affiliates").
+Integrates WordPress with your Wink account. Learn more at [https://sell.wink.travel](https://sell.wink.travel).
 
 == Description ==
 
@@ -23,7 +23,7 @@ Once you've entered your credentials, you can go to your Gutenberg editor and st
 * Avada
 * Elementor
 * WPBakery
-* Divi support here: [https://github.com/wink-travel/affiliate-wordpress-divi-plugin]
+* Divi support here: [https://github.com/wink-travel/affiliate-wordpress-divi-plugin](https://github.com/wink-travel/affiliate-wordpress-divi-plugin)
 
 == Short codes ==
 
@@ -69,7 +69,7 @@ No. It is not yet compatible with PHP 8.x
 
 * Support: developer@wink.travel
 
-[https://sell.wink.travel](https://sell.wink.travel "Your favorite travel inventory software")
+[https://sell.wink.travel](https://sell.wink.travel "The travel monetization platform for influencers and affiliates")
 
 == Changelog ==
 
