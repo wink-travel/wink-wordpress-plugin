@@ -141,6 +141,7 @@ build
 releaseToMaster.bash
 cliff.toml
 CHANGELOG.md
+README.md
 .distignore
 .gitignore
 ###################################
