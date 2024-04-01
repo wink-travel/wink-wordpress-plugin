@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Wink Affiliate WordPress Plugin
  * Description: This plugin integrates your Wink affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
- * Version:     1.4.14
+ * Version:     1.4.15
  * Author:      Wink
  * Author URI:  https://wink.travel/
  * License:     GPL-3.0
@@ -40,7 +40,7 @@ class wink {
         //add_action('init', array( $this,'gutenbergBlockRegistration' ) ); // Adding Gutenberg Block
         add_action( 'wp_enqueue_scripts', array($this, 'loadScripts' )); // too resource intensive to search all pages for Wink elements. Scripts need to be added all the time.
         
-        add_filter( 'clean_url', array($this,'jsHelper'), 11, 1 ); // Helper to add attribute to js tag
+        add_filter( 'script_loader_tag', array($this,'jsHelper'), 11, 3 ); // Helper to add attribute to js tag
         add_action( 'admin_enqueue_scripts', array($this,'customizeScripts'));
 
         add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array($this,'settingsLink' ));
@@ -69,21 +69,26 @@ class wink {
             wp_enqueue_style( 'winkCustomizer', $this->pluginURL . 'css/customize.css', array(), $this->version );
         }
     }
-    function jsHelper($url) {
+    function jsHelper($tag, $handle, $src) {
         $env = winkCore::environmentURL('js', $this->environmentVal);
         $optimize = array(
-            $env.'/elements.js?ver='.$this->version
+            'wink-Elements',
+            'wink-Elements-Poly',
+            'wink-Elements-main'
         );
-        if ( in_array( $url, $optimize ) ) { // this will be optimized
-            return "$url' defer data-cfasync='true";
+        if ( in_array( $handle, $optimize ) ) { // this will be optimized
+            $tag = '<script type="module" src="' . esc_url( $src ) . '" defer data-cfasync="true"></script>';
         }
-        return $url;
+        return $tag;
     }
+
     function loadScripts() {
         if (!empty(get_option($this->clientIdKey, false))) {
             $env = winkCore::environmentURL('js', $this->environmentVal);
             wp_enqueue_style('wink',$env.'/styles.css',array(),$this->version);
             wp_enqueue_script('wink-Elements',$env.'/elements.js',array(),$this->version,true);
+            // wp_enqueue_script('wink-Elements-Poly',$env.'/polyfills.js',array(),$this->version,true);
+            // wp_enqueue_script('wink-Elements-main',$env.'/main.js',array(),$this->version,true);
         }
     }
     function adminNotice() {
