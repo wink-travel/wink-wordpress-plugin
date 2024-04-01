@@ -2,7 +2,7 @@
 
 Changelog of wink-wordpress-plugin.
 
-## 1.4.14 (2024-02-26)
+## 1.4.15 (2024-03-31)
 
 ### Other changes
 
