@@ -96,9 +96,15 @@ class winkContent extends winkElements {
                 $config['layout'] = "HOTEL";
             }
         }
+		$attrs = join(' ', array_map(function($key) use ($config){
+			if(is_bool($config[$key])){
+				return $config[$key]?$key:'';
+			}
+			return $key.'="'.$config[$key].'"';
+		}, array_keys($config)));
         ob_start();
         ?>
-        <wink-content-loader config='<?php echo filter_var(wp_json_encode($config),FILTER_SANITIZE_FULL_SPECIAL_CHARS); ?>'></wink-content-loader>
+        <wink-content-loader <?php echo $attrs; ?>></wink-content-loader>
         <?php
         $content = ob_get_contents();
         ob_end_clean();
@@ -113,7 +119,7 @@ class winkContent extends winkElements {
             return htmlspecialchars($content);
         }
         //error_log(str_replace("&quot;",'"',$content));
-        return str_replace("&quot;",'"',$content);
+        return str_replace('&quot;','"',$content);
     }
 
     function getwinkBearerToken()
@@ -220,21 +226,21 @@ class winkContent extends winkElements {
             } else {
                 if (!empty($response['body'])) {
                     $data = json_decode($response['body'], true);
-                if (!empty($data)) {
-                    if (!empty($data['status']) && $data['error'] == 404) {
-                        delete_option( 'winkData' );
-                        delete_option( 'winkdataTime' );
-                        error_log('Wink - Unable to retrieve layout data.');
+                    if (!empty($data)) {
+                        if (!empty($data['status']) && $data['error'] == 404) {
+                            delete_option( 'winkData' );
+                            delete_option( 'winkdataTime' );
+                            error_log('Wink - Unable to retrieve layout data.');
+                        } else {
+                            // error_log('Wink - layout $data' . $data);
+                            update_option('winkData', $data);
+                            update_option('winkdataTime', 60 * 2 + current_time('timestamp')); // 2 minutes
+                            return $data;
+                        }
                     } else {
-                        // error_log('Wink - layout $data' . $data);
-                        update_option('winkData', $data);
-                        update_option('winkdataTime', 60 * 2 + current_time('timestamp')); // 2 minutes
-                        return $data;
+                        error_log('Wink - Unable to get response body content while retrieving layouts. Response array below:');
+                        error_log(print_r($response,true));
                     }
-                } else {
-                    error_log('Wink - Unable to get response body content while retrieving layouts. Response array below:');
-                    error_log(print_r($response,true));
-                }
             }
         }
         } else {
