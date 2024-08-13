@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Wink Affiliate WordPress Plugin
  * Description: This plugin integrates your Wink affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
- * Version:     1.4.16
+ * Version:     1.4.17
  * Author:      Wink
  * Author URI:  https://wink.travel/
  * License:     GPL-3.0
@@ -225,78 +225,4 @@ class winkCore {
 
 if (!empty(get_option('winkClientId', false))) {
     require_once('includes/elementHandler.php'); // Handles all Wink Elements (Only load it if the client id is present)
-}
-
-
-// make silent-refresh.html accessible on all sites using rewrite rules
-function winkAddRewriteRules() {
-    $page_slug = 'products'; // slug of the page you want to be shown to
-    $param     = 'winksilent';       // param name you want to handle on the page
-    add_rewrite_tag('%winksilent%', '([^&]+)', 'winksilent=');
-    add_rewrite_rule('silent-refresh\.html?([^/]*)', 'index.php?winksilent=true', 'top');
-}
-
-function winkAddQueryVars($vars) {
-    $vars[] = 'winksilent'; // param name you want to handle on the page
-    return $vars;
-}
-add_filter('query_vars', 'winkAddQueryVars');
-
-function winkRenderSilentRefresh( $atts ){
-    $do = get_query_var( 'winksilent' );
-    if ( !empty($do) ) {
-        header('Content-type: text/html');
-        //$dir = plugin_dir_path( __FILE__ );
-        if (file_exists(dirname(realpath(__FILE__)).'/includes/silent-refresh.html')) {
-            echo "<html>
-            <body>
-              <script>
-                var checks = [
-                  /[\?|&|#]code=/,
-                  /[\?|&|#]error=/,
-                  /[\?|&|#]token=/,
-                  /[\?|&|#]id_token=/
-                ];
-          
-                function isResponse(str) {
-                  if (!str) return false;
-                  for (var i = 0; i < checks.length; i++) {
-                    if (str.match(checks[i])) return true;
-                  }
-                  return false;
-                }
-          
-                var message = isResponse(location.hash)
-                  ? location.hash
-                  : '#' + location.search;
-          
-                // console.log('message', message);
-          
-                if (window.parent && window.parent !== window) {
-                    // if loaded as an iframe during silent refresh
-                    window.parent.postMessage(message, location.origin);
-                } else if (window.opener && window.opener !== window) {
-                    // if loaded as a popup during initial login
-                    window.opener.postMessage(message, location.origin);
-                } else {
-                    // last resort for a popup which has been through redirects and can't use window.opener
-                    localStorage.setItem('auth_hash', message);
-                    localStorage.removeItem('auth_hash');
-                }
-          
-              </script>
-            </body>
-          </html>";
-        }
-        die();
-    }
-}
-add_action( 'parse_query', 'winkRenderSilentRefresh' );
-
-register_activation_hook( __FILE__, 'winkActivationRewrite' );
-add_action( 'init' , 'winkAddRewriteRules', 10, 2 );
-
-function winkActivationRewrite() {
-    winkAddRewriteRules();
-    flush_rewrite_rules();
 }

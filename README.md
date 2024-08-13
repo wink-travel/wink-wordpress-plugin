@@ -35,3 +35,8 @@ There are 2 ways to use our components:
 * Support: developer@wink.travel
 
 [https://sell.wink.travel]: https://sell.wink.travel
+
+### Contributors
+
+<!-- readme: collaborators,contributors -start -->
+<!-- readme: collaborators,contributors -end -->
