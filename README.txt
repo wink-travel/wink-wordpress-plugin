@@ -9,7 +9,7 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Integrates WordPress with your Wink account. Learn more at [https://sell.wink.travel](https://sell.wink.travel).
+Integrates WordPress with your Wink account. Learn more at [https://studio.wink.travel](https://studio.wink.travel).
 
 == Description ==
 
@@ -39,7 +39,7 @@ This plugin relies on a 3rd party service.
 
 Name: Wink API
 Description: This plugin requires that you have created an account with Wink. It uses the [Wink API](https://api.wink.travel) to retrieve travel inventory data from your Wink account. You can find more information about Wink at [https://wink.travel](https://wink.travel "Influencer-driven travel booking").
-How to create a Wink account: [https://sell.wink.travel](https://sell.wink.travel)
+How to create a Wink account: [https://studio.wink.travel](https://studio.wink.travel)
 Wink API endpoint: [https://api.wink.travel](https://api.wink.travel)
 Privacy policy: [https://wink.travel/privacy-policy](https://wink.travel/privacy-policy) 
 Terms & Conditions: [https://wink.travel/terms-and-conditions](https://wink.travel/terms-and-conditions)
@@ -55,7 +55,7 @@ There are multiple ways to use our components:
 
 = Is a Wink affiliate account required to use this plugin? =
 
-Yes. Learn more at [https://sell.wink.travel](https://sell.wink.travel "Your favorite travel inventory platform").
+Yes. Learn more at [https://studio.wink.travel](https://studio.wink.travel "Your favorite travel inventory platform").
 
 = Is it compatible with PHP <8.0 =
 
@@ -69,8 +69,8 @@ No. It is not yet compatible with PHP 8.x
 
 * Support: developer@wink.travel
 
-[https://sell.wink.travel](https://sell.wink.travel "The travel monetization platform for influencers and affiliates")
+[https://studio.wink.travel](https://studio.wink.travel "The travel monetization platform for influencers and affiliates")
 
 == Changelog ==
 
-See CHANGELOG.md in our public Github repo (https://github.com/wink-travel/wink-wordpress-plugin)[https://github.com/wink-travel/wink-wordpress-plugin] for details
+See CHANGELOG.md in our public Github repo https://github.com/wink-travel/wink-wordpress-plugin for details
