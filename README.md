@@ -39,4 +39,21 @@ There are 2 ways to use our components:
 ### Contributors
 
 <!-- readme: collaborators,contributors -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/bjornharvold">
+            <img src="https://avatars.githubusercontent.com/u/641791?v=4" width="100;" alt="bjornharvold"/>
+            <br />
+            <sub><b>Bjorn Harvold</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/MB-Jan">
+            <img src="https://avatars.githubusercontent.com/u/17821126?v=4" width="100;" alt="MB-Jan"/>
+            <br />
+            <sub><b>Null</b></sub>
+        </a>
+    </td></tr>
+</table>
 <!-- readme: collaborators,contributors -end -->
