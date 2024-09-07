@@ -2,6 +2,37 @@
 
 Changelog of wink-wordpress-plugin.
 
+## 1.4.19 (2024-09-07)
+
+### Other changes
+
+**Merge branch 'release/1.4.19'**
+
+
+[dad49](https://github.com/wink-travel/wink-wordpress-plugin/commit/dad49b549e35a8a) Bjorn Harvold *2024-09-07 04:26:43*
+
+**:twisted_rightwards_arrows: doc: merged CHANGELOG.md from master into develop branch**
+
+
+[e3324](https://github.com/wink-travel/wink-wordpress-plugin/commit/e33241ec3945581) Bjorn Harvold *2024-08-13 09:06:58*
+
+**Merge tag '1.4.18' into develop**
+
+* 1.4.18 1.4.18 
+
+[ebf56](https://github.com/wink-travel/wink-wordpress-plugin/commit/ebf560d156ab712) Bjorn Harvold *2024-08-13 09:06:35*
+
+
+## v1.4.18 (2024-08-13)
+
+### Other changes
+
+**:memo: doc: Updated CHANGELOG.md...**
+
+
+[a7649](https://github.com/wink-travel/wink-wordpress-plugin/commit/a76499f29fda258) Bjorn Harvold *2024-08-13 09:06:36*
+
+
 ## 1.4.18 (2024-08-13)
 
 ### Other changes
