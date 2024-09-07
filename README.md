@@ -27,16 +27,13 @@ Once you've entered your credentials, you can go to your Gutenberg editor and st
 ### Options ###
 There are 2 ways to use our components:
 
-1. By selecting our custom Gutenberg blocks directly in the editor
-2. Using the short code that accompanies each web component
+1. Use our page builder support to drag and drop features and inventory into your posts and pages.
+2. Using our short codes... There is one for each of our Web Components.
 
 ### Support ###
 
-* Support: developer@wink.travel
+For questions and support, please proceed in this order:
 
-[https://studio.wink.travel]: https://studio.wink.travel
-
-### Contributors
-
-<!-- readme: collaborators,contributors -start -->
-<!-- readme: collaborators,contributors -end -->
+1. Read our documentation at [Wink Academy](https://academy.wink.travel).
+2. If you think you found a bug, please create an issue here and describe the problem.
+3. If you need immediate support, e-mail us at [developer@wink.travel](mailto:developer@wink.travel).
