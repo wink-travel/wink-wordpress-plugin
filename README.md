@@ -13,16 +13,16 @@ Once you've entered your credentials, you can go to your Gutenberg editor and st
 * Avada
 * Elementor
 * WPBakery
-* Divi support here: [https://github.com/wink-travel/affiliate-wordpress-divi-plugin]
+* Divi support can be found here: [https://github.com/wink-travel/affiliate-wordpress-divi-plugin]
 
 
 ### Short codes ###
 
-* [winklookup]: Works with ranked content grid. Type in a place you want to visit and have inventory displayed.
-* [winksearch]: Simple button to open up itinerary form.
-* [winkaccount]Account: Button to let you authenticate. Once authenticated, it turns into a dropdown with account options.
-* [winkitinerary]Itinerary: Same as search button, only it contains itinerary information as button text.
-* [winkcontent]: Lets you embed the inventory you've selected on WINK directly into a page or post.
+* [winklookup] - Works with ranked content grid. Type in a place you want to visit and have inventory displayed.
+* [winksearch] - Simple button to open up itinerary form.
+* [winkaccount] - Account: Button to let you authenticate. Once authenticated, it turns into a dropdown with account options.
+* [winkitinerary] - Same as search button, only it contains itinerary information as button text.
+* [winkcontent] - Lets you embed the inventory you've selected on Wink directly into a page or post.
 
 ### Options ###
 There are 2 ways to use our components:
