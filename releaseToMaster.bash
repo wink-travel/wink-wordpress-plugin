@@ -4,80 +4,94 @@
 # Copyright (c) wink.travel 2022.
 #
 
+set -e  # Abort immediately if any command fails
+
 echo "Releasing new version of Wink WordPress plugin using git flow..."
 
-versionNumber=$(npx git-changelog-command-line --print-next-version --major-version-pattern BREAKING --minor-version-pattern feat)
+echo "Disabling git messages for a release"
+export GIT_MERGE_AUTOEDIT=no
 
-read -p "Do you want to proceed with version $versionNumber? (y/n) " yn
+# Commit any uncommitted work so the release starts from a clean state
+git commit -a -m "chore: checking in anything in current branch [no ci]" 2>/dev/null || true
+
+echo "Checking out develop branch..."
+git checkout develop
+git pull
+
+CURRENT_VERSION=$(npx git-changelog-command-line --print-next-version --major-version-pattern BREAKING --minor-version-pattern feat)
+PREV_VERSION=$(git describe --tags --abbrev=0)
+
+echo ""
+echo "Previous version : $PREV_VERSION"
+echo "Next version     : $CURRENT_VERSION"
+echo ""
+echo "Unreleased changes:"
+git cliff --unreleased --tag "$CURRENT_VERSION" --sort newest
+echo ""
+
+read -p "Do you want to proceed with version $CURRENT_VERSION? (y/n) " yn
+
+restore_git_autoedit() {
+  export GIT_MERGE_AUTOEDIT=yes
+}
 
 case $yn in
 [yY])
-  echo "Disabling git messages for a release"
-  export GIT_MERGE_AUTOEDIT=no
-
-  git cliff --unreleased --tag $versionNumber --sort newest
-
-  echo "Committing version changes for $versionNumber"
-  sed -i '' "s/Version.*/Version: $versionNumber/g" README.txt
-  sed -i '' "s/Stable tag.*/Stable tag: $versionNumber/g" README.txt
-  sed -i '' "s/Version.*/Version:     $versionNumber/g" wink.php
-
-  git commit -a -m "build: arrow_up: bumping version and merging to master
-
-  Version bump to $versionNumber registered
-
-  Ops: $USER
-  "
+  echo "Bumping version numbers in source files..."
+  sed -i '' "s/Version.*/Version: $CURRENT_VERSION/g" README.txt
+  sed -i '' "s/Stable tag.*/Stable tag: $CURRENT_VERSION/g" README.txt
+  sed -i '' "s/Version.*/Version:     $CURRENT_VERSION/g" wink.php
 
   git push --follow-tags origin develop
 
-  echo "Calling 'git flow release $versionNumber'"
-  git flow release start $versionNumber
+  echo "Starting release branch for $CURRENT_VERSION..."
+  git flow release start "$CURRENT_VERSION"
 
-  echo "Calling 'git flow finish -m $versionNumber $versionNumber'"
-  git flow release finish -m $versionNumber $versionNumber
+  echo "Updating CHANGELOG.md on release branch..."
+  npx git-changelog-command-line -of CHANGELOG.md
+  git commit -a -m "docs: generated changelog and bumped version to $CURRENT_VERSION [no ci]"
+
+  echo "Finishing release $CURRENT_VERSION..."
+  git flow release finish -m "$CURRENT_VERSION [no ci]" "$CURRENT_VERSION"
 
   echo "Checking out master..."
   git checkout master
-
-  echo "Updating CHANGELOG.md..."
-  npx git-changelog-command-line -of CHANGELOG.md
-  git commit -a -m ":memo: doc: Updated CHANGELOG.md..."
-
-  git push origin master:refs/heads/master
-
-  echo "Creating GitHub release..."
-  gh release create v$versionNumber --notes "See CHANGELOG.md for release notes" --target master
-
-  echo "Pulling ORIGIN master into local branch..."
   git pull origin
+  git push
+  git push --tags
 
-  echo "Pushing master (+ tags) to ORIGIN..."
+  echo "Checking out develop..."
+  git checkout develop
+  git pull origin
   git push
 
-  echo "Checking out local develop branch..."
-  git checkout develop
+  echo "Generating release notes from commits since $PREV_VERSION..."
+  git log "$PREV_VERSION".."$CURRENT_VERSION" --pretty=format:"%s" \
+    | grep -v '\[no ci\]' \
+    | sed -E 's/^(feat|fix|chore|docs|style|refactor|perf|test)(\([^)]+\))?: /- \1\2: /' \
+    | grep '^-' \
+    | sort | uniq > release-notes.md
 
-  echo "Pulling ORIGIN develop into local branch..."
-  git pull origin
+  echo "Creating GitHub release v$CURRENT_VERSION..."
+  gh release create "v$CURRENT_VERSION" -F release-notes.md --target master --latest
+  rm release-notes.md
 
   echo "Merging CHANGELOG.md from master into develop..."
   git merge master --no-edit -m ":twisted_rightwards_arrows: doc: merged CHANGELOG.md from master into develop branch" --strategy-option theirs
-
-  echo "Pushing develop to ORIGIN..."
   git push
 
-  echo "Enabling git messages for a release again"
-  export GIT_MERGE_AUTOEDIT=yes
+  restore_git_autoedit
 
-  echo "Wink WordPress plugin $versionNumber has been successfully released"
+  echo "Wink WordPress plugin $CURRENT_VERSION has been successfully released"
   ;;
 [nN])
   echo "Exiting..."
-  exit
+  restore_git_autoedit
+  exit 0
   ;;
 *)
   echo "Invalid response"
+  restore_git_autoedit
   exit 1
   ;;
 esac
