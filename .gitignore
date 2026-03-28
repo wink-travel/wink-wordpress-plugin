@@ -31,6 +31,12 @@ wp-content/upgrade/
 wp-content/mu-plugins/
 
 ###################################
+# Local config overrides
+###################################
+
+settings.local.json
+
+###################################
 # IDEs / Editors
 ###################################
 
