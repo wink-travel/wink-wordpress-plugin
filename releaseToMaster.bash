@@ -50,13 +50,15 @@ git flow release finish -m "$CURRENT_VERSION [no ci]" "$CURRENT_VERSION"
 
 echo "Checking out master..."
 git checkout master
-git pull --ff-only origin
+git fetch --tags origin
+git merge --ff-only origin/master
 git push
 git push --tags
 
 echo "Checking out develop..."
 git checkout develop
-git pull --ff-only origin
+git fetch --tags origin
+git merge --ff-only origin/develop
 git push
 
 echo "Generating release notes from commits since $PREV_VERSION..."
