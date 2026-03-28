@@ -1,142 +1,58 @@
 ###################################
-# general ignore patterns
+# PHP / Composer
 ###################################
 
-build/
-obj/
-*.o
-Debug*/
-Release*/
-*.mode*
-*.app/
-*.pyc
-.svn/
+vendor/
+.env
+.env.*
+!.env.example
+
+###################################
+# PHPUnit
+###################################
+
+.phpunit.result.cache
+.phpunit.cache/
+coverage/
+build/logs/
+
+###################################
+# WordPress
+###################################
+
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+wp-content/advanced-cache.php
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/upgrade/
+wp-content/mu-plugins/
+
+###################################
+# IDEs / Editors
+###################################
+
 .idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+nbproject/
 
 ###################################
-# IDE specific
+# OS
 ###################################
 
-# XCode
-*.pbxuser
-*.perspective
-*.perspectivev3
-*.mode1v3
-*.mode2v3
-
-# XCode 4
-xcuserdata
-*.xcworkspace
-
-# Code::Blocks
-*.depend
-*.layout
-
-# Visual Studio
-*.sdf
-*.opensdf
-*.suo
-ipch/
-
-# Eclipse
-.metadata
-local.properties
-.externalToolBuilders
-
-
-###################################
-# OS Specific
-###################################
-
-# Linux
-*~
-# KDE
-.directory
-
-# OSX
-**/.DS_Store
 .DS_Store
-*.swp
-*~.nib
-# Thumbnails
-._*
-
-# Windows
-# Windows image file caches
 Thumbs.db
-# Folder config file
 Desktop.ini
-
-# Android
-.csettings
-/libs/openFrameworksCompiled/project/android/paths.make
+*~
 
 ###################################
-# Misc filetypes
+# Logs & temp files
 ###################################
 
-.mailmap
-*.mov
-
-###################################
-# EAGLE Cad
-###################################
-
-# Backup files
-*.s#?
-*.b#?
-*.l#?
-# Eagle project file
-# It contains a serial number and references to the file structure
-# on your computer.
-# comment the following line if you want to have your project file included.
-#eagle.epf
-# CAM files
-*.$$$
-*.cmp
-*.ly2
-*.l15
-*.sol
-*.plc
-*.stc
-*.sts
-*.crc
-*.crs
-*.dri
-*.drl
-*.gpi
-*.pls
-*.drd
-*.drd.*
-*.info
-*.eps
-
-###################################
-# Node.js
-###################################
-
-**/node_modules
-lib-cov
-lcov.info
-*.seed
 *.log
-*.csv
-*.dat
-*.out
 *.pid
-*.gz
-pids
-logs
-results
-build
-.grunt
-
-###################################
-# App Specific 
-###################################
-
-
-
-
-
-###################################
+*.swp
