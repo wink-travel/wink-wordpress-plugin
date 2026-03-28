@@ -2,6 +2,33 @@
 
 Changelog of wink-wordpress-plugin.
 
+## 1.5.0 (2026-03-28)
+
+### Features
+
+-  PHP 8 modernization, security hardening, and full unit test suite (#5) ([8c5d1](https://github.com/wink-travel/wink-wordpress-plugin/commit/8c5d1c96f760530) Bjorn Harvold)  
+
+### Other changes
+
+**Add claude GitHub actions 1774694142117 (#6)**
+
+* &quot;Claude PR Assistant workflow&quot; 
+* &quot;Claude Code Review workflow&quot; 
+
+[b80e8](https://github.com/wink-travel/wink-wordpress-plugin/commit/b80e8f911fbec8c) Bjorn Harvold *2026-03-28 10:36:18*
+
+**:twisted_rightwards_arrows: doc: merged CHANGELOG.md from master into develop branch**
+
+
+[90a2c](https://github.com/wink-travel/wink-wordpress-plugin/commit/90a2ce66d10b042) Bjorn Harvold *2024-09-07 04:43:40*
+
+**Merge tag '1.4.20' into develop**
+
+* 1.4.20 1.4.20 
+
+[770c7](https://github.com/wink-travel/wink-wordpress-plugin/commit/770c7b10567f6a8) Bjorn Harvold *2024-09-07 04:43:19*
+
+
 ## v1.4.20 (2024-09-07)
 
 ### Other changes
