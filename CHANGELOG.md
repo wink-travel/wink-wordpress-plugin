@@ -2,6 +2,16 @@
 
 Changelog of wink-wordpress-plugin.
 
+## 1.5.1 (2026-03-28)
+
+### Other changes
+
+**Merge branch 'master' into develop**
+
+
+[d51a3](https://github.com/wink-travel/wink-wordpress-plugin/commit/d51a3adee1e7e48) Bjorn Harvold *2026-03-28 10:42:38*
+
+
 ## 1.5.0 (2026-03-28)
 
 ### Features
