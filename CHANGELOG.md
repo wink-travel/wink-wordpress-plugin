@@ -2,6 +2,16 @@
 
 Changelog of wink-wordpress-plugin.
 
+## v1.4.20 (2024-09-07)
+
+### Other changes
+
+**:memo: doc: Updated CHANGELOG.md...**
+
+
+[d5988](https://github.com/wink-travel/wink-wordpress-plugin/commit/d5988116ab1fb2a) Bjorn Harvold *2024-09-07 04:43:20*
+
+
 ## 1.4.20 (2024-09-07)
 
 ### Other changes
