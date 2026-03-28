@@ -1,88 +1,101 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+/**
+ * Wink Search block element.
+ *
+ * Renders a <wink-search-button> custom element that opens the Wink travel search
+ * interface. Supports Gutenberg blocks, shortcodes, WPBakery, Elementor, and Avada.
+ */
 class winkSearch extends winkElements {
+    /**
+     * Registers the Gutenberg block, shortcode, and Customizer data filter for this element.
+     */
     function __construct() {
         parent::__construct();
         $this->blockCode = 'winksearch';
-        $this->blockName = esc_html__( "Wink Search", "wink2travel" );
-        add_action('init', array( $this,'gutenbergBlockRegistration' ) ); // Adding Gutenberg Block
-        add_shortcode( $this->blockCode, array( $this,'blockHandler') );
-        add_filter('winkShortcodes',array( $this, 'shortcodeData') );
+        $this->blockName = esc_html__( 'Wink Search', 'wink2travel' );
+        add_action( 'init', array( $this, 'gutenbergBlockRegistration' ) );
+        add_shortcode( $this->blockCode, array( $this, 'blockHandler' ) );
+        add_filter( 'winkShortcodes', array( $this, 'shortcodeData' ) );
     }
-    function shortcodeData($shortcodes) {
+
+    /**
+     * Provides shortcode metadata for the Customizer settings panel and WPBakery.
+     *
+     * @param  array $shortcodes Existing shortcode definitions.
+     * @return array Shortcode definitions with this element appended.
+     */
+    function shortcodeData( array $shortcodes ): array {
         $shortcodes[] = array(
-            'code' => $this->blockCode,
-            'name' => $this->blockName,
-            'params' => array() 
+            'code'   => $this->blockCode,
+            'name'   => $this->blockName,
+            'params' => array(),
         );
         return $shortcodes;
     }
-    function blockHandler($atts) {
+
+    /**
+     * Registers the Gutenberg block and schedules the elements stylesheet to be loaded
+     * in the block editor only. Extends the base implementation.
+     *
+     * The stylesheet is registered via the 'enqueue_block_editor_assets' action rather
+     * than during 'init', which would enqueue it on every front-end page load.
+     *
+     * @return void
+     */
+    function gutenbergBlockRegistration(): void {
+        parent::gutenbergBlockRegistration();
+        add_action( 'enqueue_block_editor_assets', array( $this, 'enqueueEditorStyle' ) );
+    }
+
+    /**
+     * Enqueues the elements stylesheet for the Gutenberg block editor.
+     * Hooked to 'enqueue_block_editor_assets'; runs only when the editor is active.
+     *
+     * @return void
+     */
+    function enqueueEditorStyle(): void {
+        wp_enqueue_style(
+            'winkBlockRenderer_' . $this->blockCode,
+            $this->pluginURL . 'elements/css/elements.css',
+            array(),
+            false
+        );
+    }
+
+    /**
+     * Outputs the <wink-app-loader> footer component and renders the block HTML.
+     * Used as the render_callback for register_block_type() and as the shortcode handler.
+     *
+     * @param  array|string $atts Block attributes or shortcode attributes (unused for this element).
+     * @return string The rendered HTML for this element.
+     */
+    function blockHandler( $atts ): string {
         $this->coreFunction();
         return $this->winkElement();
     }
-    function winkElement() {
+
+    /**
+     * Returns the HTML for the <wink-search-button> custom element.
+     *
+     * In the Gutenberg editor context the HTML is returned as an escaped string so the
+     * block preview renders the tag text rather than trying to initialise the web component.
+     *
+     * @return string The element HTML.
+     */
+    function winkElement(): string {
         ob_start();
         ?><wink-search-button></wink-search-button><?php
-        $content = ob_get_contents();
-        ob_end_clean();
-        $isAdmin = false;
-        if (!empty($_REQUEST['context']) && $_REQUEST['context'] == 'edit') {
-            $isAdmin = true;
-        }
-        if (!empty($_REQUEST['action']) && $_REQUEST['action'] == 'edit') {
-            $isAdmin = true;
-        }
-        if (is_admin( ) || $isAdmin) { // in editor we should show the raw HTML to make it easier to click on
-            return htmlspecialchars($content);
+        $content = (string) ob_get_clean();
+
+        if ( $this->isEditorContext() ) {
+            return htmlspecialchars( $content );
         }
         return $content;
     }
-
-    function gutenbergBlockRegistration() {
-        // Skip block registration if Gutenberg is not enabled/merged.
-        if (!function_exists('register_block_type')) {
-            return;
-        }
-        
-        $dir = dirname(__FILE__);
-
-        $gutenbergJS = $this->blockCode.'.js';
-        wp_register_script('winkBlockRenderer_'.$this->blockCode, $this->pluginURL . 'elements/js/'.$gutenbergJS,
-            array(
-                'wp-blocks',
-                'wp-i18n',
-                'wp-element',
-                'wp-components',
-                'wp-editor'
-            ),
-            false
-        );
-        
-
-        $jsData = array(
-            'blockCat'  => "wink2travel".'-blocks',
-            'imgURL'    => $this->imgURL,
-            'mode'      => $this->environmentVal
-        );
-
-        wp_localize_script( 'winkBlockRenderer_'.$this->blockCode, 'winkData', $jsData );
-        
-        wp_enqueue_style(
-            'winkBlockRenderer_'.$this->blockCode, $this->pluginURL . 'elements/css/elements.css', array(), false);
-        register_block_type('wink-blocks/'.$this->blockCode, array(
-            'editor_script' => 'winkBlockRenderer_'.$this->blockCode,
-            'render_callback' => array($this,'blockHandler'),
-            'attributes' => [
-                // 'configurationId' => [
-                //     'default' => '',
-                //     'type' => 'string'
-                // ]
-            ],
-            'category' => "wink2travel".'-blocks'
-        ));
-    }
 }
 
-$winkSearch = new winkSearch();
+if ( ! defined( 'WINK_TESTING' ) ) {
+    $winkSearch = new winkSearch();
+}
