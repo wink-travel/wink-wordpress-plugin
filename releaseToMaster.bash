@@ -45,6 +45,31 @@ echo "Updating CHANGELOG.md on release branch..."
 npx git-changelog-command-line -of CHANGELOG.md
 git commit -a -m "docs: generated changelog and bumped version to $CURRENT_VERSION [no ci]"
 
+echo "Checking for merge conflicts before finishing release..."
+if ! git merge --no-commit --no-ff master >/dev/null 2>&1; then
+  conflicted_files=$(git diff --name-only --diff-filter=U)
+  echo ""
+  echo "❌ RELEASE STOPPED: Merge conflicts detected between release branch and master"
+  echo ""
+  echo "Conflicted files:"
+  echo "$conflicted_files" | sed 's/^/  - /'
+  echo ""
+  echo "Resolution steps:"
+  echo "  1. Abort this release: git merge --abort"
+  echo "  2. Abort release branch: git flow release cancel $CURRENT_VERSION"
+  echo "  3. Switch to develop: git checkout develop"
+  echo "  4. Resolve conflicts in the files listed above"
+  echo "  5. Commit the resolution: git commit -m 'resolve: merge conflicts before release'"
+  echo "  6. Push to origin: git push origin develop"
+  echo "  7. Re-run this release script"
+  echo ""
+  git merge --abort
+  exit 1
+else
+  git merge --abort
+  echo "✓ No conflicts detected between release and master"
+fi
+
 echo "Finishing release $CURRENT_VERSION..."
 git flow release finish -m "$CURRENT_VERSION [no ci]" "$CURRENT_VERSION"
 
