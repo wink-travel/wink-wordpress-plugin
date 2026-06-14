@@ -76,6 +76,12 @@ else
   exit 1
 fi
 
+# Ensure git-flow merge/back-merge commits are skipped by CI, independent of any
+# machine-specific global git config. git-flow-next exposes no CLI flag for the
+# back-merge message, so the only portable way to tag it [no ci] is local config.
+git config --local gitflow.release.finish.mergemessage  "chore: merge %b into %p [no ci]"
+git config --local gitflow.release.finish.updatemessage "chore: sync %b from %p [no ci]"
+
 echo "Finishing release $CURRENT_VERSION..."
 git flow release finish -m "$CURRENT_VERSION [no ci]" "$CURRENT_VERSION"
 
@@ -108,7 +114,7 @@ gh release create "v$CURRENT_VERSION" -F release-notes.md --target master --late
 rm release-notes.md
 
 echo "Merging CHANGELOG.md from master into develop..."
-git merge master --no-edit -m ":twisted_rightwards_arrows: doc: merged CHANGELOG.md from master into develop branch" --strategy-option theirs
+git merge master --no-edit -m ":twisted_rightwards_arrows: doc: merged CHANGELOG.md from master into develop branch [no ci]" --strategy-option theirs
 git push
 
 echo "Wink WordPress plugin $CURRENT_VERSION has been successfully released"
