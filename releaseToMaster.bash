@@ -46,7 +46,16 @@ npx git-changelog-command-line -of CHANGELOG.md
 git commit -a -m "docs: generated changelog and bumped version to $CURRENT_VERSION [no ci]"
 
 echo "Checking for merge conflicts before finishing release..."
-if ! git merge --no-commit --no-ff master >/dev/null 2>&1; then
+# In normal GitFlow, master is already an ancestor of the release branch, so the
+# dry-run merge reports "Already up to date." WITHOUT creating a merge state — a
+# following 'git merge --abort' would then fail ("MERGE_HEAD missing"). Short-
+# circuit that case, and only abort when a merge is actually in progress.
+if git merge-base --is-ancestor master HEAD; then
+  echo "✓ master is already contained in this release branch — no merge needed"
+elif git merge --no-commit --no-ff master >/dev/null 2>&1; then
+  git merge --abort
+  echo "✓ No conflicts detected between release and master"
+else
   conflicted_files=$(git diff --name-only --diff-filter=U)
   echo ""
   echo "❌ RELEASE STOPPED: Merge conflicts detected between release branch and master"
@@ -63,11 +72,8 @@ if ! git merge --no-commit --no-ff master >/dev/null 2>&1; then
   echo "  6. Push to origin: git push origin develop"
   echo "  7. Re-run this release script"
   echo ""
-  git merge --abort
+  [[ -f .git/MERGE_HEAD ]] && git merge --abort
   exit 1
-else
-  git merge --abort
-  echo "✓ No conflicts detected between release and master"
 fi
 
 echo "Finishing release $CURRENT_VERSION..."
