@@ -19,6 +19,34 @@ echo "Checking out develop branch..."
 git checkout develop
 git pull
 
+# --- Pre-flight conflict guard (run BEFORE release-start / any mutation) ---
+# Releasing merges develop into master. If develop has diverged (a previous
+# release's back-merge was lost, or commits landed straight on master), that
+# merge can CONFLICT and break the release AFTER the release branch already
+# exists -- stranding you on a half-built branch. Detect it here, in memory:
+# `git merge-tree` never touches the working tree (requires git >= 2.38).
+echo "==> Pre-flight: checking develop merges into master without conflicts..."
+if git merge-base --is-ancestor master develop; then
+  echo "OK: master already contained in develop -- release merge will be clean"
+elif _gtout=$(git merge-tree --write-tree --name-only develop master 2>/dev/null); then
+  echo "WARN: develop diverged from master but merges cleanly -- proceeding."
+  git --no-pager log --oneline master ^develop | sed 's/^/     /'
+else
+  echo ""
+  echo "RELEASE STOPPED -- nothing changed; no release branch was created."
+  echo "   Merging 'develop' into 'master' would CONFLICT and break the release."
+  echo "   Conflicting files:"
+  printf '%s\n' "$_gtout" | tail -n +2 | sed 's/^/     - /'
+  echo ""
+  echo "   Reconcile develop first, then re-run:"
+  echo "     git checkout develop && git merge master   # resolve toward develop, commit"
+  echo "     git push origin develop"
+  echo ""
+  echo "   Commits on master missing from develop:"
+  git --no-pager log --oneline master ^develop | sed 's/^/     /'
+  exit 1
+fi
+
 CURRENT_VERSION=$(npx git-changelog-command-line --print-next-version --major-version-pattern BREAKING --minor-version-pattern feat)
 PREV_VERSION=$(git describe --tags --abbrev=0)
 
