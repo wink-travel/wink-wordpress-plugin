@@ -13,11 +13,17 @@ export GIT_MERGE_AUTOEDIT=no
 trap 'export GIT_MERGE_AUTOEDIT=yes' EXIT
 
 # Commit any uncommitted work so the release starts from a clean state
+# --- release hardening: never let an ambient pull.rebase=true / pull.ff turn a
+# sync-pull into a history-rewriting rebase or surprise merge. Pin every pull to
+# fast-forward-only so a diverged shared branch FAILS LOUDLY instead of silently
+# rebasing a just-finished release onto origin. Overrides personal git config. ---
+git config --local pull.ff only
+git config --local pull.rebase false
 git commit -a -m "chore: checking in anything in current branch [no ci]" 2>/dev/null || true
 
 echo "Checking out develop branch..."
 git checkout develop
-git pull
+git pull --ff-only
 
 # --- Pre-flight conflict guard (run BEFORE release-start / any mutation) ---
 # Releasing merges develop into master. If develop has diverged (a previous
