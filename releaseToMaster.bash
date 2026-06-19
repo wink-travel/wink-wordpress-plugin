@@ -69,7 +69,13 @@ sed -i '' "s/^Version:.*/Version: $CURRENT_VERSION/" README.txt
 sed -i '' "s/^Stable tag:.*/Stable tag: $CURRENT_VERSION/" README.txt
 sed -i '' "s/^\( \* Version:\s*\).*/\1$CURRENT_VERSION/" wink.php
 
-git commit -a -m "chore: bump version to $CURRENT_VERSION [no ci]"
+# If the version is already current the sed edits are a no-op, leaving nothing to
+# commit; `git commit` would then exit 1 and abort the release under `set -e`.
+if git diff --quiet HEAD --; then
+  echo "Source files already at $CURRENT_VERSION — skipping version-bump commit."
+else
+  git commit -a -m "chore: bump version to $CURRENT_VERSION [no ci]"
+fi
 git push origin develop
 
 echo "Starting release branch for $CURRENT_VERSION..."
@@ -77,7 +83,13 @@ git flow release start "$CURRENT_VERSION"
 
 echo "Updating CHANGELOG.md on release branch..."
 npx git-changelog-command-line -of CHANGELOG.md
-git commit -a -m "docs: generated changelog and bumped version to $CURRENT_VERSION [no ci]"
+# Skip the commit if the regenerated changelog produced no diff, so an empty
+# commit can't abort the release under `set -e`.
+if git diff --quiet HEAD --; then
+  echo "CHANGELOG.md unchanged — skipping changelog commit."
+else
+  git commit -a -m "docs: generated changelog and bumped version to $CURRENT_VERSION [no ci]"
+fi
 
 echo "Checking for merge conflicts before finishing release..."
 # In normal GitFlow, master is already an ancestor of the release branch, so the
