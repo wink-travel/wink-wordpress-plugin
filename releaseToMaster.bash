@@ -142,6 +142,9 @@ echo "Checking out develop..."
 git checkout develop
 git fetch --tags origin
 git merge --ff-only origin/develop
+# git-flow ignores gitflow.release.finish.updatemessage on some versions and falls back to the
+# default "Merge branch 'master' into develop" — amend here, before push, so Bamboo skips it.
+git commit --amend -m "chore: sync master into develop [no ci]"
 git push
 
 echo "Generating release notes from commits since $PREV_VERSION..."
