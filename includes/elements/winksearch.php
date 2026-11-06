@@ -35,35 +35,6 @@ class winkSearch extends winkElements {
     }
 
     /**
-     * Registers the Gutenberg block and schedules the elements stylesheet to be loaded
-     * in the block editor only. Extends the base implementation.
-     *
-     * The stylesheet is registered via the 'enqueue_block_editor_assets' action rather
-     * than during 'init', which would enqueue it on every front-end page load.
-     *
-     * @return void
-     */
-    function gutenbergBlockRegistration(): void {
-        parent::gutenbergBlockRegistration();
-        add_action( 'enqueue_block_editor_assets', array( $this, 'enqueueEditorStyle' ) );
-    }
-
-    /**
-     * Enqueues the elements stylesheet for the Gutenberg block editor.
-     * Hooked to 'enqueue_block_editor_assets'; runs only when the editor is active.
-     *
-     * @return void
-     */
-    function enqueueEditorStyle(): void {
-        wp_enqueue_style(
-            'winkBlockRenderer_' . $this->blockCode,
-            $this->pluginURL . 'elements/css/elements.css',
-            array(),
-            false
-        );
-    }
-
-    /**
      * Outputs the <wink-app-loader> footer component and renders the block HTML.
      * Used as the render_callback for register_block_type() and as the shortcode handler.
      *

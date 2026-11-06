@@ -155,6 +155,32 @@ class winkElements {
             'attributes'      => $this->attributes,
             'category'        => 'wink2travel-blocks',
         ) );
+
+        // 'enqueue_block_assets' (not 'enqueue_block_editor_assets'): the editor canvas is an
+        // iframe for API version 3 blocks and only this hook is copied into it. Every block
+        // adds the same handle, so WordPress enqueues the stylesheet once.
+        add_action( 'enqueue_block_assets', array( $this, 'enqueueEditorStyle' ) );
+    }
+
+    /**
+     * Enqueues the stylesheet that styles the Wink block previews in the block editor.
+     *
+     * 'enqueue_block_assets' also fires on the front end, where the previews do not exist,
+     * so this does nothing outside wp-admin.
+     *
+     * @return void
+     */
+    function enqueueEditorStyle(): void {
+        if ( ! is_admin() ) {
+            return;
+        }
+
+        wp_enqueue_style(
+            'winkBlockRenderer_elements',
+            $this->pluginURL . 'elements/css/elements.css',
+            array(),
+            false
+        );
     }
 }
 
