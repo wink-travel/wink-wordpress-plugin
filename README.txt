@@ -61,9 +61,9 @@ Yes. Learn more at [https://studio.wink.travel](https://studio.wink.travel "Your
 
 No. The plugin requires PHP 8.2 or newer. WordPress will not offer the update on sites running an older PHP version; please ask your host to upgrade PHP.
 
-= Is it compatible with PHP >8.x =
+= Is it compatible with PHP 8.2 to 8.5 =
 
-No. It is not yet compatible with PHP 8.x
+Yes. The plugin is tested on PHP 8.2, 8.3, 8.4 and 8.5.
 
 == Support ==
 
