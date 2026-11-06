@@ -14,8 +14,7 @@ parameters:
         - includes/elements/wpbakery
         - includes/elements/avada
     scanFiles:
+        # WordPress core function, class and constant declarations, so a misspelled or removed
+        # function is reported instead of ignored.
+        - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
         - tests/bootstrap.php
-    ignoreErrors:
-        # WordPress core functions and constants are not available to static analysis.
-        -
-            identifier: function.notFound

@@ -10,6 +10,7 @@
         "brain/monkey": "^2.6",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
         "mockery/mockery": "^1.6",
+        "php-stubs/wordpress-stubs": "^7.1",
         "phpcompatibility/phpcompatibility-wp": "^2.1",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^11.5"
@@ -22,7 +23,7 @@
     "scripts": {
         "test": "phpunit --configuration phpunit.xml",
         "compat": "phpcs",
-        "analyse": "phpstan analyse --no-progress",
+        "analyse": "phpstan analyse --no-progress --memory-limit=512M",
         "check": [
             "@compat",
             "@analyse",
