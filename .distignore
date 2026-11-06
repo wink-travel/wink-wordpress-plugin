@@ -138,7 +138,10 @@ build
 /.git
 /.github
 /node_modules
-releaseToMaster.bash
+/bamboo-specs
+/scripts
+/release.txt
+release.bash
 cliff.toml
 CHANGELOG.md
 README.md

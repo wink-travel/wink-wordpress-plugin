@@ -1,0 +1,319 @@
+# Bamboo Specs for wink-wordpress-plugin. See README.md in this directory before changing anything.
+#
+# THIS REPOSITORY IS PUBLIC. Nothing secret may ever be written here. The WordPress.org SVN
+# credentials are the Bamboo GLOBAL variables WORDPRESS_SVN_USERNAME and WORDPRESS_SVN_PASSWORD;
+# Bamboo exports them to every script as the environment variables bamboo_WORDPRESS_SVN_USERNAME and
+# bamboo_WORDPRESS_SVN_PASSWORD, which scripts/deployToWordPressOrg.bash reads. Never write
+# ${bamboo.NAME} for a secret: it splices the value into the script text.
+#
+# Bamboo reads exactly this file (bamboo-specs/bamboo.yml). Each plan or deployment is followed by
+# its permissions document, as in Bamboo's own export.
+
+# ======================================================================================
+# Staging plan WS-WP: runs the tests for every merge to master. Nothing is deployed from it.
+# ======================================================================================
+---
+version: 2
+plan:
+  project-key: WS
+  key: WP
+  name: WordPress Plugin
+  enabled: true
+  rerunnable: true
+  description: Web Components wrapped in WordPress PHP
+stages:
+  - Default Stage:
+      manual: false
+      final: false
+      jobs:
+        - Default Job
+Default Job:
+  key: JOB1
+  other:
+    clean-working-dir: true
+    all-other-apps:
+      custom:
+        auto: {}
+        buildHangingConfig.enabled: 'false'
+  tasks:
+    - checkout:
+        force-clean-build: false
+        description: Checkout Default Repository
+    - script:
+        interpreter: SHELL
+        scripts:
+          - composer install --no-interaction
+        description: Build all
+    - script:
+        interpreter: SHELL
+        scripts:
+          - |-
+            mkdir test-results
+
+            ./vendor/bin/phpunit --configuration phpunit.xml --log-junit test-results/junit.xml
+        description: Test
+  artifact-subscriptions: []
+repositories:
+  - wink-wordpress-plugin:
+      scope: global
+triggers:
+  - polling:
+      period: '180'
+branches:
+  create: manually
+  delete: never
+  link-to-jira: true
+notifications:
+  - events:
+      - plan-failed
+    recipients:
+      - emails:
+          - ankush@unicornh.com
+      - emails:
+          - bjorn+bamboo@wink.travel
+labels: []
+dependencies:
+  require-all-stages-passing: false
+  enabled-for-branches: true
+  block-strategy: none
+  plans: []
+other:
+  concurrent-build-plugin:
+    number-of-concurrent-builds: system-default
+    execution-strategy: block-triggering
+---
+version: 2
+plan:
+  key: WS-WP
+plan-permissions:
+  - users:
+      - admin
+    permissions:
+      - view
+      - edit
+      - build
+      - clone
+      - admin
+      - view-configuration
+      - create-plan-branch
+  - roles:
+      - logged-in
+    permissions:
+      - view
+
+# ======================================================================================
+# Release plan WP-WP: tests the tagged commit; its deployment publishes to WordPress.org
+# ======================================================================================
+# release.bash pushes a bare-semver tag (1.5.3) and this trigger starts the plan. `tag:` with
+# `filter:` (a regex on the tag name) is not in the published YAML reference, but Bamboo 12.1.3
+# validates and applies it (verified on monorepo-typescript); re-run the validator after every
+# Bamboo upgrade. The filter matches bare semver only, so the old v1.x tags and pre-release tags
+# never build. The tag build checks out the TAGGED commit.
+#
+# The job records which version and which commit it tested in the `release` artifact; the deployment
+# refuses to publish anything else.
+---
+version: 2
+plan:
+  project-key: WP
+  key: WP
+  name: WordPress Plugin
+  enabled: true
+  rerunnable: true
+  description: Tests a release tag of the WordPress plugin; the deployment publishes it to WordPress.org
+stages:
+  - Default Stage:
+      manual: false
+      final: false
+      jobs:
+        - Default Job
+Default Job:
+  key: JOB1
+  other:
+    clean-working-dir: true
+    all-other-apps:
+      custom:
+        auto: {}
+        buildHangingConfig.enabled: 'false'
+  tasks:
+    - checkout:
+        force-clean-build: false
+        description: Checkout Default Repository
+    - script:
+        interpreter: SHELL
+        scripts:
+          - composer install --no-interaction
+        description: Build all
+    - script:
+        interpreter: SHELL
+        scripts:
+          - |-
+            mkdir test-results
+
+            ./vendor/bin/phpunit --configuration phpunit.xml --log-junit test-results/junit.xml
+        description: Test
+    - script:
+        interpreter: SHELL
+        scripts:
+          - |-
+            #!/usr/bin/env bash
+            set -euo pipefail
+            # The bare-semver tag on the commit this build checked out, and that commit. The deployment
+            # downloads this file and checks that its own checkout is the same commit.
+            version="$(git tag --points-at HEAD | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 || true)"
+            if [ -z "$version" ]; then
+              echo "ERROR: HEAD carries no bare-semver tag; this plan only releases tags" >&2
+              exit 1
+            fi
+            printf '%s %s\n' "$version" "$(git rev-parse HEAD)" > release.txt
+            echo "release: $(cat release.txt)"
+        description: Record the release version and commit
+  artifacts:
+    - name: release
+      location: .
+      pattern: release.txt
+      shared: true
+      required: true
+  artifact-subscriptions: []
+repositories:
+  - wink-wordpress-plugin:
+      scope: global
+triggers:
+  - tag:
+      filter: '^\d+\.\d+\.\d+$'
+branches:
+  create: manually
+  delete: never
+  link-to-jira: true
+notifications:
+  - events:
+      - plan-failed
+    recipients:
+      - emails:
+          - ankush@unicornh.com
+      - emails:
+          - bjorn+bamboo@wink.travel
+labels: []
+dependencies:
+  require-all-stages-passing: false
+  enabled-for-branches: true
+  block-strategy: none
+  plans: []
+other:
+  concurrent-build-plugin:
+    number-of-concurrent-builds: system-default
+    execution-strategy: block-triggering
+---
+version: 2
+plan:
+  key: WP-WP
+plan-permissions:
+  - users:
+      - admin
+    permissions:
+      - view
+      - edit
+      - build
+      - clone
+      - admin
+      - view-configuration
+      - create-plan-branch
+  - roles:
+      - logged-in
+    permissions:
+      - view
+
+# ======================================================================================
+# Deployment: "WordPress Plugin" publishes a tested release tag to the WordPress.org plugin SVN
+# ======================================================================================
+# Runs automatically when WP-WP succeeds on a release tag. scripts/deployToWordPressOrg.bash checks the
+# plugin files out of the checkout, syncs trunk and assets/ in https://plugins.svn.wordpress.org/wink2travel,
+# commits, and then creates tags/<version>. It stops before changing anything if tags/<version> already
+# exists or if wink.php / README.txt do not carry the release version.
+#
+# The agent needs svn (>= 1.10, `brew install subversion`) and rsync on PATH.
+---
+version: 2
+deployment:
+  name: WordPress Plugin
+  source-plan: WP-WP
+  description: Publishes a tested release tag to the WordPress.org plugin SVN
+release-naming:
+  next-version-name: release-1
+  applies-to-branches: false
+  auto-increment: true
+  auto-increment-variables: []
+environments:
+  - WordPress.org
+WordPress.org:
+  description: https://plugins.svn.wordpress.org/wink2travel
+  triggers:
+    - build-success
+  tasks:
+    - clean
+    - checkout:
+        repository: wink-wordpress-plugin
+        force-clean-build: false
+        description: Checkout
+    - artifact-download:
+        artifacts:
+          - name: release
+        description: Fetch the release version and commit
+    - script:
+        interpreter: SHELL
+        scripts:
+          - |-
+            #!/usr/bin/env bash
+            set -euo pipefail
+            # Non-login shell: Homebrew's svn lives here.
+            export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+            read -r version commit < release.txt
+            if [ "$(git rev-parse HEAD)" != "$commit" ]; then
+              echo "ERROR: this checkout is $(git rev-parse HEAD) but the tested release ${version} is ${commit}; not publishing" >&2
+              exit 1
+            fi
+            # The SVN credentials arrive as bamboo_WORDPRESS_SVN_USERNAME / bamboo_WORDPRESS_SVN_PASSWORD
+            # (Bamboo global variables); the script reads them from the environment.
+            scripts/deployToWordPressOrg.bash --version "$version"
+        description: Publish to WordPress.org
+  final-tasks: []
+  variables: {}
+  requirements: []
+  notifications:
+    - events:
+        - deployment-failed
+      recipients:
+        - emails:
+            - bjorn+bamboo@wink.travel
+---
+version: 2
+deployment:
+  name: WordPress Plugin
+deployment-permissions:
+  - users:
+      - admin
+    permissions:
+      - view
+      - edit
+      - clone
+      - admin
+      - view-configuration
+      - approve-release
+      - create-release
+  - roles:
+      - logged-in
+    permissions:
+      - view
+environment-permissions:
+  - WordPress.org:
+      - users:
+          - admin
+        permissions:
+          - view
+          - edit
+          - deploy
+          - view-configuration
+      - roles:
+          - logged-in
+        permissions:
+          - view
