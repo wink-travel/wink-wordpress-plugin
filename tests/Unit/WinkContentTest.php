@@ -32,7 +32,6 @@ class TestableWinkContent extends \winkContent
         // Skip parent::__construct() entirely — it calls add_action, add_shortcode,
         // get_option, etc. which are not relevant here. Set the minimum properties.
         $this->blockCode      = 'winkcontent';
-        $this->blockName      = 'wink Content';
         $this->attributes     = [];
         $this->pluginURL      = 'https://example.com/wp-content/plugins/wink/includes/';
         $this->imgURL         = 'https://example.com/wp-content/plugins/wink/img/';

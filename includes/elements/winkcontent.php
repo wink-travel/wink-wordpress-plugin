@@ -26,7 +26,6 @@ class winkContent extends winkElements {
     function __construct() {
         parent::__construct();
         $this->blockCode = 'winkcontent';
-        $this->blockName = esc_html__( 'wink Content', 'wink2travel' );
         $this->attributes = array(
             'layout'     => array( 'default' => '', 'type' => 'string' ),
             'layoutId'   => array( 'default' => '', 'type' => 'string' ),
@@ -68,7 +67,7 @@ class winkContent extends winkElements {
 
         $shortcodes[ $this->blockCode ] = array(
             'code'   => $this->blockCode,
-            'name'   => $this->blockName,
+            'name'   => esc_html__( 'wink Content', 'wink2travel' ),
             'params' => array(
                 array(
                     'type'        => 'dropdown',

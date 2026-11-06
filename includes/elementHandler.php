@@ -9,8 +9,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * - Block editor context detection (safe, sanitized $_REQUEST check)
  * - The <wink-app-loader> footer component (rendered exactly once per page)
  *
- * Child classes must assign $this->blockCode and $this->blockName in their
- * constructor before calling any methods that depend on those values.
+ * Child classes must assign $this->blockCode in their constructor before calling any
+ * methods that depend on it. Do not call translation functions (__(), esc_html__(), ...)
+ * in a constructor: constructors run while the plugin file loads, before the 'init'
+ * action, and WordPress 6.7+ logs a notice for translations loaded that early. Translate
+ * labels where they are used instead (e.g. in shortcodeData()).
  */
 class winkElements {
     /**
@@ -31,12 +34,6 @@ class winkElements {
      * Must be set by the child constructor.
      */
     protected string $blockCode;
-
-    /**
-     * Human-readable display name shown in the Gutenberg block inserter.
-     * Must be set by the child constructor.
-     */
-    protected string $blockName;
 
     /**
      * Gutenberg block attribute definitions passed to register_block_type().
