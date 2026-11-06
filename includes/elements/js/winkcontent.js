@@ -59,6 +59,7 @@ function initwinkContent() {
         // });
         var formattedLayoutData = loadFormattedLayoutData(layoutData);
         winkRegisterBlockType( 'wink-blocks/'+blockName, {
+            apiVersion: 3,
             title: wink__( 'WINK Content' ), // Block title.
             category:  winkData.blockCat, //category
             icon: iconEl,
@@ -78,6 +79,7 @@ function initwinkContent() {
             },
             //display the post title
             edit(props){
+                const winkBlockProps = wp.blockEditor.useBlockProps();
                 const attributes =  props.attributes;
                 const setAttributes =  props.setAttributes;
 
@@ -249,7 +251,7 @@ function initwinkContent() {
                 );
                 return winkCreateElement(
                     'div',
-                    {},
+                    winkBlockProps,
                     // Children of the main div as an array
                     [ preview, inspector ]
                 );

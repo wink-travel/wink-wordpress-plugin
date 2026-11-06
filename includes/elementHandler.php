@@ -152,6 +152,7 @@ class winkElements {
         ) );
 
         register_block_type( 'wink-blocks/' . $this->blockCode, array(
+            'api_version'     => 3,
             'editor_script'   => $handle,
             'render_callback' => array( $this, 'blockHandler' ),
             'attributes'      => $this->attributes,

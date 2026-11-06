@@ -1,0 +1,25 @@
+- generic [ref=f4e2]:
+  - text:          
+  - generic:
+    - generic [ref=f4e3]:
+      - navigation "Toolbar":
+        - menu:
+          - group [ref=f4e4]:
+            - menuitem "About WordPress" [ref=f4e5] [cursor=pointer]
+          - group [ref=f4e8]:
+            - menuitem "wink-wordpress-plugin" [ref=f4e9] [cursor=pointer]
+          - group [ref=f4e10]:
+            - menuitem "⌘K Open command palette" [ref=f4e11] [cursor=pointer]:
+              - generic [ref=f4e13]:
+                - text: ⌘K
+                - generic [ref=f4e14]: Open command palette
+          - group [ref=f4e15]:
+            - menuitem "0 Comments in moderation" [ref=f4e16] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f4e18]: "0"
+          - group [ref=f4e20]:
+            - menuitem "New" [ref=f4e21] [cursor=pointer]
+        - menu [ref=f4e24]:
+          - group [ref=f4e25]:
+            - menuitem "Howdy, admin" [ref=f4e26] [cursor=pointer]
+    - main:
+      - heading "Add Post" [level=1] [ref=f4e27]
