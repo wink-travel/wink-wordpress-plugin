@@ -67,8 +67,12 @@ fi
 
 # --- The release version must be in the files WordPress reads --------------------------------------
 
-header_value() { # <file> <sed pattern that captures the value in \1>
-  sed -n "$2" "$1" | head -n 1 | tr -d '\r' | sed 's/[[:space:]]*$//'
+header_value() { # <file> <sed pattern that captures the value in \1>; the first match wins
+  # No `| head -n 1`: under pipefail it kills sed with SIGPIPE when a file has a second match.
+  local out nl=$'\n'
+  out="$(sed -n "$2" "$1" | tr -d '\r')"
+  out="${out%%"$nl"*}"
+  printf '%s\n' "${out%"${out##*[![:space:]]}"}"
 }
 PLUGIN_VERSION="$(header_value "$REPO_ROOT/wink.php" 's/^ \* Version:[[:space:]]*\(.*\)$/\1/p')"
 README_VERSION="$(header_value "$REPO_ROOT/README.txt" 's/^Version:[[:space:]]*\(.*\)$/\1/p')"
@@ -86,10 +90,16 @@ done
 for tool in svn rsync; do
   command -v "$tool" >/dev/null 2>&1 || { echo "FAIL: '${tool}' is not installed on this machine"; exit 1; }
 done
-svn help commit 2>/dev/null | grep -q -- '--password-from-stdin' || {
-  echo "FAIL: this svn is too old (no --password-from-stdin, needs 1.10+) — nothing published."
+# --password-from-stdin arrived in svn 1.10. Compare the version rather than grepping `svn help`: under
+# pipefail, `grep -q` closing the pipe early made the pipeline fail even when the option was there.
+SVN_VERSION="$(svn --version --quiet 2>/dev/null | head -n 1 || true)"
+SVN_MAJOR="${SVN_VERSION%%.*}"
+SVN_REST="${SVN_VERSION#*.}"
+SVN_MINOR="${SVN_REST%%.*}"
+if ! [[ "$SVN_MAJOR" =~ ^[0-9]+$ && "$SVN_MINOR" =~ ^[0-9]+$ ]] || (( SVN_MAJOR < 1 || (SVN_MAJOR == 1 && SVN_MINOR < 10) )); then
+  echo "FAIL: svn '${SVN_VERSION}' is too old or unreadable (needs 1.10+ for --password-from-stdin) — nothing published."
   exit 1
-}
+fi
 
 SVN_FLAGS="--non-interactive --no-auth-cache"
 WORK="$(mktemp -d)"

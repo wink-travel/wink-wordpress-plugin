@@ -33,7 +33,7 @@ cat >"$BIN/svn" <<'STUB'
 #!/usr/bin/env bash
 echo "svn $*" >>"$CALLS"
 case "$1" in
-  help) [[ "${OLD_SVN:-0}" == 1 ]] || echo "  --password-from-stdin"; exit 0 ;;
+  --version) if [[ "${OLD_SVN:-0}" == 1 ]]; then echo 1.9.7; else echo "${SVN_VERSION:-1.15.0}"; fi; exit 0 ;;
   info) [[ "${TAG_EXISTS:-0}" == 1 ]] && exit 0; exit 1 ;;
   checkout)
     dest="${@: -1}"
@@ -69,6 +69,9 @@ run() { local out="$1"; shift
   echo $? >"${out}.rc"
 }
 export WORDPRESS_SVN_USERNAME=wink2travel-deployer WORDPRESS_SVN_PASSWORD=s3cr3t-PW-value
+
+echo "== 0. the script is executable (Bamboo runs it directly) =="
+[[ -x "$SRC/scripts/deployToWordPressOrg.bash" ]] && ok "deployToWordPressOrg.bash is executable" || bad "deployToWordPressOrg.bash is executable"
 
 echo "== 1. happy path =="
 run "$T/a" --version 1.5.3
@@ -114,6 +117,12 @@ check  "names Stable tag" "README.txt Stable tag says '1.5.2'" "$T/c2"
 [[ -s "$CALLS" ]] && bad "svn untouched (Stable tag)" || ok "svn untouched (Stable tag)"
 write_versions 1.5.3 1.5.3 1.5.3
 
+echo "== 3b. a second Version line in the readme does not break the check =="
+printf '=== wink2travel ===\nStable tag: 1.5.3\nVersion: 1.5.3\n\n== Changelog ==\nVersion: 1.4.0 (history)\nStable tag: 1.4.0\n' >"$REPO/README.txt"
+run "$T/c3" --version 1.5.3 --dry-run
+rc_is  "first match wins, exit 0" "$T/c3.rc" 0
+write_versions 1.5.3 1.5.3 1.5.3
+
 echo "== 4. a published tag is permanent =="
 TAG_EXISTS=1 run "$T/d" --version 1.5.3
 rc_is  "exit 1" "$T/d.rc" 1
@@ -138,6 +147,13 @@ check  "unknown option" "unexpected argument '--bogus'" "$T/f3"
 OLD_SVN=1 run "$T/g" --version 1.5.3
 rc_is  "old svn fails" "$T/g.rc" 1
 check  "says why" "too old" "$T/g"
+refute "an old svn changes nothing" "svn checkout" "$CALLS"
+for v in 1.10.0 1.14.5 1.15.0 2.0.0; do
+  SVN_VERSION=$v run "$T/g_$v" --version 1.5.3 --dry-run
+  rc_is  "svn $v is accepted" "$T/g_$v.rc" 0
+done
+SVN_VERSION=garbage run "$T/g2" --version 1.5.3 --dry-run
+rc_is  "an unreadable svn version fails" "$T/g2.rc" 1
 
 echo "== 6. dry run =="
 ( unset WORDPRESS_SVN_USERNAME WORDPRESS_SVN_PASSWORD; run "$T/h" --version 1.5.3 --dry-run )
