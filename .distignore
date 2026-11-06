@@ -142,6 +142,7 @@ build
 /scripts
 /release.txt
 /tests
+/vendor
 /composer.json
 /composer.lock
 /patchwork.json
