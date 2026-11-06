@@ -4,7 +4,7 @@
  * Description: This plugin integrates your Wink affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
  * Version:1.5.2
  * Requires at least: 6.3
- * Requires PHP: 8.1
+ * Requires PHP: 8.0
  * Author:      Wink
  * Author URI:  https://wink.travel/
  * License:     GPL-2.0-or-later
