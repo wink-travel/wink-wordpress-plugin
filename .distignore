@@ -148,6 +148,7 @@ build
 /phpunit.xml
 /phpcs.xml.dist
 /phpstan.neon.dist
+/.wp-env.json
 release.bash
 cliff.toml
 CHANGELOG.md

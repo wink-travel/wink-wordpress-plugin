@@ -141,7 +141,7 @@ class winkElements {
         wp_register_script(
             $handle,
             $this->pluginURL . 'elements/js/' . $this->blockCode . '.js',
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor' ),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-block-editor', 'wp-server-side-render' ),
             false
         );
 
