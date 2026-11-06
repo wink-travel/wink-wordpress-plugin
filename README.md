@@ -37,3 +37,18 @@ For questions and support, please proceed in this order:
 1. Read our documentation at [Wink Academy](https://academy.wink.travel).
 2. If you think you found a bug, please create an issue here and describe the problem.
 3. If you need immediate support, e-mail us at [developer@wink.travel](mailto:developer@wink.travel).
+### Contributing and releasing ###
+
+This repository is **trunk-based**: `master` is the only long-lived branch (there is no `develop` and no git flow).
+Branch from `master`, open the pull request against `master`, and use [Conventional Commits](https://www.conventionalcommits.org/)
+(`feat:`, `fix:`, ...). Every merge runs the PHPUnit tests in Bamboo; nothing is deployed from a merge.
+
+A release is a bare-semver tag on `master`, for example `1.5.3`, created by `./release.bash` (run `--dry-run` first; it
+needs `git-cliff`, `gh` and a clean, up-to-date `master`). It works out the next version from the commits, writes it into
+`wink.php` (`Version`) and `README.txt` (`Version` and `Stable tag`), adds the `CHANGELOG.md` entry, commits, tags, pushes
+the commit and the tag together, and creates the GitHub release. **Never push a bare-semver tag by hand.**
+
+Pushing the tag makes Bamboo test the tagged commit and then publish it to the
+[WordPress.org plugin SVN](https://plugins.svn.wordpress.org/wink2travel): `trunk`, `assets/` (from `.wordpress-org/`) and
+`tags/<version>`. See [bamboo-specs/README.md](bamboo-specs/README.md) and `scripts/deployToWordPressOrg.bash`. A published
+SVN tag is permanent; to fix a bad release, fix forward on `master` and release a new patch version.
