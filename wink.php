@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Wink Affiliate WordPress Plugin
  * Description: This plugin integrates your Wink affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
- * Version:1.5.2
+ * Version:2.0.0
  * Requires at least: 6.3
  * Requires PHP: 8.2
  * Author:      Wink

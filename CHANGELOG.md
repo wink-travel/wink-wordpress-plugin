@@ -2,6 +2,31 @@
 
 Changelog of wink-wordpress-plugin.
 
+## [2.0.0] - 2026-11-06
+
+### Bug fixes
+
+- :bug: skip no-op release commit so set -e can't abort the release (402bc86)
+- Amend git-flow back-merge commit before pushing develop to suppress CI (f0ead42)
+- *(deploy)* Make the deploy script executable and fix the svn version check (#9) (b2701c9)
+- *(deploy)* Do not publish dev-only files to WordPress.org (#10) (bb619ce)
+
+### Documentation
+
+- Update Tested up to to 7.1 and Requires PHP to 8.0 (#11) (9125b7e)
+
+### Features
+
+- [**breaking**] Support php 8.2-8.5 and wordpress 6.3+, upgrade tooling and block api (#12) (1d4bbde)
+
+### Other changes
+
+- *(release)* Add early conflict detection to releaseToMaster script (301aaa6)
+- *(release)* Fix conflict-detection abort when master already merged (8dc76c3)
+- :wrench: pin release pulls to --ff-only to prevent rebase-on-release (8317721)
+- Switch to trunk-based development and publish releases to WordPress.org from Bamboo (#8) (8f388a4)
+
+
 ## 1.5.1 (2026-03-28)
 
 ### Other changes
