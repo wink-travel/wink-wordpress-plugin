@@ -140,6 +140,9 @@ svn status | sed -n 's/^![[:space:]]*//p' | while IFS= read -r gone; do
 done
 
 # WordPress.org serves assets by MIME type; svn guesses wrongly for new binaries.
+# For an .svg svn prints "'image/svg+xml' is a binary mime-type but file ... looks like text". That
+# warning is expected and harmless: the type is what WordPress.org needs to render the icon, and the
+# only cost is that svn will not diff or merge that one file as text.
 for f in assets/*.png assets/*.jpg assets/*.jpeg assets/*.svg assets/*.gif; do
   [[ -f "$f" ]] || continue
   case "$f" in

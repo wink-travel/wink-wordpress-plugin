@@ -141,6 +141,11 @@ build
 /bamboo-specs
 /scripts
 /release.txt
+/tests
+/composer.json
+/composer.lock
+/patchwork.json
+/phpunit.xml
 release.bash
 cliff.toml
 CHANGELOG.md

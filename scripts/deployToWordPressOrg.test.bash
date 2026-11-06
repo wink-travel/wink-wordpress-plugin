@@ -25,6 +25,7 @@ echo 'icon' >"$REPO/.wordpress-org/icon-128x128.png"
 echo '<svg/>' >"$REPO/.wordpress-org/icon.svg"
 echo 'x' >"$REPO/release.bash"; echo 'x' >"$REPO/cliff.toml"; echo 'x' >"$REPO/CHANGELOG.md"; echo 'x' >"$REPO/README.md"
 echo 'x' >"$REPO/.github/workflows/ci.yml"; echo 'x' >"$REPO/bamboo-specs/bamboo.yml"
+for f in composer.json composer.lock patchwork.json phpunit.xml; do echo x >"$REPO/$f"; done
 echo 'x' >"$REPO/release.txt"; echo 'x' >"$REPO/scripts/other.bash"; echo 'x' >"$REPO/tests/T.php"
 SCRIPT="$REPO/scripts/deployToWordPressOrg.bash"
 
@@ -88,6 +89,9 @@ check  "password reached svn on stdin" "s3cr3t-PW-value" "$STDIN_LOG"
 check  "plugin files ship" "./wink.php" "$TRUNK_LIST"
 check  "readme ships" "./README.txt" "$TRUNK_LIST"
 check  "includes ship" "./includes/a.php" "$TRUNK_LIST"
+for f in composer.json composer.lock patchwork.json phpunit.xml tests; do
+  refute "does not ship dev file: $f" "./$f" "$TRUNK_LIST"
+done
 for f in release.txt release.bash cliff.toml CHANGELOG.md README.md .github bamboo-specs scripts .wordpress-org; do
   refute "does not ship: $f" "./$f" "$TRUNK_LIST"
 done
