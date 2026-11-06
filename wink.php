@@ -211,7 +211,7 @@ class wink {
 
         if ( ! get_option( $this->clientIdKey, false ) ) {
             echo '<div class="notice notice-info">'
-                . '<img src="' . esc_url( $this->pluginURL ) . 'img/logo.png" alt="' . esc_html__( 'Wink logo', 'wink2travel' ) . '" width="100" style="margin-top: 10px;">'
+                . '<img src="' . esc_url( $this->pluginURL ) . 'img/logo.svg" alt="' . esc_html__( 'Wink logo', 'wink2travel' ) . '" width="160" style="margin-top: 10px;">'
                 . '<p><b>' . esc_html__( 'Congratulations', 'wink2travel' ) . '</b> '
                 . esc_html__( 'on installing the official Wink Affiliate WordPress plugin.', 'wink2travel' )
                 . ' <a href="' . esc_url( $this->settingsURL ) . '" title="' . esc_html__( 'Wink settings', 'wink2travel' ) . '">'
@@ -220,7 +220,7 @@ class wink {
                 . '.</p></div>';
         } elseif ( empty( get_option( 'permalink_structure' ) ) ) {
             echo '<div class="notice notice-info">'
-                . '<img src="' . esc_url( $this->pluginURL ) . 'img/logo.png" alt="' . esc_html__( 'Wink logo', 'wink2travel' ) . '" width="100" style="margin-top: 10px;">'
+                . '<img src="' . esc_url( $this->pluginURL ) . 'img/logo.svg" alt="' . esc_html__( 'Wink logo', 'wink2travel' ) . '" width="160" style="margin-top: 10px;">'
                 . '<p><b>' . esc_html__( 'Attention!', 'wink2travel' ) . '</b> '
                 . esc_html__( 'the Wink plugin requires permalinks. Please disable plain permalinks', 'wink2travel' )
                 . ' <a href="' . esc_url( admin_url( 'options-permalink.php' ) ) . '" title="' . esc_html__( 'Edit Permalinks', 'wink2travel' ) . '">'
@@ -253,7 +253,7 @@ class wink {
         $wp_customize->add_section( $this->section, array(
             'title'       => esc_html__( 'Wink Settings', 'wink2travel' ),
             'priority'    => 30,
-            'description' => '<p><img src="' . esc_url( $this->pluginURL ) . 'img/logo.png" alt="' . esc_attr__( 'Wink logo', 'wink2travel' ) . '" width="100"></p>'
+            'description' => '<p><img src="' . esc_url( $this->pluginURL ) . 'img/logo.svg" alt="' . esc_attr__( 'Wink logo', 'wink2travel' ) . '" width="160"></p>'
                 . esc_html__( 'This plugin connects your site to your Wink account. Once you entered your Client-ID, you can start using the Wink elements either as a Gutenberg block or via the shortcodes below', 'wink2travel' )
                 . '<br>' . implode( '<br>', $shortcodes ),
         ) );
