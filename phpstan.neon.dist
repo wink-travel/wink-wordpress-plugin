@@ -1,7 +1,7 @@
 parameters:
     level: 1
     phpVersion:
-        min: 80000
+        min: 80200
         max: 80599
     paths:
         - wink.php

@@ -5,7 +5,7 @@ Requires at least: 6.3
 Tested up to: 7.1
 Stable tag: 1.5.2
 Version: 1.5.2
-Requires PHP: 8.0
+Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,9 +57,9 @@ There are multiple ways to use our components:
 
 Yes. Learn more at [https://studio.wink.travel](https://studio.wink.travel "Your favorite travel inventory platform").
 
-= Is it compatible with PHP <8.0 =
+= Is it compatible with PHP <8.2 =
 
-If you notice any issues, please contact us.
+No. The plugin requires PHP 8.2 or newer. WordPress will not offer the update on sites running an older PHP version; please ask your host to upgrade PHP.
 
 = Is it compatible with PHP >8.x =
 

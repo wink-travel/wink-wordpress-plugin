@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="Wink PHP compatibility">
-    <description>Checks the plugin code runs on every supported PHP version (8.0 up to 8.5).</description>
+    <description>Checks the plugin code runs on every supported PHP version (8.2 up to 8.5).</description>
 
     <file>wink.php</file>
     <file>includes</file>
@@ -10,7 +10,7 @@
     <arg value="sp"/>
 
     <!-- Supported PHP range: keep in sync with composer.json and the CI matrix. -->
-    <config name="testVersion" value="8.0-"/>
+    <config name="testVersion" value="8.2-"/>
     <rule ref="PHPCompatibilityWP"/>
 
     <exclude-pattern>*/vendor/*</exclude-pattern>
