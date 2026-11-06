@@ -3,11 +3,13 @@
  * Plugin Name: Wink Affiliate WordPress Plugin
  * Description: This plugin integrates your Wink affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
  * Version:1.5.2
+ * Requires at least: 6.3
+ * Requires PHP: 8.1
  * Author:      Wink
  * Author URI:  https://wink.travel/
- * License:     GPL-3.0
- * License URI: https://oss.ninja/gpl-3.0?organization=Useful%20Team&project=jwt-auth
- * Text Domain: wink
+ * License:     GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: wink2travel
  *
  * The Wink Affiliate WordPress plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
