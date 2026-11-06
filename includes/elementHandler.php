@@ -72,6 +72,24 @@ class winkElements {
     }
 
     /**
+     * Shortcodes for elements the Wink web components no longer draw (the account button is
+     * retired: its tag renders nothing). The block, widgets and settings are gone, but posts
+     * that already contain the shortcode must not show the raw "[winkaccount]" text.
+     */
+    private const RETIRED_SHORTCODES = array( 'winkaccount' );
+
+    /**
+     * Keeps each retired shortcode registered so it renders nothing instead of its raw text.
+     *
+     * @return void
+     */
+    public static function registerRetiredShortcodes(): void {
+        foreach ( self::RETIRED_SHORTCODES as $shortcode ) {
+            add_shortcode( $shortcode, '__return_empty_string' );
+        }
+    }
+
+    /**
      * Registers the wp_footer action to output the <wink-app-loader> web component.
      *
      * Call this from blockHandler() so the Wink app-loader element is injected into
@@ -191,12 +209,12 @@ require_once 'elements/winklookup.php';
 require_once 'elements/winkitinerary.php';
 require_once 'elements/winkitineraryform.php';
 require_once 'elements/winksearch.php';
-require_once 'elements/winkaccount.php';
 require_once 'elements/winkcontent.php';
 
 // Page-builder integrations call add_action()/add_filter() at the module level,
 // so skip them entirely when running under PHPUnit.
 if ( ! defined( 'WINK_TESTING' ) ) {
+    winkElements::registerRetiredShortcodes();
     require_once 'elements/wpbakery/vcElements.php';
     require_once 'elements/elementor/elementorWidgets.php';
     require_once 'elements/avada/fusionElements.php';

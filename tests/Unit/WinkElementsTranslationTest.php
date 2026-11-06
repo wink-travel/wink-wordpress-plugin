@@ -46,7 +46,6 @@ class WinkElementsTranslationTest extends TestCase
         return [
             'lookup'         => ['winkLookup', 'winklookup', 'Wink Lookup'],
             'search'         => ['winkSearch', 'winksearch', 'Wink Search'],
-            'account'        => ['winkAccount', 'winkaccount', 'Wink Account'],
             'itinerary'      => ['winkItinerary', 'winkitinerary', 'wink Itinerary Button'],
             'itinerary form' => ['winkItineraryForm', 'winkitineraryform', 'wink Itinerary Form'],
         ];
@@ -60,7 +59,6 @@ class WinkElementsTranslationTest extends TestCase
         return [
             'lookup'         => ['winkLookup'],
             'search'         => ['winkSearch'],
-            'account'        => ['winkAccount'],
             'itinerary'      => ['winkItinerary'],
             'itinerary form' => ['winkItineraryForm'],
             'content'        => ['winkContent'],

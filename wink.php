@@ -163,7 +163,6 @@ class wink {
         $blocks = array(
             'wink-blocks/winklookup',
             'wink-blocks/winksearch',
-            'wink-blocks/winkaccount',
             'wink-blocks/winkitinerary',
             'wink-blocks/winkitineraryform',
             'wink-blocks/winkcontent',
@@ -174,7 +173,7 @@ class wink {
             }
         }
 
-        $shortcodes = array( 'winklookup', 'winksearch', 'winkaccount', 'winkitinerary', 'winkitineraryform', 'winkcontent' );
+        $shortcodes = array( 'winklookup', 'winksearch', 'winkitinerary', 'winkitineraryform', 'winkcontent' );
         foreach ( $shortcodes as $shortcode ) {
             if ( has_shortcode( $post->post_content, $shortcode ) ) {
                 return true;

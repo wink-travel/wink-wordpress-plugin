@@ -50,7 +50,6 @@ class WinkEditorStyleTest extends TestCase
         return [
             'lookup'         => ['winkLookup'],
             'search'         => ['winkSearch'],
-            'account'        => ['winkAccount'],
             'itinerary'      => ['winkItinerary'],
             'itinerary form' => ['winkItineraryForm'],
             'content'        => ['winkContent'],
