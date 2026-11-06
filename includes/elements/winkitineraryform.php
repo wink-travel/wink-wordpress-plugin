@@ -4,7 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Wink Itinerary Form block element.
  *
- * Renders a <wink-itinerary-form> custom element that displays a form for
+ * Renders a <wink-itinerary-picker> custom element (the tag the Wink web components
+ * register for the itinerary form; <wink-itinerary-form> is not defined) that displays a form for
  * creating or managing a travel itinerary on the Wink affiliate platform.
  * Supports Gutenberg blocks, shortcodes, WPBakery, Elementor, and Avada.
  */
@@ -48,7 +49,7 @@ class winkItineraryForm extends winkElements {
     }
 
     /**
-     * Returns the HTML for the <wink-itinerary-form> custom element.
+     * Returns the HTML for the <wink-itinerary-picker> custom element.
      *
      * In the Gutenberg editor context the HTML is returned as an escaped string so the
      * block preview renders the tag text rather than trying to initialise the web component.
@@ -57,7 +58,7 @@ class winkItineraryForm extends winkElements {
      */
     function winkElement(): string {
         ob_start();
-        ?><wink-itinerary-form></wink-itinerary-form><?php
+        ?><wink-itinerary-picker></wink-itinerary-picker><?php
         $content = (string) ob_get_clean();
 
         if ( $this->isEditorContext() ) {
