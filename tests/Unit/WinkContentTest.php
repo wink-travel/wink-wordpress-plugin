@@ -262,4 +262,24 @@ class WinkContentTest extends TestCase
         $result = $this->content->resolveLayoutTypePublic('any-id');
         $this->assertSame('HOTEL', $result);
     }
+
+    // ── shortcodeData: label is translated here, not in the constructor ───────
+
+    public function test_shortcodeData_returns_translated_name_and_layout_dropdown(): void
+    {
+        Functions\when('esc_html__')->returnArg(1);
+        Functions\when('__')->returnArg(1);
+        $this->mockApiClient->shouldReceive('getLayouts')
+            ->andReturn([['name' => 'Package Card', 'id' => 'abc-123']]);
+
+        $data = $this->content->shortcodeData([]);
+
+        $this->assertArrayHasKey('winkcontent', $data);
+        $this->assertSame('winkcontent', $data['winkcontent']['code']);
+        $this->assertSame('wink Content', $data['winkcontent']['name']);
+        $this->assertSame(
+            ['Select...' => '', 'Package Card' => 'abc-123'],
+            $data['winkcontent']['params'][0]['value']
+        );
+    }
 }
