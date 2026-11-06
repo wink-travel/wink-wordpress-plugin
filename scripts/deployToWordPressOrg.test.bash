@@ -70,6 +70,9 @@ run() { local out="$1"; shift
 }
 export WORDPRESS_SVN_USERNAME=wink2travel-deployer WORDPRESS_SVN_PASSWORD=s3cr3t-PW-value
 
+echo "== 0. the script is executable (Bamboo runs it directly) =="
+[[ -x "$SRC/scripts/deployToWordPressOrg.bash" ]] && ok "deployToWordPressOrg.bash is executable" || bad "deployToWordPressOrg.bash is executable"
+
 echo "== 1. happy path =="
 run "$T/a" --version 1.5.3
 rc_is  "exit 0" "$T/a.rc" 0
