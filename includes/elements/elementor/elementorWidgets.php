@@ -19,14 +19,12 @@ class winkElementorWidgets extends winkElements {
             add_action( 'elementor/widgets/widgets_registered', function() {
 
 
-                require_once('winkaccount.php');
                 require_once('winkitinerary.php');
                 require_once('winklookup.php');
                 require_once('winksearch.php');   
                 require_once('winkcontent.php');
                 require_once('winkitineraryform.php');          
                 // Let Elementor know about our widget
-                Elementor\Plugin::instance()->widgets_manager->register_widget_type( new elementorWinkAccount() );
                 Elementor\Plugin::instance()->widgets_manager->register_widget_type( new elementorWinkitinerary() );
                 Elementor\Plugin::instance()->widgets_manager->register_widget_type( new elementorWinkLookup() );
                 Elementor\Plugin::instance()->widgets_manager->register_widget_type( new elementorWinkSearch() );

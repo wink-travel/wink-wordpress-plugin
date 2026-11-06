@@ -44,7 +44,7 @@ class winkVCElements extends winkElements {
                     "base" => $shortcodeData['code'],
                     "class" => "",
                     "category" => esc_html__( "Content", "wink2travel"),
-                    "icon" => $this->imgURL.'logo.png',
+                    "icon" => $this->imgURL.'icon.svg',
                     "params" => $params
                 ));
             }

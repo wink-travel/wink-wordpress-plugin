@@ -3,11 +3,13 @@
  * Plugin Name: Wink Affiliate WordPress Plugin
  * Description: This plugin integrates your Wink affiliate account with WordPress. It integrates with Gutenberg, Elementor, Avada, WPBakery and as shortcodes.
  * Version:1.5.2
+ * Requires at least: 6.3
+ * Requires PHP: 8.2
  * Author:      Wink
  * Author URI:  https://wink.travel/
- * License:     GPL-3.0
- * License URI: https://oss.ninja/gpl-3.0?organization=Useful%20Team&project=jwt-auth
- * Text Domain: wink
+ * License:     GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: wink2travel
  *
  * The Wink Affiliate WordPress plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -161,7 +163,6 @@ class wink {
         $blocks = array(
             'wink-blocks/winklookup',
             'wink-blocks/winksearch',
-            'wink-blocks/winkaccount',
             'wink-blocks/winkitinerary',
             'wink-blocks/winkitineraryform',
             'wink-blocks/winkcontent',
@@ -172,7 +173,7 @@ class wink {
             }
         }
 
-        $shortcodes = array( 'winklookup', 'winksearch', 'winkaccount', 'winkitinerary', 'winkitineraryform', 'winkcontent' );
+        $shortcodes = array( 'winklookup', 'winksearch', 'winkitinerary', 'winkitineraryform', 'winkcontent' );
         foreach ( $shortcodes as $shortcode ) {
             if ( has_shortcode( $post->post_content, $shortcode ) ) {
                 return true;
@@ -209,7 +210,7 @@ class wink {
 
         if ( ! get_option( $this->clientIdKey, false ) ) {
             echo '<div class="notice notice-info">'
-                . '<img src="' . esc_url( $this->pluginURL ) . 'img/logo.png" alt="' . esc_html__( 'Wink logo', 'wink2travel' ) . '" width="100" style="margin-top: 10px;">'
+                . '<img src="' . esc_url( $this->pluginURL ) . 'img/logo.svg" alt="' . esc_html__( 'Wink logo', 'wink2travel' ) . '" width="160" style="margin-top: 10px;">'
                 . '<p><b>' . esc_html__( 'Congratulations', 'wink2travel' ) . '</b> '
                 . esc_html__( 'on installing the official Wink Affiliate WordPress plugin.', 'wink2travel' )
                 . ' <a href="' . esc_url( $this->settingsURL ) . '" title="' . esc_html__( 'Wink settings', 'wink2travel' ) . '">'
@@ -218,7 +219,7 @@ class wink {
                 . '.</p></div>';
         } elseif ( empty( get_option( 'permalink_structure' ) ) ) {
             echo '<div class="notice notice-info">'
-                . '<img src="' . esc_url( $this->pluginURL ) . 'img/logo.png" alt="' . esc_html__( 'Wink logo', 'wink2travel' ) . '" width="100" style="margin-top: 10px;">'
+                . '<img src="' . esc_url( $this->pluginURL ) . 'img/logo.svg" alt="' . esc_html__( 'Wink logo', 'wink2travel' ) . '" width="160" style="margin-top: 10px;">'
                 . '<p><b>' . esc_html__( 'Attention!', 'wink2travel' ) . '</b> '
                 . esc_html__( 'the Wink plugin requires permalinks. Please disable plain permalinks', 'wink2travel' )
                 . ' <a href="' . esc_url( admin_url( 'options-permalink.php' ) ) . '" title="' . esc_html__( 'Edit Permalinks', 'wink2travel' ) . '">'
@@ -251,7 +252,7 @@ class wink {
         $wp_customize->add_section( $this->section, array(
             'title'       => esc_html__( 'Wink Settings', 'wink2travel' ),
             'priority'    => 30,
-            'description' => '<p><img src="' . esc_url( $this->pluginURL ) . 'img/logo.png" alt="' . esc_attr__( 'Wink logo', 'wink2travel' ) . '" width="100"></p>'
+            'description' => '<p><img src="' . esc_url( $this->pluginURL ) . 'img/logo.svg" alt="' . esc_attr__( 'Wink logo', 'wink2travel' ) . '" width="160"></p>'
                 . esc_html__( 'This plugin connects your site to your Wink account. Once you entered your Client-ID, you can start using the Wink elements either as a Gutenberg block or via the shortcodes below', 'wink2travel' )
                 . '<br>' . implode( '<br>', $shortcodes ),
         ) );

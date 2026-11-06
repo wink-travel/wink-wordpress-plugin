@@ -42,8 +42,22 @@ Default Job:
     - script:
         interpreter: SHELL
         scripts:
+          - |-
+            php --version
+            php -r 'exit(PHP_VERSION_ID >= 80200 ? 0 : 1);' || { echo "This build needs PHP 8.2 or newer: the plugin and PHPUnit 11 require it."; exit 1; }
+        description: Require PHP 8.2+
+    - script:
+        interpreter: SHELL
+        scripts:
           - composer install --no-interaction
         description: Build all
+    - script:
+        interpreter: SHELL
+        scripts:
+          - |-
+            composer compat
+            composer analyse
+        description: PHP compatibility and static analysis
     - script:
         interpreter: SHELL
         scripts:
@@ -142,8 +156,22 @@ Default Job:
     - script:
         interpreter: SHELL
         scripts:
+          - |-
+            php --version
+            php -r 'exit(PHP_VERSION_ID >= 80200 ? 0 : 1);' || { echo "This build needs PHP 8.2 or newer: the plugin and PHPUnit 11 require it."; exit 1; }
+        description: Require PHP 8.2+
+    - script:
+        interpreter: SHELL
+        scripts:
           - composer install --no-interaction
         description: Build all
+    - script:
+        interpreter: SHELL
+        scripts:
+          - |-
+            composer compat
+            composer analyse
+        description: PHP compatibility and static analysis
     - script:
         interpreter: SHELL
         scripts:

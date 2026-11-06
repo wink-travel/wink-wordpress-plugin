@@ -62,3 +62,9 @@ Desktop.ini
 *.log
 *.pid
 *.swp
+
+###################################
+# Browser automation output
+###################################
+
+.playwright-mcp/

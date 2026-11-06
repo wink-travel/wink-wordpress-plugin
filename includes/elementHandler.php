@@ -9,8 +9,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * - Block editor context detection (safe, sanitized $_REQUEST check)
  * - The <wink-app-loader> footer component (rendered exactly once per page)
  *
- * Child classes must assign $this->blockCode and $this->blockName in their
- * constructor before calling any methods that depend on those values.
+ * Child classes must assign $this->blockCode in their constructor before calling any
+ * methods that depend on it. Do not call translation functions (__(), esc_html__(), ...)
+ * in a constructor: constructors run while the plugin file loads, before the 'init'
+ * action, and WordPress 6.7+ logs a notice for translations loaded that early. Translate
+ * labels where they are used instead (e.g. in shortcodeData()).
  */
 class winkElements {
     /**
@@ -31,12 +34,6 @@ class winkElements {
      * Must be set by the child constructor.
      */
     protected string $blockCode;
-
-    /**
-     * Human-readable display name shown in the Gutenberg block inserter.
-     * Must be set by the child constructor.
-     */
-    protected string $blockName;
 
     /**
      * Gutenberg block attribute definitions passed to register_block_type().
@@ -72,6 +69,24 @@ class winkElements {
         $this->pluginURL      = trailingslashit( plugin_dir_url( __FILE__ ) );
         $this->imgURL         = trailingslashit( dirname( plugin_dir_url( __FILE__ ) ) ) . 'img/';
         $this->environmentVal = (string) get_option( 'winkEnvironment', 'production' );
+    }
+
+    /**
+     * Shortcodes for elements the Wink web components no longer draw (the account button is
+     * retired: its tag renders nothing). The block, widgets and settings are gone, but posts
+     * that already contain the shortcode must not show the raw "[winkaccount]" text.
+     */
+    private const RETIRED_SHORTCODES = array( 'winkaccount' );
+
+    /**
+     * Keeps each retired shortcode registered so it renders nothing instead of its raw text.
+     *
+     * @return void
+     */
+    public static function registerRetiredShortcodes(): void {
+        foreach ( self::RETIRED_SHORTCODES as $shortcode ) {
+            add_shortcode( $shortcode, '__return_empty_string' );
+        }
     }
 
     /**
@@ -141,7 +156,7 @@ class winkElements {
         wp_register_script(
             $handle,
             $this->pluginURL . 'elements/js/' . $this->blockCode . '.js',
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor' ),
+            array( 'jquery', 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-block-editor', 'wp-server-side-render' ),
             false
         );
 
@@ -152,11 +167,38 @@ class winkElements {
         ) );
 
         register_block_type( 'wink-blocks/' . $this->blockCode, array(
+            'api_version'     => 3,
             'editor_script'   => $handle,
             'render_callback' => array( $this, 'blockHandler' ),
             'attributes'      => $this->attributes,
             'category'        => 'wink2travel-blocks',
         ) );
+
+        // 'enqueue_block_assets' (not 'enqueue_block_editor_assets'): the editor canvas is an
+        // iframe for API version 3 blocks and only this hook is copied into it. Every block
+        // adds the same handle, so WordPress enqueues the stylesheet once.
+        add_action( 'enqueue_block_assets', array( $this, 'enqueueEditorStyle' ) );
+    }
+
+    /**
+     * Enqueues the stylesheet that styles the Wink block previews in the block editor.
+     *
+     * 'enqueue_block_assets' also fires on the front end, where the previews do not exist,
+     * so this does nothing outside wp-admin.
+     *
+     * @return void
+     */
+    function enqueueEditorStyle(): void {
+        if ( ! is_admin() ) {
+            return;
+        }
+
+        wp_enqueue_style(
+            'winkBlockRenderer_elements',
+            $this->pluginURL . 'elements/css/elements.css',
+            array(),
+            false
+        );
     }
 }
 
@@ -167,12 +209,12 @@ require_once 'elements/winklookup.php';
 require_once 'elements/winkitinerary.php';
 require_once 'elements/winkitineraryform.php';
 require_once 'elements/winksearch.php';
-require_once 'elements/winkaccount.php';
 require_once 'elements/winkcontent.php';
 
 // Page-builder integrations call add_action()/add_filter() at the module level,
 // so skip them entirely when running under PHPUnit.
 if ( ! defined( 'WINK_TESTING' ) ) {
+    winkElements::registerRetiredShortcodes();
     require_once 'elements/wpbakery/vcElements.php';
     require_once 'elements/elementor/elementorWidgets.php';
     require_once 'elements/avada/fusionElements.php';
