@@ -1,0 +1,21 @@
+parameters:
+    level: 1
+    phpVersion:
+        min: 80100
+        max: 80599
+    paths:
+        - wink.php
+        - includes
+    excludePaths:
+        - vendor
+        # Page-builder integrations extend third-party classes (Elementor, WPBakery, Avada)
+        # that are not installed here; mirrors the coverage exclusions in phpunit.xml.
+        - includes/elements/elementor
+        - includes/elements/wpbakery
+        - includes/elements/avada
+    scanFiles:
+        - tests/bootstrap.php
+    ignoreErrors:
+        # WordPress core functions and constants are not available to static analysis.
+        -
+            identifier: function.notFound

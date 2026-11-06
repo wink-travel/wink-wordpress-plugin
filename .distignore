@@ -146,6 +146,8 @@ build
 /composer.lock
 /patchwork.json
 /phpunit.xml
+/phpcs.xml.dist
+/phpstan.neon.dist
 release.bash
 cliff.toml
 CHANGELOG.md
